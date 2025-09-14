@@ -1,16 +1,55 @@
 ---
-
+import { Image } from 'astro:assets';
+import Card from '../layouts/Card.astro';
+import CardLink from '../components/CardLink.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Card>
+	<section class="flex items-center justify-center ">
+		<article class="w-full max-w-lg backdrop-blur rounded-2xl shadow-lg p-6 text-center border 
+			border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20"
+		>
+			<Image
+				src="/sanna-profile.jpg"
+				alt=""
+				densities={[1.5, 2]}
+				width={1500}
+				height={1500}
+				class="rounded-full size-40 mx-auto"
+			/>
+
+			<h1 id="profile-title" class="mt-4">Sanna Kramsi</h1>
+			<p class="text-sm text-lt-gray dark:text-dk-gray mt-1">
+				Accessibility Consultant &amp; Advocate
+			</p>
+
+			<p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+				Helping teams make the digital world accessible for everyone. I offer auditing, training and practical guidance to make UX &amp; frontend inclusive.
+			</p>
+
+			<p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+				Currently: Training teams on accessible design &amp; frontend development.
+			</p>
+		</article>
+	</section>
+
+	<section class="flex items-center justify-center">
+		<article class="w-full max-w-3xl backdrop-blur rounded-2xl shadow-lg p-6
+			border border-white/50 bg-white/95 dark:bg-black/40  dark:border-black/20"
+		>
+			<h2 class="mb-4 text-lg">A11ying with Sanna</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				<CardLink url="https://wcag.a11y.ing" title="Almost, but not quite" description="a guide to the requirements" />
+				<CardLink url="https://a11y.ing" title="I would if I could" description="a guide to web accessibility" />
+				<CardLink url="https://blog.sanna.ninja" title="Blog" description="a peek into my life" />
+			</div>
+
+			<h2 class="my-4 text-lg">Reach out</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				<CardLink url="https://www.linkedin.com/in/sanna-kramsi/" title="LinkedIn" description="let's connect" />
+				<CardLink url="https://forms.gle/22RnCg5TQpMyXYPu5" title="Requests" description="send a request for content" />
+				<CardLink url="/services/" title="Services" description="what I do" />
+			</div>
+		</article>
+	</section>
+</Card>

@@ -1,0 +1,121 @@
+---
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { Icon } from 'astro-icon/components';
+
+import '@fontsource/satisfy';
+import '@fontsource/atkinson-hyperlegible';
+import '@fontsource/lato';
+---
+<html lang="en">
+  <head>
+    <title>A11ying with Sanna - Sanna Kramsi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="A11ying with Sanna - Sanna Kramsi" />
+    <meta name="description" content="meta" />
+    <meta
+      property="og:description"
+      content="meta"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="A11ying with Sanna - Sanna Kramsi" />
+    <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicons/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body
+    class="font-sans px-4
+      flex items-center justify-center flex-wrap
+      min-h-screen bg-gradient-to-b
+      background-gradient-light from-lt-perfume to-lt-blue-light
+      dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header"
+  >
+    <header class="w-full flex justify-end self-start">
+      <ThemeToggle />
+    </header>
+    <main class="max-w-6xl w-full space-y-10">
+      <slot />
+    </main>
+    <footer class="w-full text-center text-xs text-lt-gray dark:text-gray-300 mt-4">
+      <div class="flex justify-center items-center">
+        Made with <Icon name="heart" class="h-4 w-5 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" /><span class="sr-only">love</span> — A11ying with Sanna
+      </div>
+      <div class="flex justify-center mt-4">
+        <Icon name="a11ying-dark" class="logo-dark" height="173" width="348" aria-hidden="true" />
+        <Icon name="a11ying-light" class="logo-light" height="173" width="348" aria-hidden="true" />
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  .light .darkmode-light,
+  .dark .darkmode-dark,
+  .light .logo-light,
+  .dark .logo-dark {
+    @apply hidden invisible;
+  }
+
+  .light .button-highlighted {
+    @apply bg-gradient-to-r from-dk-purple-header to-dk-blue-header; 
+  }
+
+  .light .button-highlighted .link-main,
+  .light .button-highlighted .link-sub {
+    @apply text-white;
+  }
+
+  .dark .button-highlighted {
+    @apply bg-gradient-to-r from-lt-perfume to-lt-blue-light;
+  }
+
+  .dark .button-highlighted .link-main,
+  .dark .button-highlighted .link-sub {
+    @apply text-black;
+  } 
+
+  .card-link:hover .link-main {
+    @apply underline;
+  }
+
+  .light a.button-highlighted {
+    @apply text-white;
+  }
+
+  .dark a.button-highlighted {
+    @apply text-black;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold text-dk-purple-header dark:text-lt-perfume;
+  }
+
+  h1 {
+    @apply text-3xl font-semibold;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  .logo-light,
+  .logo-dark {
+    @apply h-auto w-24;
+    @apply md:w-32;
+  }
+
+  footer .logo-light,
+  footer .logo-dark {
+    @apply h-auto w-24;
+    @apply md:w-28;
+  }
+</style>

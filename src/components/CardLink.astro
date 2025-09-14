@@ -1,0 +1,13 @@
+---
+const url = Astro.props.url;
+const title = Astro.props.title;
+const description = Astro.props.description;
+const buttonClass = Astro.props.buttonClass;
+---
+<a href={ url } class={`${buttonClass} card-link group block rounded-xl p-4 text-center ring-1 ring-gray-400
+  hover:shadow-md
+  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dk-purple-header focus:dark:ring-lt-perfume`}
+>
+  <div class="link-main text-sm font-medium text-gray-700 dark:text-gray-300">{ title }</div>
+  <div class="link-sub text-xs text-gray-500 dark:text-gray-400 mt-1">{ description }</div>
+</a>

@@ -1,0 +1,12 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const iconName = Astro.props.icon;
+const description = Astro.props.description
+---
+<div class="flex items-start gap-3 ">
+  <Icon name={ iconName } class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+  <p class="text-gray-700 dark:text-gray-300">
+    { description }
+  </p>
+</div>

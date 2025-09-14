@@ -1,0 +1,54 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Card from '../layouts/Card.astro';
+import Service from '../components/Service.astro';
+import InfoColumn from '../components/InfoColumn.astro';
+---
+<Card>
+  <section class="text-center space-y-4">
+    <h1>Accessibility Services</h1>
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">I help teams design and build accessible, inclusive digital products. From training and consulting to audits, I'll guide you toward WCAG-compliant, user-friendly experiences – and beyond.</p>
+  </section>
+
+  <section aria-labelledby="services-title">
+    <span id="services-title" class="sr-only">The services I offer</span>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Service title="Audits" icon="check"
+        description="Comprehensive accessibility evaluations of websites and applications. Get actionable reports aligned with WCAG 2.2 standards and prioritized recommendations."
+      />
+      <Service title="Training" icon="book-open"
+        description="Interactive workshops and hands-on sessions tailored for designers, developers, and content teams. Learn practical skills to create accessible user experiences."
+      />
+      <Service title="Consulting" icon="chat-bubble"
+        description="Ongoing accessibility support for projects, including design reviews, development guidance, and strategy for embedding accessibility in your processes."
+      />
+      <Service title="Monitoring" icon="eye"
+        description="Ongoing accessibility monitoring with the tool of your choice. I handle issues so you can focus on your core business, and can also support remediation when needed."
+      />
+    </div>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="me" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">Why choose me?</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <div class="flex items-start gap-3 ">
+        <Icon name="academic-cap" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <p class="text-gray-700 dark:text-gray-300">
+          IAAP <a href="https://www.credly.com/badges/15d907b6-0867-448f-a06b-b564617f2d53" class="font-bold underline hover:no-underline">Certified Professional in Web Accessibility</a> (CPWA), demonstrating internationally recognized expertise in accessibility standards and best practices.
+        </p>
+      </div>
+      <InfoColumn icon="wrench-screwdriver"
+        description="With years of hands-on experience in accessibility, I combine technical expertise with a people-first approach. My work is grounded in real-world scenarios and practical solutions."
+      />
+      <InfoColumn icon="user-group"
+        description="I've trained diverse teams, audited complex platforms, and guided organizations to meet WCAG 2.2 standards. My philosophy: accessibility isn't an add-on, it's essential for great user experience."
+      />
+    </div>
+  </section>
+
+  <section class="text-center space-y-4">
+    <p class="text-gray-700 dark:text-gray-300">Interested in working together?</p>
+    <a href="mailto:you@example.com" class="inline-block px-6 py-3 rounded-xl bg-dk-purple-header dark:bg-lt-perfume text-white dark:text-black font-medium hover:opacity-90">Contact Me</a>
+  </section>
+</Card>
