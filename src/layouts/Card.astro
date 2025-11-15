@@ -7,6 +7,7 @@ const { title, metaDescription } = Astro.props;
 import '@fontsource/satisfy';
 import '@fontsource/atkinson-hyperlegible';
 import '@fontsource/lato';
+import MainMenu from '../components/MainMenu.astro';
 ---
 <html lang="en">
   <head>
@@ -34,7 +35,7 @@ import '@fontsource/lato';
       background-gradient-light from-lt-perfume to-lt-blue-light
       dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header"
   >
-    <header class="w-full flex justify-end self-start">
+    <header class="w-full flex justify-end self-start wrap">
       <ThemeToggle />
     </header>
     <main class="max-w-6xl w-full space-y-10">

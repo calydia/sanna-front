@@ -1,9 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import Card from '../layouts/Card.astro';
-import Service from '../components/Service.astro';
-import InfoColumn from '../components/InfoColumn.astro';
+import Card from '../../layouts/Card.astro';
+import Service from '../../components/Service.astro';
+import InfoColumn from '../../components/InfoColumn.astro';
 ---
 <Card title="Accessibility Services" metaDescription="I offer various accessibility services to teams of, for example, content editors, designers or developers">
   <section class="text-center space-y-4">
@@ -16,16 +16,20 @@ import InfoColumn from '../components/InfoColumn.astro';
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <Service title="Audits" icon="check"
         description="Comprehensive accessibility evaluations of websites and applications. Get actionable reports aligned with WCAG 2.2 standards and prioritized recommendations."
-      />
+        buttonLink="/accessibility-audits/" buttonText="More on audits"
+        />
       <Service title="Training" icon="book-open"
         description="Presentations, interactive workshops and hands-on sessions tailored for designers, developers, and content teams. Learn practical skills to create accessible user experiences."
-      />
+        buttonLink="/training/" buttonText="More on training"
+        />
       <Service title="Consulting" icon="chat-bubble"
         description="Ongoing accessibility support for projects, including design reviews, development guidance, and strategy for embedding accessibility in your processes."
-      />
+        buttonLink="/consulting/" buttonText="More on consulting"
+        />
       <Service title="Monitoring" icon="eye"
         description="Ongoing accessibility monitoring with the tool of your choice. I handle issues so you can focus on your core business, and can also support remediation when needed."
-      />
+        buttonLink="/monitoring/" buttonText="More on monitoring"
+        />
     </div>
   </section>
 
@@ -35,7 +39,7 @@ import InfoColumn from '../components/InfoColumn.astro';
       <div class="flex items-start gap-3 ">
         <Icon name="academic-cap" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
         <p class="text-gray-700 dark:text-gray-300">
-          IAAP <a href="https://www.credly.com/badges/15d907b6-0867-448f-a06b-b564617f2d53" class="font-bold underline hover:no-underline">Certified Professional in Web Accessibility</a> (CPWA), demonstrating internationally recognized expertise in accessibility standards and best practices.
+          I'm IAAP <a href="https://www.credly.com/badges/15d907b6-0867-448f-a06b-b564617f2d53" class="font-bold underline hover:no-underline">Certified Professional in Web Accessibility</a> (CPWA), demonstrating internationally recognized expertise in accessibility standards and best practices.
         </p>
       </div>
       <InfoColumn icon="wrench-screwdriver"

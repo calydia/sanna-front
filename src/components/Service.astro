@@ -4,8 +4,13 @@ import { Icon } from 'astro-icon/components';
 const title = Astro.props.title;
 const description = Astro.props.description;
 const iconName = Astro.props.icon;
+const buttonLink = Astro.props.buttonLink;
+const buttonText = Astro.props.buttonText;
 ---
-<article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
-  <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center"><Icon name={ iconName } class="h-6 w-6 mr-2" aria-hidden="true" /> { title }</h2>
-  <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{ description }</p>
+<article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20 flex flex-col justify-between">
+  <div>
+    <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center"><Icon name={ iconName } class="h-6 w-6 mr-2" aria-hidden="true" /> { title }</h2>
+    <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">{ description }</p>
+  </div>
+  <a href={ buttonLink } class="mt-6 text-sm flex items-center justify-between px-6 py-3 rounded-xl bg-dk-purple-header dark:bg-lt-perfume text-white dark:text-black font-medium hover:opacity-90">{ buttonText }<Icon name="arrow-right" class="h-6 w-6 mr-2" aria-hidden="true" /></a>
 </article>

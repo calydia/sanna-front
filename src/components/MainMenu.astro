@@ -1,0 +1,23 @@
+---
+const menuAriaLabel = Astro.props.menuAriaLabel;
+
+const currentPath = Astro.url.pathname;
+
+const isCurrent = (path:string ) => {
+  return currentPath === path ? 'page' : false;
+}
+---
+
+<nav aria-label={ menuAriaLabel } class="w-full ">
+  <ul class="flex gap-4">
+    <li><a href="/" >About me</a></li>
+    <li><a href="/services/">Accessibility Services</a>
+      <ul class="flex gap-4">
+        <li><a href="/accessibility-audits/" aria-current={isCurrent}>Audits</a></li>
+        <li>Training</li>
+        <li>Consulting</li>
+        <li>Monitoring</li> 
+      </ul>
+    </li>
+  </ul>
+</nav>
