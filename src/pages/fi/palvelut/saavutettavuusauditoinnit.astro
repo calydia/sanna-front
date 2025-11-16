@@ -1,0 +1,206 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Card from '../../../layouts/Card.astro';
+import InfoColumn from '../../../components/InfoColumn.astro';
+---
+<Card title="Saavutettavuusauditoinnit" metaDescription="Tarjoan kattavasti erilaisia saavutettavuusauditointipalveluita eri kokoisille verkkosivustoille ja tarpeisiin"
+  language="fi"
+>
+  <section class="text-center space-y-4">
+    <h1>Saavutettavuusauditoinnit</h1>
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto text-left">Each package can be tailored to better suit the needs of your website. The pricing will be adjusted based on the changes.</p>
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto text-left">If none of the predefined packages suit your needs, a fully tailored audit is the most cost-effective. Reach out and let's discuss your needs in more detail.</p>
+  </section>
+
+  <section aria-labelledby="services-title">
+    <span id="services-title" class="sr-only">Auditointipaketit</span>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20 flex flex-col justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center">Kevyt</h2>
+          <p><em class="text-sm text-gray-700 dark:text-gray-300">Nopea vilkaisu</em></p>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Noin 10 sivua manuaalisesti testattuna.</li>
+              <li>Automaattinen testaus 500 sivuun asti.</li>
+            </ul>
+          </p>
+          <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">Soveltuu esimerkiksi:
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Pienille sivustoille, joissa on alle viisi erilaista sisältötyyppiä</li>
+              <li>Sivustoille, jotka kaipaaALV pikaista saavutettavuuden tarkastusta alkuun pääsemiseksi</li>
+            </ul>
+          </p>
+        </div>
+        <p class="mt-6 text-sm text-gray-700 dark:text-gray-300">Hinta: 2 475 € + ALV</p>
+      </article>
+      <article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20 flex flex-col justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center">Perus</h2>
+          <p><em class="text-sm text-gray-700 dark:text-gray-300">Vankka perusta</em></p>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Noin 12 sivua manuaalisesti testattuna.</li>
+              <li>Automaattinen testaus 1000 sivuun asti.</li>
+            </ul>
+          </p>
+          <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">Soveltuu esimerkiksi:
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Pienille ja keskikokoisille sisältöpainoitteisille sivustoille</li>
+            </ul>
+          </p>
+        </div>
+        <p class="mt-6 text-sm text-gray-700 dark:text-gray-300">Hinta: 3 300 € + ALV</p>
+      </article>
+      <article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20 flex flex-col justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center">Kattava</h2>
+          <p><em class="text-sm text-gray-700 dark:text-gray-300">Syväanalyysi saavvutettavuuteen</em></p>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Noin 24 sivua manuaalisesti testattuna.</li>
+              <li>Automaattinen testaus 2000 sivuun asti.</li>
+            </ul>
+          </p>
+          <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">Soveltuu esimerkiksi:
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Pienemmille sivustoille kattavampaan saavutettavuuden tarkasteluun</li>
+              <li>Keskikokoisille sivustoille</li>
+              <li>Suurille sisältöpainoitteisille sivustoille</li>
+            </ul>
+          </p>
+        </div>
+        <p class="mt-6 text-sm text-gray-700 dark:text-gray-300">Hinta: 4 950 € + ALV</p>
+      </article>
+      <article class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20 flex flex-col justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-dk-purple-header dark:text-lt-perfume flex items-center">Laaja</h2>
+          <p><em class="text-sm text-gray-700 dark:text-gray-300">Kohti aitoa saavutettavuutta</em></p>
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Noin 36 sivua manuaalisesti testattuna.</li>
+              <li>Automaattinen testaus 3000 sivuun asti.</li>
+            </ul>
+          </p>
+          <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">Soveltuu esimerkiksi:
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Keskikokoisille ja suurille sivustoille</li>
+              <li>Pienille ja keskisuurille verkkokaupoille (Verkkokauppojen kohdalla soveltuvin auditointipaketti riippuu verkkokaupan tyypistä ja ominaisuuksista)</li>
+            </ul>
+          </p>
+        </div>
+        <p class="mt-6 text-sm text-gray-700 dark:text-gray-300">Hinta: 6 500 € + ALV</p>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="content" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">Mitä auditoinnista saa?</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <InfoColumn icon="user-group"
+        description="Auditoinnissa ei keskitytä vain WCAG 2.2 -standardien noudattamiseen, vaan otetaan huomioon myös yleinen käyttökokemus erityisesti vammaisille henkilöille. Tämä kokonaisvaltainen lähestymistapa varmistaa, että verkkosivustosi on paitsi lakisääteisten vaatimusten mukainen, myös aidosti saavutettava ja käyttäjäystävällinen."
+      />
+      <InfoColumn icon="wrench-screwdriver"
+        description="Raportti antaa sinulle selkeän käsityksen verkkosivustosi saavutettavuudesta ja tuo esiin sekä vahvuudet että parannettavat alueet. Jokaisen epäkohdan yhteydessä saat käytännön suosituksia, jotka auttavat tiimiäsi toteuttamaan tarvittavat muutokset."
+      />
+      <div class="flex items-start gap-3 ">
+        <Icon name="list-bullet" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Auditointi pähkinänkuoressa:
+            <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-outside pl-3">
+              <li>Testaus kahdella ruudunlukijalla (oletuksena Windows NVDA, iPhone VoiceOver)</li>
+              <li>Automaattinen testaus <a href="https://webwarden.fi" class="underline hover:no-underline">Webwardenilla</a></li>
+              <li>Asiantuntijan testaus, palaute ja ehdotukset</li>
+              <li>Kattava raportti, joka erittelee löydetyt haasteet ja niiden korjausehdotukset</li>
+              <li>Saavutettavuuteen ja käytettävyyteen liittyviä havaintoja myös lain vaatimuksien ulkopuolelta</li>
+              <li>Tapaaminen auditoijan kanssa tulosten läpikäymiseksi</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="options" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">Lisämahdollisuuksia</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <div class="flex items-start gap-3 ">
+        <Icon name="academic-cap" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div class="flex flex-col justify-between h-full">
+          <div class="flex flex-col">
+            <p class="text-gray-700 dark:text-gray-300">
+              Saavutettavuusselosteen luominen tai päivittäminen auditoinnin havaintojen pohjalta.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Saavutettavuusseloste voidaan tuottaa suomeksi tai englanniksi. Jos tarvitset molemmat, kerrothan siitä!
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Jos et tiedä mikä saavutettavuusseloste on, <a href="https://a11y.ing/fi/perusteet/perusjutut/saavutettavuusseloste/" class="underline hover:no-underline">Lue lisää saavutettavuusselosteista</a>.
+            </p>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 mt-6">
+            Hinta: 590 € + ALV
+          </p>
+        </div>
+
+      </div>
+
+      <div class="flex items-start gap-3 ">
+        <Icon name="computer-desktop" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div class="flex flex-col justify-between h-full">
+          <div class="flex flex-col">
+            <p class="text-gray-700 dark:text-gray-300">
+              Testausta lisäruudunlukijoilla:
+              <ul class=" text-gray-700 dark:text-gray-300 list-disc list-outside pl-4">
+                <li>Android TalkBack</li>
+                <li>VoiceOver (MacOS)</li>
+                <li>JAWS</li>
+              </ul>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Testauksen kattavuutta voidaan lisätä lisäämällä ruudunlukijoita.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Huom! Jos haluat, oletuksena käytettävät kaksi ruudunlukijaa voidaan korvata joillain yllä mainituista.
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 mt-6">
+            Hinta: 300 € + ALV per ruudunlukija
+          </p>
+        </div>
+
+      </div>
+
+      <div class="flex items-start gap-3 ">
+        <Icon name="presentation-chart-line" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div class="flex flex-col justify-between h-full">
+          <div>
+            <p class="text-gray-700 dark:text-gray-300">
+              Rooliperusteinen saavutettavuuskoulutus auditoinnin havaintojen pohjalta (1 tunti, etänä).
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Koulutus voidaan räätälöidä erityisesti esimerkiksi:
+              <ul class=" text-gray-700 dark:text-gray-300 list-disc list-outside pl-4">
+                <li>sisällöntuottajille</li>
+                <li>suunnittelijoille</li>
+                <li>kehittäjille</li>
+              </ul>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-6">
+              Koulutus voi olla teoreettinen tai voimme harjoitella oikeiden esimerkkien avulla sivustoltasi ja samalla pääset alkuun korjausprosessissa.
+            </p>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 mt-6 justify-end">
+            Hinta: 500 € + ALV per koulutus
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="text-center space-y-4">
+    <p class="text-gray-700 dark:text-gray-300">Tehtäisiinkö töitä yhdessä?</p>
+    <a href="mailto:sanna@a11y.ing" class="inline-block px-6 py-3 rounded-xl bg-dk-purple-header dark:bg-lt-perfume text-white dark:text-black font-medium hover:opacity-90">Ota yhteyttä</a>
+  </section>
+</Card>

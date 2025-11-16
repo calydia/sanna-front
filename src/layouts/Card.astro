@@ -8,8 +8,10 @@ import '@fontsource/satisfy';
 import '@fontsource/atkinson-hyperlegible';
 import '@fontsource/lato';
 import MainMenu from '../components/MainMenu.astro';
+
+const language = Astro.props.language || 'en';
 ---
-<html lang="en">
+<html lang={ language }>
   <head>
     <title>A11ying with Sanna - Sanna Kramsi</title>
     <meta charset="utf-8">
@@ -42,7 +44,7 @@ import MainMenu from '../components/MainMenu.astro';
       <slot />
     </main>
     <footer class="w-full text-center text-xs text-lt-gray dark:text-gray-300 mt-4">
-      <div class="flex justify-center items-center">
+      <div class="flex justify-center items-center" lang="en">
         Made with <Icon name="heart" class="h-4 w-5 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" /><span class="sr-only">love</span> — A11ying with Sanna
       </div>
       <div class="flex justify-center mt-4">

@@ -1,0 +1,62 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Card from '../../../layouts/Card.astro';
+import Service from '../../../components/Service.astro';
+import InfoColumn from '../../../components/InfoColumn.astro';
+---
+<Card title="Palvelut" metaDescription="Tarjoan kattavasti erilaisia palveluita tiimeille, kuten sisällöntuottajille, suunnittelijoille ja kehittäjille"
+  language="fi"  
+>
+  <section class="text-center space-y-4">
+    <h1>Palvelut</h1>
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+      Autan tiimejä suunnittelemaan ja rakentamaan saavutettavia, inklusiivisia digitaalisia palveluita. Koulutuksista ja konsultoinnista auditointeihin: ohjaan sinut kohti WCAG-yhteensopivia, käyttäjäystävällisiä kokemuksia – ja pidemmälle.
+    </p>
+  </section>
+
+  <section aria-labelledby="services-title">
+    <span id="services-title" class="sr-only">Tarjoamiani palveluita</span>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <Service title="Auditoinnit" icon="check"
+        description="Kattavat saavutettavuusarvioinnit verkkosivustoille ja sovelluksille. Saat käytännönläheiset raportit, jotka ovat linjassa WCAG 2.2 -standardien kanssa, sekä priorisoidut suositukset."
+        buttonLink="/saavutettavuusauditoinnit/" buttonText="Lisää auditoinneista"
+        />
+      <Service title="Koulutus" icon="book-open"
+        description="Esitykset, interaktiiviset työpajat ja käytännönläheiset sessiot, jotka on räätälöity suunnittelijoille, kehittäjille ja sisällöntuottajille. Opit käytännön taitoja saavutettavien käyttäjäkokemusten luomiseen."
+        buttonLink="/koulutukset/" buttonText="Lisää koulutuksista"
+        />
+      <Service title="Konsultointi" icon="chat-bubble"
+        description="Jatkuva saavutettavuustuki projekteille, mukaan lukien suunnitteluarvioinnit, kehitysohjeistus ja strategia saavutettavuuden sisällyttämiseksi prosesseihisi."
+        buttonLink="/konsultointi/" buttonText="Lisää konsultoinnista"
+        />
+      <Service title="Monitorointi" icon="eye"
+        description="Saavutettavuuden monitorointi valitsemallasi työkalulla. Hoidan ongelmat puolestasi, jotta voit keskittyä ydinliiketoimintaasi, ja voin tarvittaessa tukea korjaustoimenpiteitä."
+        buttonLink="/monitorointi/" buttonText="Lisää monitoroinnista"
+        />
+    </div>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="me" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">Miksi valita minut?</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <div class="flex items-start gap-3 ">
+        <Icon name="academic-cap" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <p class="text-gray-700 dark:text-gray-300">
+          Olen IAAP:n sertifioima ammattilainen (<a lang="en" href="https://www.credly.com/badges/15d907b6-0867-448f-a06b-b564617f2d53" class="font-bold underline hover:no-underline">Certified Professional in Web Accessibility (CPWA)</a>), mikä osoittaa kansainvälisesti tunnustetun asiantuntemuksen saavutettavuusstandardeissa ja parhaissa käytännöissä.
+        </p>
+      </div>
+      <InfoColumn icon="wrench-screwdriver"
+        description="Vuosien käytännön kokemuksella saavutettavuudesta yhdistän teknisen osaamisen ihmiskeskeiseen lähestymistapaan. Työni perustuu todellisiin tilanteisiin ja käytännön ratkaisuihin. "
+      />
+      <InfoColumn icon="user-group"
+        description="Olen kouluttanut monipuolisia tiimejä, auditoinut monimutkaisia alustoja ja opastanut organisaatioita WCAG 2.2 -standardien noudattamisessa. Periaatteeni on, että saavutettavuus ei ole lisäominaisuus, vaan se on välttämätön osa hyvää käyttökokemusta."
+      />
+    </div>
+  </section>
+
+  <section class="text-center space-y-4">
+    <p class="text-gray-700 dark:text-gray-300">Tehtäisiinkö töitä yhdessä?</p>
+    <a href="mailto:sanna@a11y.ing" class="inline-block px-6 py-3 rounded-xl bg-dk-purple-header dark:bg-lt-perfume text-white dark:text-black font-medium hover:opacity-90">Ota yhteyttä</a>
+  </section>
+</Card>

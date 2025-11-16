@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import Card from '../../layouts/Card.astro';
+import CardLink from '../../components/CardLink.astro';
+---
+
+<Card title="Sanna Kramsi" metaDescription="Tarjoan auditointeja, koulutusta ja käytännön ohjeita käyttökokemuksen ja digitaalisen inklusiivisuuden parantamiseen.">
+	<section class="flex items-center justify-center ">
+		<article class="w-full max-w-lg backdrop-blur rounded-2xl shadow-lg p-6 text-center border 
+			border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20"
+		>
+			<Image
+				src="/sanna-profile.jpg"
+				alt=""
+				densities={[1.5, 2]}
+				width={1500}
+				height={1500}
+				class="rounded-full size-40 mx-auto"
+			/>
+
+			<h1 id="profile-title" class="mt-4">Sanna Kramsi</h1>
+			<p class="text-sm text-lt-gray dark:text-dk-gray mt-1">
+				Saavutettavuuskonsultti &amp; saavutettavuuden puolestapuhuja
+			</p>
+
+			<p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
+				Autan tiimejä tekemään digitaalisesta maailmasta saavutettavan kaikille. Tarjoan auditoinnteja, koulutusta ja käytännön ohjeita käyttökokemuksen ja digitaalisen inklusiivisuuden parantamiseen.
+			</p>
+
+			<p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+				Tällä hetkellä: Koulutan tiimejä saavutettavaan tekemiseen.
+			</p>
+		</article>
+	</section>
+
+	<section class="flex items-center justify-center">
+		<article class="w-full max-w-3xl backdrop-blur rounded-2xl shadow-lg p-6
+			border border-white/50 bg-white/95 dark:bg-black/40  dark:border-black/20"
+		>
+			<h2 class="mb-4 text-lg">A11ying with Sanna</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				<CardLink url="https://wcag.a11y.ing/fi/" title="Melkein, mutta ei ihan" description="opas vaatimuksiin" />
+				<CardLink url="https://a11y.ing/fi/" title="Toki, jos voisin" description="opas saavutettavuuteen" />
+				<CardLink url="https://blog.sanna.ninja" title="Blogi" description="kurkistus elämääni" />
+			</div>
+
+			<h2 class="my-4 text-lg">Ota yhteyttä</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				<CardLink url="https://www.linkedin.com/in/sanna-kramsi/" title="LinkedIn" description="verkostoidutaan" />
+				<CardLink url="https://forms.gle/22RnCg5TQpMyXYPu5" title="Toiveet" description="lähetä toive sisällöstä" />
+				<CardLink url="/fi/palvelut/" title="Palvelut" description="palvelut" />
+			</div>
+		</article>
+	</section>
+</Card>
