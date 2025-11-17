@@ -8,6 +8,7 @@ import '@fontsource/satisfy';
 import '@fontsource/atkinson-hyperlegible';
 import '@fontsource/lato';
 import MainMenu from '../components/MainMenu.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 
 const language = Astro.props.language || 'en';
 ---
@@ -38,6 +39,7 @@ const language = Astro.props.language || 'en';
       dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header"
   >
     <header class="w-full flex justify-end self-start wrap">
+      <LanguageSwitcher />
       <ThemeToggle />
     </header>
     <main class="max-w-6xl w-full space-y-10">
