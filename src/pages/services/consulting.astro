@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Card from '../../layouts/Card.astro';
+import InfoColumn from '../../components/InfoColumn.astro';
+---
+<Card title="Consulting" metaDescription="I offer consulting services to help you integrate accessibility into your work processes.">
+  <section class="text-center space-y-4">
+    <h1>Consulting</h1>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="content" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">Need help or support? A sparring buddy?</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <InfoColumn icon="lightbulb"
+        description="Do you think about taking accessibility into account in your own work? Does your organization lack accessibility practices? Don't know where to start?"
+      />
+      <InfoColumn icon="calendar"
+        description="You can flexibly schedule chats and assignments with me from half an hour upwards."
+      />
+      <div class="flex items-start gap-3 ">
+        <Icon name="heart" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">
+            Let me know what kind of support you need and take the first step towards accessibility together with me!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="me" class="rounded-2xl shadow-lg p-6 border border-white/50 bg-white/95 dark:bg-black/40 dark:border-black/20">
+    <h2 id="content" class="font-bold text-xl text-dk-purple-header dark:text-lt-perfume">What can you get from the consulting service?</h2>
+    <div class="grid gap-8 lg:grid-cols-3 mt-4">
+      <InfoColumn icon="chat-bubble"
+        description="Flexible consulting sessions tailored to your needs."
+      />
+      <InfoColumn icon="video-camera"
+        description="Remote discussions and support via email or video calls."
+      />
+      <div class="flex items-start gap-3 ">
+        <Icon name="percent-badge" class="h-6 w-6 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" />
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">
+            Anything accessibility-related that you need help with! The billing is done based on the actual time used with an hourly rate.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-center space-y-4">
+    <p class="text-gray-700 dark:text-gray-300">Interested in working together?</p>
+    <a href="mailto:sanna@a11y.ing" class="inline-block px-6 py-3 rounded-xl bg-dk-purple-header dark:bg-lt-perfume text-white dark:text-black font-medium hover:opacity-90">Contact me</a>
+  </section>
+</Card>
