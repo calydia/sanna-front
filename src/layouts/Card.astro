@@ -2,13 +2,13 @@
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { Icon } from 'astro-icon/components';
 
-const { title, metaDescription } = Astro.props;
+const { title, metaDescription, pageType } = Astro.props;
 
 import '@fontsource/satisfy';
 import '@fontsource/atkinson-hyperlegible';
 import '@fontsource/lato';
-import MainMenu from '../components/MainMenu.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 const language = Astro.props.language || 'en';
 ---
@@ -42,6 +42,7 @@ const language = Astro.props.language || 'en';
       <LanguageSwitcher />
       <ThemeToggle />
     </header>
+    <Breadcrumb currentPage={ title } pageType={ pageType } language={ language } />
     <main class="max-w-6xl w-full space-y-10">
       <slot />
     </main>
@@ -124,5 +125,9 @@ const language = Astro.props.language || 'en';
   footer .logo-dark {
     @apply h-auto w-24;
     @apply md:w-28;
+  }
+
+  .breadcrumb-li::after {
+    @apply content-['/'] mx-4 text-black dark:text-white;
   }
 </style>

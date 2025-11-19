@@ -1,0 +1,32 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+  const lang = getLangFromUrl(Astro.url);
+  const t = useTranslations(lang);
+
+  const currentPage = Astro.props.currentPage;
+  const pageType = Astro.props.pageType;
+  const language = Astro.props.language || 'en';
+
+  const frontLink = language == 'fi' ? '/fi/' : '/';
+  const servicesLink = language == 'fi' ? '/fi/palvelut/' : '/services/';
+---
+{pageType !== 'front' ?
+  <section class="w-full mb-4 max-w-6xl">
+    <nav aria-label={ t('breadcrumb-aria') }>
+      <ul class="flex flex-wrap">
+        <li class="breadcrumb-li">
+          <a href={ frontLink } class="text-black dark:text-white underline breadcrumb-link hover:no-underline">{ t('home-link') }</a>
+        </li>
+
+        {pageType == 'service' ?
+            <li class="breadcrumb-li">
+              <a href={ servicesLink } class="text-black dark:text-white underline breadcrumb-link hover:no-underline">{ t('services-link') }</a>
+            </li>
+          : null
+        }
+        <li class="text-black dark:text-white">{ currentPage }</li>
+      </ul>
+    </nav>
+  </section>
+: null }
