@@ -2,14 +2,31 @@
 import { getLangFromUrl } from '../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 
+const fiUrl = Astro.props.fiUrl || '/fi/';
+const enUrl = Astro.props.enUrl || '/';
+
 const link = lang === 'fi' ? '/' : '/fi/';
 const linkText = lang === 'fi' ? 'In English' : 'suomeksi';
 const langAttribute = lang === 'fi' ? 'en' : 'fi';
 ---
-<a href={ link } lang={ langAttribute } class="py-2 px-3 text-black dark:text-white border-y-4 border-transparent
-  hover:border-y-4 hover:border-lt-purple dark:hover:border-dk-blue-light
-  focus:outline focus:outline-2 focus:outline-offset-4 	focus:outline-black dark:focus:outline-white"
-  >
-    <span class="lang-switcher-text">{ linkText }</span>
+
+
+{lang !== 'fi' ?
+  <a href={ fiUrl } lang={ langAttribute } class="py-2 px-3 text-black dark:text-white border-y-4 border-transparent
+    hover:border-y-4 hover:border-lt-purple dark:hover:border-dk-blue-light
+    focus:outline focus:outline-2 focus:outline-offset-4 	focus:outline-black dark:focus:outline-white"
+    >
+      <span class="lang-switcher-text">{ linkText }</span>
+  </a>
+:
+  <a href={ enUrl } lang={ langAttribute } class="py-2 px-3 text-black dark:text-white border-y-4 border-transparent
+    hover:border-y-4 hover:border-lt-purple dark:hover:border-dk-blue-light
+    focus:outline focus:outline-2 focus:outline-offset-4 	focus:outline-black dark:focus:outline-white"
+    >
+      <span class="lang-switcher-text">{ linkText }</span>
+  </a>
+}
+
+
 
 

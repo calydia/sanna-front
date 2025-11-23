@@ -2,7 +2,7 @@
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { Icon } from 'astro-icon/components';
 
-const { title, metaDescription, pageType } = Astro.props;
+const { title, metaDescription, pageType, fiUrl, enUrl } = Astro.props;
 
 import '@fontsource/satisfy';
 import '@fontsource/atkinson-hyperlegible';
@@ -39,7 +39,7 @@ const language = Astro.props.language || 'en';
       dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header"
   >
     <header class="w-full flex justify-end self-start wrap">
-      <LanguageSwitcher />
+      <LanguageSwitcher fiUrl={fiUrl} enUrl={enUrl} />
       <ThemeToggle />
     </header>
     <Breadcrumb currentPage={ title } pageType={ pageType } language={ language } />
