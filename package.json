@@ -9,12 +9,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.5.1",
-    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.2",
     "@fontsource/atkinson-hyperlegible": "^5.2.7",
     "@fontsource/lato": "^5.2.6",
     "@fontsource/satisfy": "^5.2.6",
-    "astro": "^5.13.7",
-    "astro-icon": "^1.1.5"
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.2.0",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.2.4"
+  },
+  "overrides": {
+    "vite": "7.3.2"
   }
 }

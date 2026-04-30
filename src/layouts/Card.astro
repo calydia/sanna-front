@@ -59,9 +59,8 @@ const language = Astro.props.language || 'en';
 </html>
 
 <style is:global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+  @import "tailwindcss";
+  @config "../../tailwind.config.cjs";
 
   .light .darkmode-light,
   .dark .darkmode-dark,
