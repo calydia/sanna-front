@@ -15,12 +15,12 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
   <section class="w-full mb-4 max-w-6xl">
     <nav aria-label={ t('breadcrumb-aria') }>
       <ul class="flex flex-wrap">
-        <li class="breadcrumb-li">
+        <li class="breadcrumb-li text-black dark:text-white">
           <a href={ frontLink } class="text-black dark:text-white underline breadcrumb-link hover:no-underline">{ t('home-link') }</a>
         </li>
 
         {pageType == 'service' ?
-            <li class="breadcrumb-li">
+            <li class="breadcrumb-li text-black dark:text-white">
               <a href={ servicesLink } class="text-black dark:text-white underline breadcrumb-link hover:no-underline">{ t('services-link') }</a>
             </li>
           : null

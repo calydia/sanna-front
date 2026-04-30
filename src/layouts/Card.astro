@@ -127,6 +127,7 @@ const language = Astro.props.language || 'en';
   }
 
   .breadcrumb-li::after {
-    @apply content-['/'] mx-4 text-black dark:text-white;
+    @apply content-['/'] mx-4;
+    color: currentColor;
   }
 </style>
