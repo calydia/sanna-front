@@ -40,6 +40,16 @@ This specification supersedes the recent experimental card hover and focus decis
 - Blog action links styled as buttons use the production filled default state, transparent bordered hover state, transition, and focus outline.
 - Pagination links use the same button interaction language while preserving their current-page semantics.
 
+## Blog topic navigation
+
+- Inactive topic links have no underline by default.
+- Hover adds the production two-pixel underline with a four-pixel offset.
+- Exact current destinations and ancestor topics on nested pages share the active visual treatment: purple in light mode or wheat in dark mode, with a persistent four-pixel underline.
+- Hovering an active topic reduces its underline to two pixels, matching production.
+- Continue using the shared route-state utility so nested Personal and professional article/category routes activate their owning topic without duplicating pathname logic.
+- Preserve exact-page and ancestor-current semantics already exposed by the navigation component.
+- Focus uses the production blog-link treatment.
+
 ## Article Keep reading box
 
 - Keep the existing three-card Related posts section beneath the article body.
@@ -94,5 +104,6 @@ This specification supersedes the recent experimental card hover and focus decis
 - Verify About the author precedes Keep reading and matches the required structure.
 - Verify Keep reading contains the available featured post, up to two related links, and the category browse link.
 - Verify On this page structure and default, hover, and focus link states.
+- Verify inactive, hovered, exact-current, and nested-ancestor blog topic navigation states.
 - Run unit, production-build, browser, accessibility, and visual suites.
 - Update and inspect affected light/dark desktop/mobile visual baselines.
