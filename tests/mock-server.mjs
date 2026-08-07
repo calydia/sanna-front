@@ -51,7 +51,15 @@ const articles = [
   })),
 ];
 
-const categoryIds = { 21: 'Accessibility', 22: 'Cats', 23: 'Games', 24: 'Life', 25: 'Tech' };
+const categoryIds = {
+  21: 'Accessibility',
+  22: 'Cats',
+  23: 'Games',
+  24: 'Life',
+  25: 'Tech',
+  70: 'Speaking',
+  71: 'Projects',
+};
 
 function json(response, status, body) {
   response.writeHead(status, { 'Content-Type': 'application/json' });
