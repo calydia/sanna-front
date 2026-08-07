@@ -28,7 +28,7 @@ const popularTags = category.showPopularTopics ? getPopularTags(allPosts) : [];
     <h1 class="text-4xl font-bold md:text-5xl">{title}</h1>
     {firstPage && <div class="blog-body mt-4"><Fragment set:html={editorialPage.content} /></div>}
   </header>
-  {firstPage && featuredPost && <aside class="relative border-4 border-lt-blue-dark bg-lt-blue-light p-5 dark:border-dk-blue-light dark:bg-dk-purple"><p class="m-0 font-semibold">New here? Read this first</p><a class="blog-card-link mt-1 inline-block underline decoration-2 underline-offset-4" href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)}>{featuredPost.title} →</a></aside>}
+  {firstPage && featuredPost && <aside class="blog-cover-card blog-gradient-border relative bg-lt-blue-light p-5 dark:bg-dk-purple"><p class="m-0 font-semibold">New here? Read this first</p><a class="blog-card-link blog-cover-link mt-1 inline-block no-underline" href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)}><span class="blog-card-title">{featuredPost.title} →</span></a></aside>}
   {firstPage && <TopicBrowse tags={popularTags} />}
-  <section aria-label={`${category.label} blog posts`}><PostGrid posts={posts} /><Pagination currentPage={currentPage} totalPages={totalPages} getPageUrl={(page: number) => getBlogCategoryPagePath(category, page)} /></section>
+  <section class="mb-8 md:mb-12" aria-label={`${category.label} blog posts`}><PostGrid posts={posts} /><Pagination currentPage={currentPage} totalPages={totalPages} getPageUrl={(page: number) => getBlogCategoryPagePath(category, page)} /></section>
 </BlogLayout>

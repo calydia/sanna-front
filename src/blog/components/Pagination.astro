@@ -8,14 +8,30 @@ const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 ---
 
 {totalPages > 1 && (
-  <nav class="mt-8" aria-label="Pagination">
+  <nav class="mt-8 text-base md:mt-10" aria-label="Pagination">
     <ul class="flex flex-wrap items-center justify-center gap-2 p-0" role="list">
-      {currentPage > 1 && <li><a class="inline-flex min-h-11 items-center border-2 border-lt-blue-dark px-4 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(currentPage - 1)} rel="prev">← Previous</a></li>}
+      {currentPage > 1 && <li><a class="blog-pager-link inline-flex min-h-11 items-center gap-1 rounded-sm border-2 border-lt-blue-dark px-4 py-2 font-semibold text-lt-blue-dark no-underline dark:border-dk-blue-light dark:text-dk-blue-light" href={getPageUrl(currentPage - 1)} rel="prev"><span aria-hidden="true">←</span> Previous</a></li>}
       {pages.map((page) => <li>{page === currentPage
-        ? <span class="inline-flex min-h-11 min-w-11 items-center justify-center bg-lt-blue-dark px-3 py-2 font-bold text-white dark:bg-dk-blue-light dark:text-dk-purple" aria-current="page"><span class="sr-only">Page </span>{page}</span>
-        : <a class="inline-flex min-h-11 min-w-11 items-center justify-center border-2 border-lt-blue-dark px-3 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(page)} aria-label={`Page ${page}`}>{page}</a>
+        ? <span class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm bg-lt-blue-dark px-3 py-2 font-bold text-white dark:bg-dk-blue-light dark:text-dk-purple" aria-current="page"><span class="sr-only">Page </span>{page}</span>
+        : <a class="blog-pager-link inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm border-2 border-lt-blue-dark px-3 py-2 font-semibold text-lt-blue-dark no-underline dark:border-dk-blue-light dark:text-dk-blue-light" href={getPageUrl(page)} aria-label={`Page ${page}`}>{page}</a>
       }</li>)}
-      {currentPage < totalPages && <li><a class="inline-flex min-h-11 items-center border-2 border-lt-blue-dark px-4 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(currentPage + 1)} rel="next">Next →</a></li>}
+      {currentPage < totalPages && <li><a class="blog-pager-link inline-flex min-h-11 items-center gap-1 rounded-sm border-2 border-lt-blue-dark px-4 py-2 font-semibold text-lt-blue-dark no-underline dark:border-dk-blue-light dark:text-dk-blue-light" href={getPageUrl(currentPage + 1)} rel="next">Next <span aria-hidden="true">→</span></a></li>}
     </ul>
   </nav>
 )}
+
+<style>
+  @media (hover: hover) {
+    .blog-pager-link:hover {
+      background: #dfe7fc;
+    }
+
+    :global(.dark) .blog-pager-link:hover {
+      background: #070038;
+    }
+  }
+
+  .blog-pager-link:focus {
+    outline-offset: 4px;
+  }
+</style>

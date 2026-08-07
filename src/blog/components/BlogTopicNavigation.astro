@@ -24,8 +24,9 @@ const links = [
             href={link.href}
             aria-current={getAriaCurrent(state)}
             class:list={[
-              'inline-block px-1 py-2 text-black underline decoration-2 underline-offset-4 hover:no-underline focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:text-white dark:focus:outline-white',
-              state !== 'inactive' && 'font-semibold no-underline',
+              'blog-topic-link inline-block px-1 py-2 underline-offset-4',
+              state === 'inactive' && 'text-black no-underline dark:text-white',
+              state !== 'inactive' && 'font-semibold text-lt-purple underline decoration-4 dark:text-wheat',
             ]}
           >
             {link.label}

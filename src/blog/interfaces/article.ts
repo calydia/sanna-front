@@ -18,7 +18,7 @@ export interface BlogArticle extends BlogArticleListing {
   content: string;
   id: string;
   imageCredits?: string | null;
-  published: string;
+  published: boolean;
   mainImage: string;
   boxTitle: string;
   boxContent: string;

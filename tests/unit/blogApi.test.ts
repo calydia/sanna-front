@@ -25,6 +25,26 @@ describe('Drupal article normalization', () => {
     assert.equal(article.content, '<p>Content</p>');
   });
 
+  it('normalizes numeric Drupal article identifiers to strings', () => {
+    const article = normalizeArticle({
+      ...common,
+      listingImage: '/image.jpg',
+      authorContent: '<p>Author</p>',
+      authorImage: '/author.jpg',
+      authorName: 'Author',
+      content: '<p>Content</p>',
+      id: 123,
+      published: true,
+      mainImage: '/main.jpg',
+      boxTitle: null,
+      boxContent: null,
+    }, 'full');
+
+    assert.equal(article.id, '123');
+    assert.equal(article.boxTitle, '');
+    assert.equal(article.boxContent, '');
+  });
+
   it('rejects malformed required fields with their response location', () => {
     assert.throws(
       () => normalizeArticle({ ...common, title: null, listingImage: '/image.jpg' }, 'listing', 3),

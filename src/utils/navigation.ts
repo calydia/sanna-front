@@ -5,13 +5,14 @@ function normalizePath(path: string): string {
   return `/${path.replace(/^\/+|\/+$/g, '')}/`;
 }
 
-export function getNavigationState(currentPath: string, destination: string): NavigationState {
+export function getNavigationState(currentPath: string, destination: string, exactOnly = false): NavigationState {
   const normalizedCurrentPath = normalizePath(currentPath);
   const normalizedDestination = normalizePath(destination);
 
   if (normalizedCurrentPath === normalizedDestination) return 'current';
   if (
-    normalizedDestination !== '/'
+    !exactOnly
+    && normalizedDestination !== '/'
     && normalizedCurrentPath.startsWith(normalizedDestination)
   ) return 'ancestor';
 

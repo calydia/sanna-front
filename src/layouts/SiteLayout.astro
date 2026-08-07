@@ -5,6 +5,7 @@ import '@fontsource/atkinson-hyperlegible';
 import '@fontsource/lato';
 
 import Breadcrumb from '../components/Breadcrumb.astro';
+import BlogFooter from '../blog/components/BlogFooter.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 import PrimaryNavigation from '../components/PrimaryNavigation.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
@@ -18,6 +19,9 @@ type Props = {
   enUrl?: string;
   language?: 'en' | 'fi';
   showBreadcrumb?: boolean;
+  bodyAppearance?: 'gradient' | 'blog';
+  showLanguageSwitcher?: boolean;
+  languageLinkText?: string;
 };
 
 const {
@@ -28,6 +32,9 @@ const {
   enUrl,
   language = 'en',
   showBreadcrumb = true,
+  bodyAppearance = 'gradient',
+  showLanguageSwitcher = true,
+  languageLinkText,
 } = Astro.props;
 const t = useTranslations(language);
 const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Kramsi`;
@@ -35,8 +42,9 @@ const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Krams
 
 <html lang={language}>
   <head>
-    <title>{documentTitle}</title>
     <meta charset="utf-8">
+    <script is:inline src="/theme-init.js"></script>
+    <title>{documentTitle}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content={title}>
     <meta name="description" content={metaDescription}>
@@ -51,7 +59,12 @@ const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Krams
     <slot name="head" />
   </head>
   <body
-    class="font-sans px-4 flex items-center justify-center flex-wrap min-h-screen bg-gradient-to-b background-gradient-light from-lt-perfume to-lt-blue-light dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header"
+    class:list={[
+      'font-sans px-4 flex items-center justify-center flex-wrap min-h-screen',
+      bodyAppearance === 'blog'
+        ? 'bg-lt-bg dark:bg-dk-blue-darkest'
+        : 'bg-gradient-to-b background-gradient-light from-lt-perfume to-lt-blue-light dark:background-gradient-dark dark:from-dk-purple-header dark:to-dk-blue-header',
+    ]}
   >
     <a
       href="#main-content"
@@ -59,12 +72,21 @@ const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Krams
     >
       {t('skip-link-text')}
     </a>
-    <header class="w-full self-start">
-      <div class="flex justify-end">
-        <LanguageSwitcher fiUrl={fiUrl} enUrl={enUrl} />
+    <header id="page-top" class="w-full self-start">
+      <div class="flex justify-end gap-1">
+        {showLanguageSwitcher && <LanguageSwitcher fiUrl={fiUrl} enUrl={enUrl} linkText={languageLinkText} />}
+        {bodyAppearance === 'blog' && (
+          <a
+            href="/blog/rss.xml"
+            class="border-y-4 border-transparent px-3 py-2 text-black hover:border-lt-purple focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:text-white dark:hover:border-dk-blue-light dark:focus:outline-white"
+            aria-label="RSS feed"
+          >
+            <Icon name="rss" class="h-8 w-8" aria-hidden="true" />
+          </a>
+        )}
         <ThemeToggle />
       </div>
-      {language === 'en' && <PrimaryNavigation />}
+      <PrimaryNavigation language={language} />
     </header>
     {showBreadcrumb && (
       <Breadcrumb currentPage={title} pageType={pageType} language={language} />
@@ -72,7 +94,7 @@ const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Krams
     <main id="main-content" tabindex="-1" class="max-w-6xl w-full space-y-10">
       <slot />
     </main>
-    <footer class="w-full text-center text-xs text-lt-gray dark:text-gray-300 mt-4">
+    {bodyAppearance === 'blog' ? <BlogFooter /> : <footer class="w-full text-center text-xs text-lt-gray dark:text-gray-300 mt-4">
       <div class="flex justify-center items-center" lang="en">
         Made with <Icon name="heart" class="h-4 w-5 shrink-0 text-dk-purple-header dark:text-lt-perfume" aria-hidden="true" /><span class="sr-only">love</span> — A11ying with Sanna
       </div>
@@ -80,13 +102,17 @@ const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Krams
         <Icon name="a11ying-dark" class="logo-dark" height="173" width="348" aria-hidden="true" />
         <Icon name="a11ying-light" class="logo-light" height="173" width="348" aria-hidden="true" />
       </div>
-    </footer>
+    </footer>}
   </body>
 </html>
 
 <style is:global>
   @import "tailwindcss";
   @config "../../tailwind.config.cjs";
+
+  html {
+    scrollbar-gutter: stable;
+  }
 
   .light .darkmode-light,
   .dark .darkmode-dark,

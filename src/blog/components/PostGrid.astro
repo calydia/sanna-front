@@ -1,13 +1,15 @@
 ---
 import dayjs from 'dayjs';
 import type { BlogArticleListing } from '../interfaces/article.ts';
-import { getBlogArticlePath, getBlogCategoryPath } from '../routes.ts';
+import { getBlogArticlePath } from '../routes.ts';
 import { getBlogCategoryByDrupalName } from '../categories.ts';
 
-const { posts, emptyMessage = 'No posts have been published in this section yet.' } = Astro.props as {
+const { posts, emptyMessage = 'No posts have been published in this section yet.', headingLevel = 2 } = Astro.props as {
   posts: BlogArticleListing[];
   emptyMessage?: string;
+  headingLevel?: 2 | 3;
 };
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 ---
 
 {posts.length === 0 ? (
@@ -19,17 +21,17 @@ const { posts, emptyMessage = 'No posts have been published in this section yet.
     {posts.map((post) => {
       const category = getBlogCategoryByDrupalName(post.category, post.title);
       return (
-        <li class="relative grid content-start border-4 border-lt-blue-dark bg-lt-blue-light p-2 transition-shadow hover:shadow-lg focus-within:shadow-lg dark:border-dk-blue-light dark:bg-dk-purple dark:text-white">
+        <li class="blog-cover-card blog-gradient-border group relative grid content-start bg-lt-blue-light p-2 transition-shadow hover:shadow-lg focus-within:shadow-lg dark:bg-dk-purple dark:text-white">
           <img src={post.listingImage} alt="" width="690" height="404" loading="lazy" class="aspect-[690/404] w-full object-cover">
           <div class="p-3 text-center">
-            <h2 class="m-0 text-xl font-semibold leading-tight lg:text-2xl">
-              <a class="blog-card-link underline decoration-2 underline-offset-4" href={getBlogArticlePath(category, post.slug, post.title)}>
-                {post.title}
+            <Heading class="m-0 text-xl font-semibold leading-tight lg:text-2xl">
+              <a class="blog-card-link blog-cover-link no-underline" href={getBlogArticlePath(category, post.slug, post.title)}>
+                <span class="blog-card-title">{post.title}</span>
               </a>
-            </h2>
+            </Heading>
             <p class="mt-3 text-base">
               {dayjs(post.date).format('MMMM DD, YYYY')} <span aria-hidden="true">|</span>{' '}
-              <a class="relative z-10 underline hover:no-underline" href={getBlogCategoryPath(category)}>{category.label}</a>
+              <span class="sr-only">in category </span>{category.label}
             </p>
             <p class="mt-3 text-base leading-relaxed">{post.metaDescription}</p>
           </div>

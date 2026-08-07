@@ -26,5 +26,7 @@ describe('navigation state', () => {
 
   it('does not treat the homepage as an ancestor of every route', () => {
     assert.equal(getNavigationState('/blog/', '/'), 'inactive');
+    assert.equal(getNavigationState('/fi/projektit/', '/fi/', true), 'inactive');
+    assert.equal(getNavigationState('/fi/', '/fi/', true), 'current');
   });
 });

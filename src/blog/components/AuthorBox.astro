@@ -1,0 +1,21 @@
+---
+const { authorName, authorImage, authorContent } = Astro.props as {
+  authorName: string;
+  authorImage: string;
+  authorContent: string;
+};
+---
+
+<section aria-label="About the author" class="blog-gradient-border bg-lt-blue-light p-5 text-center text-lg dark:bg-dk-purple dark:text-white md:p-6">
+  <p class="m-0 text-sm font-bold uppercase tracking-[0.16em] text-lt-gray dark:text-dk-gray">About the author</p>
+  {authorImage && <div class="mb-4 mt-2"><img src={authorImage} alt="" width="150" height="150" loading="lazy" class="mx-auto size-[120px] rounded-full border-4 border-lt-purple object-cover dark:border-dk-blue-light"></div>}
+  <span class="font-title text-2xl text-lt-gray dark:text-dk-gray">{authorName}</span>
+  <div class="author-copy mx-auto max-w-xl text-lg text-lt-gray dark:text-dk-gray"><Fragment set:html={authorContent} /></div>
+</section>
+
+<style>
+  .author-copy :global(p) {
+    margin-block: 1rem 0;
+    line-height: 1.5;
+  }
+</style>

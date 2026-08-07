@@ -2,11 +2,19 @@
 import type { BlogCategory } from '../categories.ts';
 import type { BlogArticleListing } from '../interfaces/article.ts';
 import { getBlogArticlePath, getBlogCategoryPath } from '../routes.ts';
-const { category, featuredPost } = Astro.props as { category: BlogCategory; featuredPost?: BlogArticleListing };
+
+type CategoryProps = { category: BlogCategory; featuredPost?: BlogArticleListing };
+type GatewayProps = { href: string; label: string; description: string };
+const props = Astro.props as CategoryProps | GatewayProps;
+const category = 'category' in props ? props.category : undefined;
+const featuredPost = 'category' in props ? props.featuredPost : undefined;
+const href = 'category' in props ? getBlogCategoryPath(props.category) : props.href;
+const label = 'category' in props ? props.category.label : props.label;
+const description = 'category' in props ? props.category.description : props.description;
 ---
 
-<article class="relative border-4 border-lt-blue-dark bg-lt-blue-light p-5 transition-transform motion-reduce:transition-none hover:-translate-y-1 focus-within:-translate-y-1 dark:border-dk-blue-light dark:bg-dk-purple dark:text-white">
-  <h2 class="m-0 text-2xl"><a href={getBlogCategoryPath(category)} class="blog-card-link underline decoration-2 underline-offset-4">{category.label}</a></h2>
-  <p class="my-4 text-base leading-relaxed">{category.description}</p>
-  {featuredPost && <div class="relative z-10 border-t border-current pt-3 text-base"><span class="block">Recommended post</span><a href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)} class="font-semibold underline">{featuredPost.title} →</a></div>}
+<article class="blog-cover-card blog-gradient-border group relative bg-lt-blue-light p-5 transition-transform motion-reduce:transition-none hover:-translate-y-1 focus-within:-translate-y-1 dark:bg-dk-purple dark:text-white">
+  <h2 class="m-0 text-2xl"><a href={href} class="blog-card-link blog-cover-link underline decoration-2 underline-offset-4"><span class="blog-card-title">{label}</span></a></h2>
+  <p class="my-4 text-base leading-relaxed">{description}</p>
+  {category && featuredPost && <div class="relative z-10 border-t border-current pt-3 text-base"><span class="block">Recommended post</span><a href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)} class="font-semibold underline decoration-1 underline-offset-4 hover:decoration-2">{featuredPost.title} →</a></div>}
 </article>

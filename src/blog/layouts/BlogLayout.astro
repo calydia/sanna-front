@@ -20,6 +20,7 @@ const {
   image = '/sanna-profile.jpg',
 } = Astro.props;
 const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
+const isBlogHomepage = Astro.url.pathname === '/blog/';
 ---
 
 <SiteLayout
@@ -29,6 +30,9 @@ const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
   fiUrl={fiUrl}
   enUrl={enUrl}
   showBreadcrumb={false}
+  bodyAppearance="blog"
+  showLanguageSwitcher={isBlogHomepage}
+  languageLinkText="Tietoa blogista suomeksi"
 >
   <Fragment slot="head">
     <meta property="og:url" content={canonicalUrl}>
@@ -52,9 +56,128 @@ const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
     color: #ade5f8;
   }
 
+  @media (hover: hover) {
+    .blog-shell a:hover {
+      color: #54007b;
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    .dark .blog-shell a:hover {
+      color: #f5deb3;
+    }
+  }
+
+  .blog-shell a:focus {
+    color: #54007b;
+    text-decoration-line: none;
+    outline: 2px solid #54007b;
+    outline-offset: 2px;
+  }
+
+  .dark .blog-shell a:focus {
+    color: #f5deb3;
+    outline-color: #f5deb3;
+  }
+
+  .blog-gradient-border {
+    border: 4px solid;
+    border-image: linear-gradient(90deg, #46037e 0%, #4169e1 50%, #46037e 100%) 1;
+  }
+
+  .blog-cover-card:focus-within {
+    outline: 4px solid #111;
+    outline-offset: 4px;
+  }
+
+  .dark .blog-cover-card:focus-within {
+    outline-color: #fff;
+  }
+
+  .blog-shell .blog-cover-link:focus {
+    color: inherit;
+    outline: none;
+  }
+
+  @media (hover: hover) {
+    .blog-cover-card:hover .blog-card-title {
+      color: #54007b;
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    .dark .blog-cover-card:hover .blog-card-title {
+      color: #ade5f8;
+    }
+  }
+
+  .blog-tag-link {
+    text-decoration-line: none;
+  }
+
+  @media (hover: hover) {
+    .blog-shell .blog-tag-link:hover {
+      border-color: #54007b;
+    }
+
+    .dark .blog-shell .blog-tag-link:hover {
+      border-color: #f5deb3;
+    }
+  }
+
+  .blog-button {
+    border: 4px solid transparent;
+    background: #033573;
+    color: #fff !important;
+    transition: color 300ms ease-in-out, background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+  }
+
+  .dark .blog-button {
+    background: #ade5f8;
+    color: #000 !important;
+  }
+
+  @media (hover: hover) {
+    .blog-shell .blog-button:hover {
+      border-color: #033573;
+      background: transparent;
+      color: #033573 !important;
+    }
+
+    .dark .blog-shell .blog-button:hover {
+      border-color: #ade5f8;
+      color: #ade5f8 !important;
+    }
+  }
+
+  .blog-shell .blog-button:focus {
+    color: #fff;
+    outline: 2px solid #000;
+    outline-offset: 4px;
+  }
+
+  .dark .blog-shell .blog-button:focus {
+    color: #000;
+    outline-color: #fff;
+  }
+
   .blog-shell .blog-body p {
     margin-block: 1.5rem;
     line-height: 1.625;
+  }
+
+  .blog-shell .blog-body a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  @media (hover: hover) {
+    .blog-shell .blog-body a:hover {
+      text-decoration-thickness: 2px;
+    }
   }
 
   .blog-shell .blog-body h2 {
@@ -91,6 +214,21 @@ const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
   .dark .blog-shell .blog-body code {
     border-color: #18399a;
     background: #070038;
+  }
+
+  .blog-shell .blog-body a[href^="http://"]::after,
+  .blog-shell .blog-body a[href^="https://"]::after {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url('/icons/external-link-light.svg') right bottom / 1.25rem 1.25rem no-repeat;
+    vertical-align: text-bottom;
+  }
+
+  .dark .blog-shell .blog-body a[href^="http://"]::after,
+  .dark .blog-shell .blog-body a[href^="https://"]::after {
+    background-image: url('/icons/external-link-dark.svg');
   }
 
   @media (min-width: 64rem) {

@@ -1,19 +1,31 @@
 ---
 import { getAriaCurrent, getNavigationState } from '../utils/navigation.ts';
 
+const { language = 'en' } = Astro.props as { language?: 'en' | 'fi' };
 const currentPath = Astro.url.pathname;
-const links = [
-  { href: '/about/', label: 'About' },
-  { href: '/speaking/', label: 'Speaking' },
-  { href: '/projects/', label: 'Projects' },
-  { href: '/blog/', label: 'Blog' },
-];
+const links = language === 'fi'
+  ? [
+      { href: '/fi/', label: 'Etusivu', exactOnly: true },
+      { href: '/fi/mina/', label: 'Minä', exactOnly: false },
+      { href: '/fi/palvelut/', label: 'Palvelut', exactOnly: false },
+      { href: '/fi/esiintymiset/', label: 'Esiintymiset', exactOnly: false },
+      { href: '/fi/projektit/', label: 'Projektit', exactOnly: false },
+      { href: '/fi/blog/', label: 'Blogi', exactOnly: false },
+    ]
+  : [
+      { href: '/', label: 'Home', exactOnly: true },
+      { href: '/about/', label: 'About', exactOnly: false },
+      { href: '/services/', label: 'Services', exactOnly: false },
+      { href: '/speaking/', label: 'Speaking', exactOnly: false },
+      { href: '/projects/', label: 'Projects', exactOnly: false },
+      { href: '/blog/', label: 'Blog', exactOnly: false },
+    ];
 ---
 
-<nav aria-label="Main" class="mt-2">
+<nav aria-label={language === 'fi' ? 'Päävalikko' : 'Main'} class="mt-2">
   <ul class="flex flex-wrap justify-center gap-x-5 gap-y-2 p-0">
     {links.map((link) => {
-      const state = getNavigationState(currentPath, link.href);
+      const state = getNavigationState(currentPath, link.href, link.exactOnly);
 
       return (
         <li>
@@ -24,7 +36,7 @@ const links = [
               'inline-block border-b-2 px-1 py-2 text-black dark:text-white focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:focus:outline-white',
               state === 'inactive'
                 ? 'border-transparent hover:border-lt-purple dark:hover:border-dk-blue-light'
-                : 'border-dk-purple-header font-semibold dark:border-lt-perfume',
+                : 'border-dk-purple-header dark:border-lt-perfume',
             ]}
           >
             {link.label}

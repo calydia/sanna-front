@@ -21,9 +21,6 @@
 
 
 <script>
-  // Implementation based on accessible Astro components
-  // variables
-  const storedTheme = localStorage.getItem('darkMode');
   const darkModeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle-button');
 
   if (!darkModeToggle) {
@@ -34,28 +31,39 @@
   const enableDarkMode = (store = true) => {
     document.documentElement.classList.add('dark');
     document.documentElement.classList.remove('light');
+    document.documentElement.style.colorScheme = 'dark';
     darkModeToggle.setAttribute('aria-pressed', 'true');
-    if (store) localStorage.setItem('darkMode', 'enabled');
+    if (store) {
+      try {
+        localStorage.setItem('darkMode', 'enabled');
+      } catch {
+        // The selected theme still applies when storage is unavailable.
+      }
+    }
   }
 
   const disableDarkMode = (store = true) => {
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('light');
+    document.documentElement.style.colorScheme = 'light';
     darkModeToggle.setAttribute('aria-pressed', 'false');
-    if (store) localStorage.setItem('darkMode', 'disabled');
-  }
-
-  const checkPreference = () => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      enableDarkMode(false);
-    } else {
-      disableDarkMode(false);
+    if (store) {
+      try {
+        localStorage.setItem('darkMode', 'disabled');
+      } catch {
+        // The selected theme still applies when storage is unavailable.
+      }
     }
   }
 
-  if (storedTheme === 'enabled') enableDarkMode();
-  if (storedTheme === 'disabled') disableDarkMode();
-  if (!storedTheme) checkPreference();
+  const root = document.documentElement;
+  if (!root.classList.contains('dark') && !root.classList.contains('light')) {
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? enableDarkMode(false)
+      : disableDarkMode(false);
+  } else {
+    darkModeToggle.setAttribute('aria-pressed', String(root.classList.contains('dark')));
+  }
 
   darkModeToggle.addEventListener('click', () => {
     const darkMode = document.documentElement.classList.contains('dark');

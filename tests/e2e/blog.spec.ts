@@ -49,7 +49,7 @@ test('personal discovery and articles retain their full nested paths', async ({ 
 test('article topics, related posts, pagination, and RSS use new routes', async ({ page, request }) => {
   await page.goto('/blog/accessibility/accessibility-testing-guide/');
   await expect(page.getByRole('link', { name: 'Accessibility Testing' })).toHaveAttribute('href', '/blog/tags/accessibility-testing/');
-  await expect(page.getByRole('heading', { name: 'Related posts' })).toBeVisible();
+  await expect(page.locator('main article').getByRole('heading', { name: 'Related posts' })).toBeVisible();
   expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain('BlogPosting');
 
   await page.goto('/blog/accessibility/');
@@ -61,6 +61,35 @@ test('article topics, related posts, pagination, and RSS use new routes', async 
   expect(feed).toContain('https://sanna.a11y.ing/blog/technology/moving-my-accessibility-site-to-astro/');
   expect(feed).toContain('https://sanna.a11y.ing/blog/personal/cats/remembering-osiris/');
   expect(feed).not.toContain('blog.sanna.ninja');
+});
+
+test('blog shell exposes RSS, honest language navigation, and the production footer', async ({ page }) => {
+  await page.goto('/blog/');
+
+  const header = page.locator('header');
+  const rssLink = header.getByRole('link', { name: 'RSS feed' });
+  const languageLink = header.getByRole('link', { name: 'Tietoa blogista suomeksi' });
+  await expect(rssLink).toHaveAttribute('href', '/blog/rss.xml');
+  await expect(languageLink).toHaveAttribute('href', '/fi/blog/');
+  expect(await languageLink.evaluate((element, rss) => Boolean(element.compareDocumentPosition(rss) & Node.DOCUMENT_POSITION_FOLLOWING), await rssLink.elementHandle())).toBe(true);
+
+  const footer = page.locator('footer');
+  await expect(footer.getByRole('button', { name: 'Back to top' })).toBeVisible();
+  await expect(footer.getByRole('navigation', { name: 'About this site' }).getByRole('link', { name: 'About me' })).toHaveAttribute('href', '/about/');
+  await expect(footer.getByRole('link', { name: 'RSS feed' })).toHaveAttribute('href', '/blog/rss.xml');
+  await expect(footer.getByRole('navigation', { name: 'A11ying sites' }).getByRole('link')).toHaveCount(2);
+
+  await footer.getByRole('button', { name: 'Back to top' }).click();
+  await expect(page.locator('#page-top')).toBeFocused();
+
+  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await expect(page.locator('header').getByRole('link', { name: 'RSS feed' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Tietoa blogista suomeksi' })).toHaveCount(0);
+
+  await page.goto('/about/');
+  await expect(page.getByRole('link', { name: 'RSS feed' })).toHaveCount(0);
+  await expect(page.getByText(/Made with/)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Back to top' })).toHaveCount(0);
 });
 
 test('rendered blog pages contain no former domain or root-level blog links', async ({ page }) => {

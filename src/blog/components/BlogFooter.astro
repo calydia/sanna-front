@@ -1,0 +1,90 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<footer class="-mx-4 w-[calc(100%+2rem)] border-t-8 border-solid border-lt-blue-dark bg-lt-blue-light p-4 text-lt-gray dark:bg-dk-purple dark:text-white lg:px-8 lg:py-4">
+  <div class="text-center">
+    <button
+      id="back-to-top"
+      type="button"
+      class="blog-footer-link inline-flex min-h-11 flex-col items-center border-y-4 border-transparent px-3 py-2 text-lt-blue-dark transition-colors duration-300 dark:text-dk-blue-light"
+    >
+      <Icon name="arrow-up-circle-solid" class="h-12 w-12" aria-hidden="true" />
+      Back to top
+    </button>
+  </div>
+  <div class="mx-auto max-w-[1500px] md:flex md:justify-between">
+    <nav aria-label="About this site">
+      <ul class="m-0 p-0 pt-2" role="list">
+        <li><a href="/about/" class="blog-footer-link block py-2 font-light">About me</a></li>
+        <li><a href="/blog/rss.xml" class="blog-footer-link block py-2 font-light">RSS feed</a></li>
+      </ul>
+    </nav>
+    <div class="flex items-center">
+      <div class="flex flex-col">
+        <div class="md:-ml-4">
+          <Icon name="a11ying-dark" class="logo-dark" height="173" width="348" aria-hidden="true" />
+          <Icon name="a11ying-light" class="logo-light" height="173" width="348" aria-hidden="true" />
+        </div>
+        <nav aria-label="A11ying sites">
+          <ul class="m-0 p-0 pt-2" role="list">
+            <li><a href="https://a11y.ing/" rel="noopener noreferrer" class="blog-footer-link block py-2 font-light">I would if I could</a></li>
+            <li><a href="https://wcag.a11y.ing/" rel="noopener noreferrer" class="blog-footer-link block py-2 font-light">Almost, but not quite</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('#back-to-top').forEach((button) => {
+    button.addEventListener('click', () => {
+      const pageTop = document.querySelector<HTMLElement>('#page-top');
+      if (!pageTop) return;
+
+      pageTop.tabIndex = -1;
+      pageTop.focus();
+    });
+  });
+</script>
+
+<style>
+  .blog-footer-link {
+    text-decoration-line: none;
+  }
+
+  a.blog-footer-link {
+    color: #033573;
+  }
+
+  :global(.dark) a.blog-footer-link {
+    color: #ade5f8;
+  }
+
+  @media (hover: hover) {
+    .blog-footer-link:hover {
+      color: #54007b;
+      border-block-color: #54007b;
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    :global(.dark) .blog-footer-link:hover {
+      color: #ade5f8;
+      border-block-color: #ade5f8;
+    }
+  }
+
+  .blog-footer-link:focus {
+    color: #54007b;
+    outline: 2px solid #54007b;
+    outline-offset: 2px;
+  }
+
+  :global(.dark) .blog-footer-link:focus {
+    color: #ade5f8;
+    outline-color: #ade5f8;
+  }
+</style>

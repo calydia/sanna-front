@@ -45,9 +45,33 @@ function requireString(record: Record<string, unknown>, field: string, context: 
   return value;
 }
 
+function requireIdentifier(record: Record<string, unknown>, field: string, context: string): string {
+  const value = record[field];
+  if (typeof value !== 'string' && typeof value !== 'number') {
+    throw new Error(`Malformed Drupal response: ${context}.${field} must be a string or number.`);
+  }
+  return String(value);
+}
+
 function optionalBoolean(record: Record<string, unknown>, field: string): boolean | undefined {
   const value = record[field];
   return typeof value === 'boolean' ? value : undefined;
+}
+
+function requireBoolean(record: Record<string, unknown>, field: string, context: string): boolean {
+  const value = record[field];
+  if (typeof value !== 'boolean') {
+    throw new Error(`Malformed Drupal response: ${context}.${field} must be a boolean.`);
+  }
+  return value;
+}
+
+function nullableString(record: Record<string, unknown>, field: string, context: string): string {
+  const value = record[field];
+  if (value !== null && typeof value !== 'string') {
+    throw new Error(`Malformed Drupal response: ${context}.${field} must be a string or null.`);
+  }
+  return value ?? '';
 }
 
 function normalizeCommonArticle(record: Record<string, unknown>, context: string) {
@@ -92,14 +116,14 @@ export function normalizeArticle<F extends ArticleFieldSet>(
     authorImage: requireString(record, 'authorImage', context),
     authorName: requireString(record, 'authorName', context),
     content: requireString(record, 'content', context),
-    id: requireString(record, 'id', context),
+    id: requireIdentifier(record, 'id', context),
     imageCredits: typeof record.imageCredits === 'string' || record.imageCredits === null
       ? record.imageCredits
       : undefined,
-    published: requireString(record, 'published', context),
+    published: requireBoolean(record, 'published', context),
     mainImage: requireString(record, 'mainImage', context),
-    boxTitle: requireString(record, 'boxTitle', context),
-    boxContent: requireString(record, 'boxContent', context),
+    boxTitle: nullableString(record, 'boxTitle', context),
+    boxContent: nullableString(record, 'boxContent', context),
   } as ArticleByFieldSet[F];
 }
 

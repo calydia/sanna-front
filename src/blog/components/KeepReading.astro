@@ -1,0 +1,33 @@
+---
+import type { BlogCategory } from '../categories.ts';
+import type { BlogArticleListing } from '../interfaces/article.ts';
+import { getBlogArticlePath, getBlogCategoryPath } from '../routes.ts';
+
+const { category, currentSlug, featuredPost, relatedPosts } = Astro.props as {
+  category: BlogCategory;
+  currentSlug: string;
+  featuredPost?: BlogArticleListing;
+  relatedPosts: BlogArticleListing[];
+};
+const startPost = featuredPost?.slug !== currentSlug ? featuredPost : undefined;
+const compactRelatedPosts = relatedPosts
+  .filter((post) => post.slug !== currentSlug && post.slug !== startPost?.slug)
+  .slice(0, 2);
+const categoryName = category.label.toLowerCase();
+---
+
+<section aria-label="Keep reading" class="blog-gradient-border bg-lt-blue-light p-5 dark:bg-dk-purple dark:text-white md:p-6">
+  <p class="m-0 text-sm font-bold uppercase tracking-[0.16em] text-lt-gray dark:text-dk-gray">Keep reading</p>
+  {startPost && <div class="mt-4">
+    <h2 class="m-0 text-xl leading-tight">Start here in {categoryName}</h2>
+    <a href={getBlogArticlePath(category, startPost.slug, startPost.title)} class="mt-2 block text-base font-semibold leading-snug no-underline"><span>{startPost.title}</span></a>
+  </div>}
+  {compactRelatedPosts.length > 0 && <div class="mt-5">
+    <h2 class="m-0 text-xl leading-tight">Related posts</h2>
+    <ul class="mt-2 grid gap-3 p-0" role="list">
+      {compactRelatedPosts.map((post) => <li><a href={getBlogArticlePath(post.category, post.slug, post.title)} class="block text-base font-semibold leading-snug no-underline"><span>{post.title}</span></a></li>)}
+    </ul>
+  </div>}
+  <hr class="my-6 border-0 border-t-2 border-current">
+  <a href={getBlogCategoryPath(category)} class="inline-block text-base font-bold leading-snug">Browse {categoryName} posts</a>
+</section>
