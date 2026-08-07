@@ -28,6 +28,9 @@ Improve the blog homepage heading hierarchy and align article-card, category-car
 - Increase the underline thickness on card hover.
 - Use the same two-pixel, four-pixel-offset light/dark focus outline as article-card links.
 - Make the Personal gateway visually identical to the other category cards and place it in the same grid with the same gap.
+- Keep each Recommended post link underlined by default.
+- Increase a Recommended post link’s underline thickness only when that link itself is hovered, not when another part of the category card is hovered. This keeps the primary category destination and secondary post destination visually distinct.
+- Apply the same two-pixel, four-pixel-offset light/dark focus outline to Recommended post links.
 
 ## Browse-all link
 
@@ -46,5 +49,6 @@ Improve the blog homepage heading hierarchy and align article-card, category-car
 - Add or update browser assertions confirming that the homepage has no “Professional topics” heading, category cards use level two, and latest-post cards use level three.
 - Verify article cards contain one post link and no category link.
 - Verify the stretched-link and default, hover, and focus styling hooks.
+- Verify Recommended post links retain their default underline, thicken only on direct hover, and use the shared focus outline.
 - Run unit and browser suites, including accessibility checks.
 - Update and inspect affected visual snapshots in light and dark themes at desktop and mobile widths.
