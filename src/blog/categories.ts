@@ -7,6 +7,7 @@ export type BlogCategory = {
   label: string;
   pathSegments: readonly string[];
   group: BlogCategoryGroup;
+  description: string;
   archivePageId?: number;
   featuredSlug?: string;
   showPopularTopics?: boolean;
@@ -29,6 +30,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Accessibility',
     pathSegments: ['accessibility'],
     group: 'professional',
+    description: 'Practical writing on digital accessibility, content quality, and the mistakes worth avoiding.',
     archivePageId: 6,
     featuredSlug: '/how-to-create-more-accessible-content-avoid-common-accessibility-mistakes',
     showPopularTopics: true,
@@ -40,6 +42,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Technology',
     pathSegments: ['technology'],
     group: 'professional',
+    description: 'Frontend, Astro, Drupal, and project notes from building and rebuilding things.',
     archivePageId: 5,
     featuredSlug: '/moving-my-accessibility-site-to-astro',
     showPopularTopics: true,
@@ -51,6 +54,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Speaking',
     pathSegments: ['speaking'],
     group: 'professional',
+    description: 'Talks, presentations, and lessons from speaking about accessibility and inclusive technology.',
   },
   {
     key: 'projects',
@@ -59,6 +63,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Projects',
     pathSegments: ['projects'],
     group: 'professional',
+    description: 'Notes about accessibility resources and other projects I am building.',
   },
   {
     key: 'life',
@@ -67,6 +72,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Life',
     pathSegments: ['personal', 'life'],
     group: 'personal',
+    description: 'Work, recovery, communication, and the personal side of building a sustainable life.',
     archivePageId: 3,
     featuredSlug: '/getting-psychological-safety-back',
   },
@@ -77,6 +83,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Cats',
     pathSegments: ['personal', 'cats'],
     group: 'personal',
+    description: 'Stories about the cats in my life, from affectionate chaos to the harder moments that stay with you.',
     archivePageId: 2,
     featuredSlug: '/remembering-osiris',
   },
@@ -87,6 +94,7 @@ export const blogCategories: readonly BlogCategory[] = [
     label: 'Games',
     pathSegments: ['personal', 'games'],
     group: 'personal',
+    description: 'Game impressions with a personal angle, usually focused on what made the experience memorable.',
     archivePageId: 4,
     featuredSlug: '/little-kitty-big-city-a-cat-lovers-dream',
   },

@@ -24,6 +24,17 @@ export interface BlogArticle extends BlogArticleListing {
   boxContent: string;
 }
 
+export interface BlogRssArticle {
+  title: string;
+  category: string;
+  slug: string;
+  date: string;
+  metaDescription: string;
+  content: string;
+  featuredCategoryPost?: boolean;
+  secondaryCategories?: SecondaryCategoriesValue;
+}
+
 export interface BlogEditorialPage {
   title: string;
   metaDescription: string;

@@ -24,6 +24,18 @@ test('Finnish pages preserve their navigation boundary', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Blogi' })).toHaveAttribute('href', '/fi/blog/');
 });
 
+test('English primary navigation destinations resolve and identify the current page', async ({ page }) => {
+  for (const path of ['/about/', '/speaking/', '/projects/']) {
+    const response = await page.goto(path);
+    expect(response?.ok(), `${path} should resolve`).toBe(true);
+
+    const primaryNavigation = page.getByRole('navigation', { name: 'Main' });
+    const currentLink = primaryNavigation.locator('[aria-current="page"]');
+    await expect(currentLink).toHaveCount(1);
+    await expect(currentLink).toHaveAttribute('href', path);
+  }
+});
+
 test('Finnish blog introduction points to English without claiming to be a translation', async ({ page }) => {
   await page.goto('/fi/blog/');
 

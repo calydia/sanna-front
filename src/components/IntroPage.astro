@@ -1,0 +1,13 @@
+---
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+---
+
+<section class="mx-auto max-w-3xl rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+  <h1>{title}</h1>
+  <p class="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
+</section>
