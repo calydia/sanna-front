@@ -1,0 +1,36 @@
+---
+import { getAriaCurrent, getNavigationState } from '../utils/navigation.ts';
+
+const currentPath = Astro.url.pathname;
+const links = [
+  { href: '/about/', label: 'About' },
+  { href: '/speaking/', label: 'Speaking' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/blog/', label: 'Blog' },
+];
+---
+
+<nav aria-label="Main" class="mt-2">
+  <ul class="flex flex-wrap justify-center gap-x-5 gap-y-2 p-0">
+    {links.map((link) => {
+      const state = getNavigationState(currentPath, link.href);
+
+      return (
+        <li>
+          <a
+            href={link.href}
+            aria-current={getAriaCurrent(state)}
+            class:list={[
+              'inline-block border-b-2 px-1 py-2 text-black dark:text-white focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:focus:outline-white',
+              state === 'inactive'
+                ? 'border-transparent hover:border-lt-purple dark:hover:border-dk-blue-light'
+                : 'border-dk-purple-header font-semibold dark:border-lt-perfume',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

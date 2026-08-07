@@ -1,0 +1,37 @@
+---
+import { getBlogCategoriesByGroup } from '../categories.ts';
+import { getBlogCategoryPath, PERSONAL_BLOG_PATH } from '../routes.ts';
+import { getAriaCurrent, getNavigationState } from '../../utils/navigation.ts';
+
+const currentPath = Astro.url.pathname;
+const links = [
+  ...getBlogCategoriesByGroup('professional').map((category) => ({
+    href: getBlogCategoryPath(category),
+    label: category.label,
+  })),
+  { href: PERSONAL_BLOG_PATH, label: 'Personal' },
+];
+---
+
+<nav aria-label="Blog topics" class="w-full border-y border-black/20 py-2 dark:border-white/30">
+  <ul class="flex flex-wrap justify-center gap-x-5 gap-y-1 p-0">
+    {links.map((link) => {
+      const state = getNavigationState(currentPath, link.href);
+
+      return (
+        <li>
+          <a
+            href={link.href}
+            aria-current={getAriaCurrent(state)}
+            class:list={[
+              'inline-block px-1 py-2 text-black underline decoration-2 underline-offset-4 hover:no-underline focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:text-white dark:focus:outline-white',
+              state !== 'inactive' && 'font-semibold no-underline',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

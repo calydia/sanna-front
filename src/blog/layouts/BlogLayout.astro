@@ -1,0 +1,25 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import BlogTopicNavigation from '../components/BlogTopicNavigation.astro';
+
+type Props = {
+  title: string;
+  metaDescription: string;
+  fiUrl?: string;
+  enUrl?: string;
+};
+
+const { title, metaDescription, fiUrl = '/fi/blog/', enUrl = Astro.url.pathname } = Astro.props;
+---
+
+<SiteLayout
+  title={title}
+  metaDescription={metaDescription}
+  language="en"
+  fiUrl={fiUrl}
+  enUrl={enUrl}
+  showBreadcrumb={false}
+>
+  <BlogTopicNavigation />
+  <slot />
+</SiteLayout>
