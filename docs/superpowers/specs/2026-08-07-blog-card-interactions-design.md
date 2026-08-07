@@ -6,10 +6,11 @@ Improve the blog homepage heading hierarchy and align article-card, category-car
 
 ## Heading hierarchy
 
-- Keep the blog homepage section headings, including “Professional topics” and “Latest posts”, at level two.
-- Render card headings inside those sections at level three.
+- Remove the “Professional topics” heading from the blog homepage.
+- Render the professional category and Personal card titles at level two. These categories are the topic sections and do not need an additional grouping heading.
+- Keep “Latest posts” at level two and render its article-card headings at level three.
 - Let `PostGrid` accept the heading level required by its surrounding page. Homepage grids use level three; archive grids, whose cards sit beneath the page heading, continue to use level two.
-- Present Personal as a card within the topics section so its heading follows the same hierarchy and its spacing matches the other topic cards.
+- Present Personal in the same category-card grid so its heading and spacing match the professional category cards.
 
 ## Article cards
 
@@ -42,7 +43,7 @@ Improve the blog homepage heading hierarchy and align article-card, category-car
 
 ## Verification
 
-- Add or update browser assertions for the homepage heading levels.
+- Add or update browser assertions confirming that the homepage has no “Professional topics” heading, category cards use level two, and latest-post cards use level three.
 - Verify article cards contain one post link and no category link.
 - Verify the stretched-link and default, hover, and focus styling hooks.
 - Run unit and browser suites, including accessibility checks.
