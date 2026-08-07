@@ -1,0 +1,7 @@
+---
+import CategoryArchivePage from '../../../../blog/components/CategoryArchivePage.astro';
+import { getBlogCategoryByKey } from '../../../../blog/categories.ts';
+import { fetchCategoryArchive } from '../../../../blog/content.ts';
+const data = await fetchCategoryArchive(getBlogCategoryByKey('cats'));
+---
+<CategoryArchivePage data={data} />

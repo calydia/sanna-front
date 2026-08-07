@@ -1,0 +1,21 @@
+---
+const { currentPage, totalPages, getPageUrl } = Astro.props as {
+  currentPage: number;
+  totalPages: number;
+  getPageUrl: (page: number) => string;
+};
+const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+---
+
+{totalPages > 1 && (
+  <nav class="mt-8" aria-label="Pagination">
+    <ul class="flex flex-wrap items-center justify-center gap-2 p-0" role="list">
+      {currentPage > 1 && <li><a class="inline-flex min-h-11 items-center border-2 border-lt-blue-dark px-4 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(currentPage - 1)} rel="prev">← Previous</a></li>}
+      {pages.map((page) => <li>{page === currentPage
+        ? <span class="inline-flex min-h-11 min-w-11 items-center justify-center bg-lt-blue-dark px-3 py-2 font-bold text-white dark:bg-dk-blue-light dark:text-dk-purple" aria-current="page"><span class="sr-only">Page </span>{page}</span>
+        : <a class="inline-flex min-h-11 min-w-11 items-center justify-center border-2 border-lt-blue-dark px-3 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(page)} aria-label={`Page ${page}`}>{page}</a>
+      }</li>)}
+      {currentPage < totalPages && <li><a class="inline-flex min-h-11 items-center border-2 border-lt-blue-dark px-4 py-2 font-semibold dark:border-dk-blue-light" href={getPageUrl(currentPage + 1)} rel="next">Next →</a></li>}
+    </ul>
+  </nav>
+)}

@@ -1,0 +1,39 @@
+---
+import BlogLayout from '../../../blog/layouts/BlogLayout.astro';
+import BlogBreadcrumb from '../../../blog/components/BlogBreadcrumb.astro';
+import PostGrid from '../../../blog/components/PostGrid.astro';
+import TopicBrowse from '../../../blog/components/TopicBrowse.astro';
+import type { BlogArticleListing } from '../../../blog/interfaces/article.ts';
+import type { BlogTag } from '../../../blog/interfaces/tag.ts';
+import { fetchAllArticles } from '../../../blog/api/blogApi.ts';
+import { getBlogTagPath } from '../../../blog/routes.ts';
+import { getPopularTags, normalizeSecondaryCategories } from '../../../blog/utils/tags.ts';
+
+export async function getStaticPaths() {
+  const response = await fetchAllArticles({ fieldSet: 'listing' });
+  const allPosts = response.articles.items;
+  const tags = new Map<string, BlogTag>();
+  allPosts.forEach((post) => normalizeSecondaryCategories(post.secondaryCategories).forEach((tag) => tags.set(tag.slug, tag)));
+
+  return Array.from(tags.values()).map((tag) => {
+    const posts = allPosts.filter((post) => normalizeSecondaryCategories(post.secondaryCategories).some((candidate) => candidate.slug === tag.slug));
+    return {
+      params: { tag: tag.slug },
+      props: {
+        tag,
+        posts,
+        browseTags: getPopularTags(posts, { limit: 12, minCount: 1 }).filter((candidate) => candidate.slug !== tag.slug),
+      },
+    };
+  });
+}
+
+const { tag, posts, browseTags } = Astro.props as { tag: BlogTag; posts: BlogArticleListing[]; browseTags: BlogTag[] };
+---
+
+<BlogLayout title={`Posts about ${tag.label}`} metaDescription={`Browse blog posts about ${tag.label}.`} canonicalPath={getBlogTagPath(tag.slug)}>
+  <BlogBreadcrumb items={[{ label: 'Blog', href: '/blog/' }, { label: `Posts about ${tag.label}` }]} />
+  <header class="text-center"><h1 class="text-4xl font-bold md:text-5xl">{tag.label}</h1></header>
+  <TopicBrowse tags={browseTags} />
+  <PostGrid posts={posts} />
+</BlogLayout>

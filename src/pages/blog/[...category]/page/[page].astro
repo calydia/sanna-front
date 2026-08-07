@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CategoryArchivePage from '../../../../blog/components/CategoryArchivePage.astro';
+import { blogCategories } from '../../../../blog/categories.ts';
+import { fetchCategoryArchive, type CategoryArchiveData } from '../../../../blog/content.ts';
+import { getPageCount } from '../../../../blog/utils/pagination.ts';
+
+export const getStaticPaths = (async () => {
+  const groups = await Promise.all(blogCategories.map(async (category) => {
+    const data = await fetchCategoryArchive(category);
+    return Array.from({ length: Math.max(0, getPageCount(data.posts.length) - 1) }, (_, index) => ({
+      params: { category: category.pathSegments.join('/'), page: String(index + 2) },
+      props: { data, currentPage: index + 2 },
+    }));
+  }));
+  return groups.flat();
+}) satisfies GetStaticPaths;
+
+const { data, currentPage } = Astro.props as { data: CategoryArchiveData; currentPage: number };
+---
+<CategoryArchivePage data={data} currentPage={currentPage} />

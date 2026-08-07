@@ -7,9 +7,19 @@ type Props = {
   metaDescription: string;
   fiUrl?: string;
   enUrl?: string;
+  canonicalPath?: string;
+  image?: string;
 };
 
-const { title, metaDescription, fiUrl = '/fi/blog/', enUrl = Astro.url.pathname } = Astro.props;
+const {
+  title,
+  metaDescription,
+  fiUrl = '/fi/blog/',
+  enUrl = Astro.url.pathname,
+  canonicalPath = Astro.url.pathname,
+  image = '/sanna-profile.jpg',
+} = Astro.props;
+const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
 ---
 
 <SiteLayout
@@ -20,6 +30,77 @@ const { title, metaDescription, fiUrl = '/fi/blog/', enUrl = Astro.url.pathname 
   enUrl={enUrl}
   showBreadcrumb={false}
 >
-  <BlogTopicNavigation />
-  <slot />
+  <Fragment slot="head">
+    <meta property="og:url" content={canonicalUrl}>
+    <meta property="og:image" content={new URL(image, Astro.site)}>
+    <link rel="canonical" href={canonicalUrl}>
+    <link rel="alternate" type="application/rss+xml" title="Sanna Kramsi – Blog" href="/blog/rss.xml">
+    <slot name="head" />
+  </Fragment>
+  <div class="blog-shell space-y-8 text-lg text-lt-gray dark:text-dk-gray lg:text-xl">
+    <BlogTopicNavigation />
+    <slot />
+  </div>
 </SiteLayout>
+
+<style is:global>
+  .blog-shell a:not([class*="text-"]) {
+    color: #033573;
+  }
+
+  .dark .blog-shell a:not([class*="text-"]) {
+    color: #ade5f8;
+  }
+
+  .blog-shell .blog-body p {
+    margin-block: 1.5rem;
+    line-height: 1.625;
+  }
+
+  .blog-shell .blog-body h2 {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .blog-shell .blog-body h3 {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .blog-shell .blog-body blockquote {
+    margin-block: 2rem;
+    border-left: 0.5rem solid #54007b;
+    background: #e2e8f0;
+    padding: 1.5rem;
+  }
+
+  .dark .blog-shell .blog-body blockquote {
+    border-left-color: #ade5f8;
+    background: #0f172a;
+  }
+
+  .blog-shell .blog-body code {
+    border: 1px solid #bbc9f7;
+    background: #dfe7fc;
+    padding: 0.125rem 0.25rem;
+    font-size: 1rem;
+  }
+
+  .dark .blog-shell .blog-body code {
+    border-color: #18399a;
+    background: #070038;
+  }
+
+  @media (min-width: 64rem) {
+    .blog-shell .blog-body h2 { font-size: 1.875rem; }
+    .blog-shell .blog-body h3 { font-size: 1.5rem; }
+  }
+
+  .blog-card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+</style>

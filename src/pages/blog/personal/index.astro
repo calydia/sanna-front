@@ -1,0 +1,21 @@
+---
+import BlogLayout from '../../../blog/layouts/BlogLayout.astro';
+import BlogBreadcrumb from '../../../blog/components/BlogBreadcrumb.astro';
+import CategoryCard from '../../../blog/components/CategoryCard.astro';
+import PostGrid from '../../../blog/components/PostGrid.astro';
+import { getBlogCategoriesByGroup } from '../../../blog/categories.ts';
+import { fetchAllArticles } from '../../../blog/api/blogApi.ts';
+import { getDrupalFeaturedCategoryPosts, resolveFeaturedCategoryPost } from '../../../blog/utils/categoryDiscovery.ts';
+
+const categories = getBlogCategoriesByGroup('personal');
+const response = await fetchAllArticles({ fieldSet: 'listing' });
+const categoryNames = new Set(categories.map((category) => category.drupalName.toLocaleLowerCase('en')));
+const posts = response.articles.items.filter((post) => categoryNames.has(post.category.toLocaleLowerCase('en')));
+---
+
+<BlogLayout title="Personal" metaDescription="Personal writing by Sanna Kramsi about life, cats, games, and more." canonicalPath="/blog/personal/">
+  <BlogBreadcrumb items={[{ label: 'Blog', href: '/blog/' }, { label: 'Personal' }]} />
+  <header class="mx-auto max-w-4xl text-center"><h1 class="text-4xl font-bold md:text-5xl">Personal</h1><p class="mt-4">Writing about life, cats, games, and whatever personal subjects might join them later.</p></header>
+  <section aria-labelledby="personal-topics"><h2 id="personal-topics" class="sr-only">Personal topics</h2><div class="grid gap-5 md:grid-cols-3">{categories.map((category) => <CategoryCard category={category} featuredPost={resolveFeaturedCategoryPost(posts, category, getDrupalFeaturedCategoryPosts(posts, category))} />)}</div></section>
+  <section aria-labelledby="latest-personal"><h2 id="latest-personal" class="mb-5 text-center text-3xl">Latest personal posts</h2><PostGrid posts={posts.slice(0, 6)} /></section>
+</BlogLayout>

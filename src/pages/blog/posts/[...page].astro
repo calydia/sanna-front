@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BlogLayout from '../../../blog/layouts/BlogLayout.astro';
+import BlogBreadcrumb from '../../../blog/components/BlogBreadcrumb.astro';
+import Pagination from '../../../blog/components/Pagination.astro';
+import PostGrid from '../../../blog/components/PostGrid.astro';
+import type { BlogArticleListing } from '../../../blog/interfaces/article.ts';
+import { fetchAllArticles } from '../../../blog/api/blogApi.ts';
+import { POSTS_PER_PAGE } from '../../../blog/utils/pagination.ts';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const response = await fetchAllArticles({ fieldSet: 'listing' });
+  return paginate(response.articles.items, { pageSize: POSTS_PER_PAGE });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: { data: BlogArticleListing[]; currentPage: number; lastPage: number } };
+const title = page.currentPage === 1 ? 'All posts' : `All posts – Page ${page.currentPage}`;
+const canonicalPath = page.currentPage === 1 ? '/blog/posts/' : `/blog/posts/${page.currentPage}/`;
+const getPageUrl = (number: number) => number === 1 ? '/blog/posts/' : `/blog/posts/${number}/`;
+---
+
+<BlogLayout title={title} metaDescription={`Browse ${page.currentPage === 1 ? 'all' : `page ${page.currentPage} of`} blog posts by Sanna Kramsi.`} canonicalPath={canonicalPath}>
+  <BlogBreadcrumb items={[{ label: 'Blog', href: '/blog/' }, { label: title }]} />
+  <header class="text-center"><h1 class="text-4xl font-bold md:text-5xl">{title}</h1></header>
+  <PostGrid posts={page.data} />
+  <Pagination currentPage={page.currentPage} totalPages={page.lastPage} getPageUrl={getPageUrl} />
+</BlogLayout>

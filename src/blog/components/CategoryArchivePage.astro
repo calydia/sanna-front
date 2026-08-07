@@ -1,0 +1,34 @@
+---
+import BlogLayout from '../layouts/BlogLayout.astro';
+import type { CategoryArchiveData } from '../content.ts';
+import { getBlogArticlePath, getBlogCategoryPagePath } from '../routes.ts';
+import { getDrupalFeaturedCategoryPosts, resolveFeaturedCategoryPost } from '../utils/categoryDiscovery.ts';
+import { getPageCount, getPageItems } from '../utils/pagination.ts';
+import { getPopularTags } from '../utils/tags.ts';
+import BlogBreadcrumb from './BlogBreadcrumb.astro';
+import Pagination from './Pagination.astro';
+import PostGrid from './PostGrid.astro';
+import TopicBrowse from './TopicBrowse.astro';
+
+const { data, currentPage = 1 } = Astro.props as { data: CategoryArchiveData; currentPage?: number };
+const { category, editorialPage, posts: allPosts } = data;
+const posts = getPageItems(allPosts, currentPage);
+const totalPages = getPageCount(allPosts.length);
+const firstPage = currentPage === 1;
+const title = firstPage ? editorialPage.title : `${editorialPage.title} posts – Page ${currentPage}`;
+const description = firstPage ? editorialPage.metaDescription : `Page ${currentPage}: ${editorialPage.metaDescription}`;
+const canonicalPath = getBlogCategoryPagePath(category, currentPage);
+const featuredPost = resolveFeaturedCategoryPost(allPosts, category, getDrupalFeaturedCategoryPosts(allPosts, category));
+const popularTags = category.showPopularTopics ? getPopularTags(allPosts) : [];
+---
+
+<BlogLayout title={title} metaDescription={description} canonicalPath={canonicalPath}>
+  <BlogBreadcrumb items={[{ label: 'Blog', href: '/blog/' }, ...(category.group === 'personal' ? [{ label: 'Personal', href: '/blog/personal/' }] : []), { label: title }]} />
+  <header class="mx-auto max-w-4xl text-center">
+    <h1 class="text-4xl font-bold md:text-5xl">{title}</h1>
+    {firstPage && <div class="blog-body mt-4"><Fragment set:html={editorialPage.content} /></div>}
+  </header>
+  {firstPage && featuredPost && <aside class="relative border-4 border-lt-blue-dark bg-lt-blue-light p-5 dark:border-dk-blue-light dark:bg-dk-purple"><p class="m-0 font-semibold">New here? Read this first</p><a class="blog-card-link mt-1 inline-block underline decoration-2 underline-offset-4" href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)}>{featuredPost.title} →</a></aside>}
+  {firstPage && <TopicBrowse tags={popularTags} />}
+  <section aria-label={`${category.label} blog posts`}><PostGrid posts={posts} /><Pagination currentPage={currentPage} totalPages={totalPages} getPageUrl={(page: number) => getBlogCategoryPagePath(category, page)} /></section>
+</BlogLayout>

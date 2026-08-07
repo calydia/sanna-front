@@ -1,0 +1,12 @@
+---
+import type { BlogCategory } from '../categories.ts';
+import type { BlogArticleListing } from '../interfaces/article.ts';
+import { getBlogArticlePath, getBlogCategoryPath } from '../routes.ts';
+const { category, featuredPost } = Astro.props as { category: BlogCategory; featuredPost?: BlogArticleListing };
+---
+
+<article class="relative border-4 border-lt-blue-dark bg-lt-blue-light p-5 transition-transform motion-reduce:transition-none hover:-translate-y-1 focus-within:-translate-y-1 dark:border-dk-blue-light dark:bg-dk-purple dark:text-white">
+  <h2 class="m-0 text-2xl"><a href={getBlogCategoryPath(category)} class="blog-card-link underline decoration-2 underline-offset-4">{category.label}</a></h2>
+  <p class="my-4 text-base leading-relaxed">{category.description}</p>
+  {featuredPost && <div class="relative z-10 border-t border-current pt-3 text-base"><span class="block">Recommended post</span><a href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)} class="font-semibold underline">{featuredPost.title} →</a></div>}
+</article>
