@@ -1,43 +1,66 @@
-# Astro Starter Kit: Minimal
+# Sanna Kramsi — A11ying with Sanna
+
+Astro frontend for `https://sanna.a11y.ing`. The application combines Sanna's personal and professional pages with an English Drupal-backed blog under `/blog/`.
+
+## Requirements
+
+- Node.js 22.12.0 or newer
+- npm
+- Playwright Chromium for browser and visual tests
+
+Install dependencies and the test browser:
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npx playwright install chromium
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Development
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro starts at `http://localhost:4321` by default. Blog pages query the configured Drupal GraphQL service at build time and during development.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Set `BLOG_API_URL` to use another Drupal GraphQL endpoint:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+BLOG_API_URL=http://127.0.0.1:4010/graphql npm run dev
+```
 
-## 🧞 Commands
+When `BLOG_API_URL` is absent, the application uses the production Drupal endpoint configured in `src/blog/api/blogApi.ts`.
 
-All commands are run from the root of the project, from a terminal:
+## Blog architecture
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- `src/blog/categories.ts` is the source of truth for Drupal category names, term IDs, public labels, grouping, and URL segments.
+- `src/blog/routes.ts` generates canonical blog links.
+- `src/blog/api/` contains the Drupal GraphQL client and response normalization.
+- `src/blog/components/`, `src/blog/layouts/`, and `src/blog/utils/` contain blog-specific presentation and behavior.
+- `src/pages/blog/` contains the static route tree.
+- Drupal categories remain flat. Astro groups Life, Cats, and Games beneath the Personal section.
 
-## 👀 Want to learn more?
+Blog components must use the shared route helpers rather than constructing category paths from Drupal labels.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Builds and tests
+
+| Command | Purpose |
+| --- | --- |
+| `npm run build` | Run strict Astro checks and create the production build |
+| `npm run preview` | Preview the generated production build |
+| `npm run test:unit` | Run category, routing, API-normalization, and utility tests |
+| `npm run test:e2e` | Build against the deterministic Drupal fixture and run all browser tests |
+| `npm run test:a11y` | Run the tagged axe and CSP accessibility checks |
+| `npm run test:visual` | Compare responsive light/dark rendering with committed baselines |
+| `npm run test:visual:update` | Replace visual baselines after an intentional reviewed change |
+
+Browser tests start `tests/mock-server.mjs` on port 4010 and serve the production build on port 4322. They do not contact live Drupal. Visual baselines live under `tests/__screenshots__/` and should only be updated after inspecting the generated pages.
+
+## Content behavior
+
+- English blog content is available under `/blog/`.
+- `/fi/blog/` introduces the blog in Finnish and links to the English section; it is not a translated blog archive.
+- Speaking and Projects archives render valid empty states when Drupal has no articles in those terms.
+- An article with an unregistered Drupal category fails the build with article context instead of receiving an accidental URL.
+
+Deployment configuration and external redirects are managed separately from this repository work.

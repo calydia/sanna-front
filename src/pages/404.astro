@@ -1,0 +1,18 @@
+---
+import Card from '../layouts/Card.astro';
+---
+
+<Card
+  title="Page not found"
+  metaDescription="The requested page could not be found."
+  pageType="front"
+  fiUrl="/fi/"
+  enUrl="/"
+>
+  <section class="mx-auto max-w-3xl rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+    <h1>Page not found</h1>
+    <p class="mt-4 text-gray-700 dark:text-gray-300">
+      The page you were trying to use is not available. Return to the <a href="/" class="font-semibold underline decoration-2 underline-offset-4 hover:no-underline">homepage</a> or browse the <a href="/blog/" class="font-semibold underline decoration-2 underline-offset-4 hover:no-underline">blog</a>.
+    </p>
+  </section>
+</Card>
