@@ -5,7 +5,6 @@ const lang = getLangFromUrl(Astro.url);
 const fiUrl = Astro.props.fiUrl || '/fi/';
 const enUrl = Astro.props.enUrl || '/';
 
-const link = lang === 'fi' ? '/' : '/fi/';
 const linkText = lang === 'fi' ? 'In English' : 'suomeksi';
 const langAttribute = lang === 'fi' ? 'en' : 'fi';
 ---
@@ -26,7 +25,6 @@ const langAttribute = lang === 'fi' ? 'en' : 'fi';
       <span class="lang-switcher-text">{ linkText }</span>
   </a>
 }
-
 
 
 

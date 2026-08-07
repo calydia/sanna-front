@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Playwright output (visual baselines are committed under tests/__screenshots__)
+playwright-report/
+test-results/

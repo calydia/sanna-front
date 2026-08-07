@@ -8,6 +8,12 @@ import icon from "astro-icon";
 export default defineConfig({
   site: 'https://sanna.a11y.ing/',
   trailingSlash: 'always',
+  security: {
+    csp: true,
+  },
+  markdown: {
+    syntaxHighlight: false,
+  },
   integrations: [sitemap({
     i18n: {
       defaultLocale: 'en',
