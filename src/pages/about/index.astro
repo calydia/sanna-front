@@ -1,17 +1,68 @@
 ---
-import IntroPage from '../../components/IntroPage.astro';
+import PrincipleCard from '../../components/PrincipleCard.astro';
 import Card from '../../layouts/Card.astro';
 ---
 
 <Card
-  title="About"
-  metaDescription="Learn about Sanna Kramsi and her work in digital accessibility."
+  title="About me"
+  metaDescription="Meet Sanna Kramsi, an accessibility specialist and developer working across accessibility, training, software development, and organisational practices."
   pageType="sub"
-  fiUrl="/fi/mina/"
+  fiUrl="/fi/minusta/"
   enUrl="/about/"
 >
-  <IntroPage
-    title="About"
-    description="I’m Sanna Kramsi, an accessibility consultant and advocate. More about my work and background will be added here."
-  />
+  <section class="mx-auto max-w-3xl rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+    <h1>About me</h1>
+    <p class="mt-4 text-gray-700 dark:text-gray-300">
+      I'm Sanna Kramsi, an accessibility specialist and developer. I work with accessibility from several perspectives, including software development, accessibility evaluation and testing, training, and organisational practices.
+    </p>
+    <p class="mt-4 text-gray-700 dark:text-gray-300">
+      I'm especially interested in how accessibility can become a lasting part of how digital products and services are built, rather than something addressed through isolated checks and fixes.
+    </p>
+  </section>
+
+  <section aria-labelledby="accessibility-principles-heading">
+    <h2 id="accessibility-principles-heading" class="mb-4">How I think about accessibility</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <PrincipleCard
+        title="Accessibility is part of quality"
+        description="Accessibility belongs throughout the design and development process. It shouldn't be something that is only checked at the end, but one of the foundations of digital quality."
+      />
+      <PrincipleCard
+        title="Fixing individual issues is not enough"
+        description="When accessibility issues occur, it's important to look beyond the individual problem and understand why it happened. By addressing the underlying causes, teams and organisations can build practices that help prevent the same issues from recurring."
+      />
+      <PrincipleCard
+        title="Accessibility should be practical and approachable"
+        description="Not everyone needs to become an accessibility specialist. People need information and practical ways of working that fit their role, so they can make better decisions and consider accessibility in their own work."
+      />
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <section aria-labelledby="a11ying-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+      <h2 id="a11ying-heading">A11ying with Sanna</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        A11ying with Sanna is the name I use for my independent accessibility work. It brings together the accessibility resources I maintain, my writing, videos, talks, and other projects.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        The name comes from a11y, the numeronym for accessibility. I use A11ying almost like a verb: learning about accessibility, testing it, improving it, and putting it into practice.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        The goal of A11ying with Sanna is to make accessibility more approachable and help turn accessibility knowledge into practical action.
+      </p>
+    </section>
+
+    <section aria-labelledby="community-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+      <h2 id="community-heading">Communities and knowledge sharing</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Sharing knowledge is an important part of my accessibility work. I speak at conferences and community events, create openly available accessibility resources, and take an active part in accessibility communities.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        I'm involved in the IAAP Nordic Committee, the W3C Nordic Accessibility Community Group, and Finland's Saavutettavuusverkosto accessibility network.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Being part of these communities is also an important way for me to learn. Other people's experiences, perspectives, and practices help me look at accessibility more broadly and continue developing my own understanding.
+      </p>
+    </section>
+  </div>
 </Card>

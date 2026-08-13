@@ -1,5 +1,7 @@
 ---
+import InProgressProject from '../../components/InProgressProject.astro';
 import IntroPage from '../../components/IntroPage.astro';
+import Project from '../../components/Project.astro';
 import Card from '../../layouts/Card.astro';
 ---
 
@@ -12,6 +14,53 @@ import Card from '../../layouts/Card.astro';
 >
   <IntroPage
     title="Projects"
-    description="This page will bring together my accessibility resources and other projects. The full project collection will be added after the blog migration."
+    description="Accessibility resources, learning materials and other projects I create to help people understand, test and improve digital accessibility."
   />
+
+  <section aria-labelledby="a11ying-projects-heading">
+    <h2 id="a11ying-projects-heading">A11ying with Sanna projects</h2>
+    <p class="mt-4 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-300">
+      Some are reference resources, while others are intended for practising accessibility in a more hands-on way.
+    </p>
+
+    <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <Project
+        title="I would if I could: a guide to web accessibility"
+        description="A growing reference library about digital accessibility for the people who design, develop, write and maintain digital services."
+        buttonLink="https://a11y.ing"
+        buttonText="Explore I would if I could"
+      />
+
+      <Project
+        title="Almost, but not quite: a guide to accessibility requirements"
+        description="A reference for understanding WCAG success criteria and the accessibility requirements that apply to digital products and services."
+        buttonLink="https://wcag.a11y.ing"
+        buttonText="Explore Almost, but not quite"
+      />
+
+      <Project
+        title="Accessibility Testing Lab"
+        description="A hands-on learning environment for investigating accessibility examples with the keyboard, screen readers, automated tools and other testing methods."
+        buttonLink="https://testing.a11y.ing"
+        buttonText="Explore Accessibility Testing Lab"
+      />
+
+      <Project
+        title="A11ying with Sanna on YouTube"
+        description="Finnish and English videos about accessibility for developers and other people creating digital products, using practical examples, explanations and demonstrations."
+        buttonLink="https://www.youtube.com/@A11yingWithSanna"
+        buttonText="Explore A11ying with Sanna on YouTube"
+      />
+    </div>
+  </section>
+
+  <section aria-labelledby="other-projects-heading">
+    <h2 id="other-projects-heading" class="mb-4">Other projects</h2>
+    <InProgressProject
+      title="Miksi saavutettavuus epäonnistuu organisaatioissa?"
+      status="In progress"
+      language="Finnish-language book"
+      description="I'm writing about why accessibility so often remains a series of audits and individual fixes, even in organisations that care about it. The book looks beyond individual WCAG failures to ownership, decision-making, processes, measurement and continuity."
+    />
+  </section>
 </Card>

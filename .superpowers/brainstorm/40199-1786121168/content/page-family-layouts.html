@@ -1,0 +1,66 @@
+<style>
+  .layout-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:24px; }
+  .layout-choice { border:2px solid #d8d2e5; border-radius:14px; padding:14px; cursor:pointer; background:#fff; }
+  .layout-choice:hover { border-color:#663399; }
+  .layout-choice.selected { border-color:#663399; box-shadow:0 0 0 3px rgba(102,51,153,.14); }
+  .mini { background:linear-gradient(#ead7ff,#cdd8ff); border-radius:10px; padding:12px; min-height:400px; color:#2c183d; }
+  .mini-nav { height:8px; width:56%; background:#4b176e; border-radius:4px; margin:0 auto 16px; opacity:.55; }
+  .mini-card { background:#fff; border-radius:9px; padding:11px; margin-bottom:10px; box-shadow:0 3px 7px rgba(46,23,70,.12); }
+  .mini h4 { font-size:14px; margin:0 0 7px; color:#4b176e; }
+  .line { height:5px; border-radius:3px; background:#8190a7; margin:5px 0; opacity:.65; }
+  .line.short { width:62%; } .line.mid { width:82%; }
+  .tag { display:inline-block; font-size:9px; background:#eee5f7; padding:3px 5px; border-radius:10px; margin:3px 2px 0 0; }
+  .button { height:16px; background:#4b006e; border-radius:5px; margin-top:9px; }
+  .two { display:grid; grid-template-columns:1.25fr .75fr; gap:8px; }
+  .tiles { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .tile { background:#fff; border-radius:7px; padding:8px; min-height:78px; }
+  .timeline { border-left:2px solid #7c5295; padding-left:9px; margin-left:4px; }
+  .timeline .line { margin-bottom:10px; }
+  .choice-copy h3 { margin-bottom:5px; }
+  .choice-copy p { font-size:14px; }
+  .recommended { display:inline-block; font-size:12px; font-weight:700; color:#4b176e; background:#eee5f7; border-radius:999px; padding:4px 8px; margin-bottom:8px; }
+  @media(max-width:900px){ .layout-grid{grid-template-columns:1fr;} .mini{min-height:330px;} }
+</style>
+
+<h2>Choose a layout direction for About, Speaking, and Projects</h2>
+<p class="subtitle">The same system would adapt to each page. Compare how quickly each direction communicates expertise and gives visitors somewhere useful to go next.</p>
+
+<div class="layout-grid">
+  <div class="layout-choice" data-choice="guided-expertise" onclick="toggleSelect(this)">
+    <div class="mini">
+      <div class="mini-nav"></div>
+      <div class="mini-card two">
+        <div><h4>Accessibility specialist, developer, and educator</h4><div class="line"></div><div class="line mid"></div><div class="button"></div></div>
+        <div><span class="tag">WCAG</span><span class="tag">Teams</span><span class="tag">Training</span><span class="tag">Development</span></div>
+      </div>
+      <div class="mini-card"><h4>How I help and what I believe</h4><div class="line"></div><div class="line"></div><div class="line short"></div></div>
+      <div class="tiles"><div class="tile"><h4>Featured talk</h4><div class="line"></div><div class="line short"></div></div><div class="tile"><h4>Featured resource</h4><div class="line"></div><div class="line mid"></div></div></div>
+    </div>
+    <div class="choice-copy"><span class="recommended">Recommended</span><h3>A. Guided expertise</h3><p>Strong opening proposition, compact proof, then curated pathways. Clear and credible without feeling sales-heavy.</p></div>
+  </div>
+
+  <div class="layout-choice" data-choice="portfolio-showcase" onclick="toggleSelect(this)">
+    <div class="mini">
+      <div class="mini-nav"></div>
+      <div class="mini-card"><h4>Selected work in accessibility</h4><div class="line mid"></div></div>
+      <div class="tiles">
+        <div class="tile"><h4>Testing Lab</h4><div class="line"></div><div class="button"></div></div>
+        <div class="tile"><h4>Talks</h4><div class="line"></div><div class="button"></div></div>
+        <div class="tile"><h4>WCAG guide</h4><div class="line"></div><div class="button"></div></div>
+        <div class="tile"><h4>Writing</h4><div class="line"></div><div class="button"></div></div>
+      </div>
+      <div class="mini-card"><h4>About the work</h4><div class="line"></div><div class="line short"></div></div>
+    </div>
+    <div class="choice-copy"><h3>B. Portfolio showcase</h3><p>Visual, energetic, and discovery-first. Makes projects prominent, but your point of view becomes less central.</p></div>
+  </div>
+
+  <div class="layout-choice" data-choice="editorial-narrative" onclick="toggleSelect(this)">
+    <div class="mini">
+      <div class="mini-nav"></div>
+      <div class="mini-card"><h4>Accessibility is a quality practice</h4><div class="line"></div><div class="line"></div><div class="line mid"></div></div>
+      <div class="mini-card"><h4>Ideas and experience</h4><div class="timeline"><div class="line"></div><div class="line mid"></div><div class="line"></div><div class="line short"></div><div class="line"></div></div></div>
+      <div class="mini-card"><h4>Continue exploring</h4><div class="line short"></div></div>
+    </div>
+    <div class="choice-copy"><h3>C. Editorial narrative</h3><p>Thoughtful and distinctive, with long-form storytelling. Best for depth, but slower for scanning visitors.</p></div>
+  </div>
+</div>

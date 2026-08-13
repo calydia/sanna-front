@@ -6,8 +6,7 @@ const currentPath = Astro.url.pathname;
 const links = language === 'fi'
   ? [
       { href: '/fi/', label: 'Etusivu', exactOnly: true },
-      { href: '/fi/mina/', label: 'Minä', exactOnly: false },
-      { href: '/fi/palvelut/', label: 'Palvelut', exactOnly: false },
+      { href: '/fi/minusta/', label: 'Minusta', exactOnly: false },
       { href: '/fi/esiintymiset/', label: 'Esiintymiset', exactOnly: false },
       { href: '/fi/projektit/', label: 'Projektit', exactOnly: false },
       { href: '/fi/blog/', label: 'Blogi', exactOnly: false },
@@ -15,7 +14,6 @@ const links = language === 'fi'
   : [
       { href: '/', label: 'Home', exactOnly: true },
       { href: '/about/', label: 'About', exactOnly: false },
-      { href: '/services/', label: 'Services', exactOnly: false },
       { href: '/speaking/', label: 'Speaking', exactOnly: false },
       { href: '/projects/', label: 'Projects', exactOnly: false },
       { href: '/blog/', label: 'Blog', exactOnly: false },

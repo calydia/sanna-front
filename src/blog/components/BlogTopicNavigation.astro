@@ -14,7 +14,7 @@ const links = [
 ---
 
 <nav aria-label="Blog topics" class="w-full border-y border-black/20 py-2 dark:border-white/30">
-  <ul class="flex flex-wrap justify-center gap-x-5 gap-y-1 p-0">
+  <ul class="flex flex-wrap justify-center gap-x-5 gap-y-1 p-0 text-lg">
     {links.map((link) => {
       const state = getNavigationState(currentPath, link.href);
 
@@ -26,7 +26,7 @@ const links = [
             class:list={[
               'blog-topic-link inline-block px-1 py-2 underline-offset-4',
               state === 'inactive' && 'text-black no-underline dark:text-white',
-              state !== 'inactive' && 'font-semibold text-lt-purple underline decoration-4 dark:text-wheat',
+              state !== 'inactive' && 'font-semibold text-lt-purple underline decoration-2 dark:text-wheat',
             ]}
           >
             {link.label}
@@ -36,3 +36,11 @@ const links = [
     })}
   </ul>
 </nav>
+
+<style>
+  @media (hover: hover) {
+    .blog-topic-link[aria-current]:hover {
+      text-decoration-thickness: 4px;
+    }
+  }
+</style>

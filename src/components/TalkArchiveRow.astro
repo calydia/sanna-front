@@ -1,0 +1,47 @@
+---
+type Props = {
+  title: string;
+  date: string;
+  displayDate: string;
+  event: string;
+  location?: string;
+  collaborator?: string;
+  role?: string;
+  recordingUrl?: string;
+  recordingLabel?: string;
+  recordingLinkText?: string;
+  recordingLabelPrefix?: string;
+};
+
+const {
+  title,
+  date,
+  displayDate,
+  event,
+  location,
+  collaborator,
+  role,
+  recordingUrl,
+  recordingLabel,
+  recordingLinkText = 'Watch recording',
+  recordingLabelPrefix = 'Watch recording of',
+} = Astro.props;
+
+const metadata = [event, location, collaborator, role].filter((value): value is string => Boolean(value));
+---
+
+<li class="border-t border-gray-300 py-5 first:border-t-0 first:pt-0 dark:border-gray-700">
+  <h4 class="text-lg">{title}</h4>
+  <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+    <time datetime={date}>{displayDate}</time>{metadata.map((item) => <Fragment>{' '}<span aria-hidden="true">·</span>{' '}{item}</Fragment>)}
+  </p>
+  {recordingUrl && recordingLabel && (
+    <a
+      href={recordingUrl}
+      aria-label={`${recordingLabelPrefix} ${recordingLabel}`}
+      class="mt-3 inline-block font-semibold text-dk-purple-header underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:text-lt-perfume dark:focus:outline-white"
+    >
+      {recordingLinkText}
+    </a>
+  )}
+</li>

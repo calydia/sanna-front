@@ -22,7 +22,7 @@ const getPageUrl = (number: number) => number === 1 ? '/blog/posts/' : `/blog/po
 <BlogLayout title={title} metaDescription={`Browse ${page.currentPage === 1 ? 'all' : `page ${page.currentPage} of`} blog posts by Sanna Kramsi.`} canonicalPath={canonicalPath}>
   <BlogBreadcrumb items={[{ label: 'Blog', href: '/blog/' }, { label: title }]} />
   <header class="text-center"><h1 class="text-4xl font-bold md:text-5xl">{title}</h1></header>
-  <section class="mb-8 md:mb-12" aria-label="All blog posts">
+  <section aria-label="All blog posts">
     <PostGrid posts={page.data} />
     <Pagination currentPage={page.currentPage} totalPages={page.lastPage} getPageUrl={getPageUrl} />
   </section>

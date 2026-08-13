@@ -91,7 +91,9 @@ test('blog card and browse-link interactions use the approved underline and focu
   await expect(tagLink).toHaveCSS('text-decoration-thickness', '2px');
 
   const tocLink = page.getByRole('navigation', { name: 'On this page' }).getByRole('link').first();
-  await expect(tocLink).toHaveCSS('text-decoration-line', 'none');
+  await expect(tocLink).toHaveCSS('color', 'rgb(3, 53, 115)');
+  await expect(tocLink).toHaveCSS('text-decoration-line', 'underline');
+  await expect(tocLink).toHaveCSS('text-decoration-thickness', '1px');
   await tocLink.hover();
   await expect(tocLink).toHaveCSS('text-decoration-line', 'underline');
   await expect(tocLink).toHaveCSS('text-decoration-thickness', '2px');
@@ -119,10 +121,23 @@ test('blog styling is scoped and article supporting content matches production s
   await expect(author.getByText('Sanna Kramsi', { exact: true })).toBeVisible();
   await expect(author.locator('img')).toHaveCSS('width', '120px');
   await expect(author.locator('img')).toHaveCSS('border-top-width', '4px');
-  await expect(keepReading.getByRole('heading', { name: 'Start here in accessibility' })).toBeVisible();
-  await expect(keepReading.getByRole('heading', { name: 'Related posts' })).toBeVisible();
-  await expect(keepReading.getByRole('link', { name: 'Browse accessibility posts' })).toHaveAttribute('href', '/blog/accessibility/');
+  const startHereHeading = keepReading.getByRole('heading', { name: 'Start here in accessibility' });
+  const startHereLink = keepReading.getByRole('link').first();
+  const relatedPostsHeading = keepReading.getByRole('heading', { name: 'Related posts' });
+  const relatedPostLinks = keepReading.locator('ul').getByRole('link');
+  const browseCategoryLink = keepReading.getByRole('link', { name: 'Browse accessibility posts' });
+  await expect(startHereHeading).toHaveCSS('font-weight', '400');
+  await expect(startHereLink).toHaveCSS('font-weight', '400');
+  await expect(relatedPostsHeading).toHaveCSS('font-weight', '400');
+  for (const relatedPostLink of await relatedPostLinks.all()) {
+    await expect(relatedPostLink).toHaveCSS('font-weight', '400');
+  }
+  await expect(browseCategoryLink).toHaveAttribute('href', '/blog/accessibility/');
+  await expect(browseCategoryLink).toHaveCSS('font-weight', '700');
   await expect(keepReading.getByRole('link')).toHaveCount(4);
+  const keepReadingLink = keepReading.getByRole('link').first();
+  await expect(keepReadingLink).toHaveCSS('color', 'rgb(3, 53, 115)');
+  await expect(keepReadingLink).toHaveCSS('text-decoration-line', 'underline');
   const keepReadingHrefs = await keepReading.getByRole('link').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
   expect(new Set(keepReadingHrefs).size).toBe(keepReadingHrefs.length);
   expect(await author.evaluate((node) => {
@@ -132,8 +147,9 @@ test('blog styling is scoped and article supporting content matches production s
 
   const toc = page.getByRole('navigation', { name: 'On this page' });
   await expect(toc.getByRole('link')).toHaveCount(3);
+  await expect(toc.locator('ul')).toHaveCSS('list-style-type', 'disc');
   const tocLink = toc.getByRole('link').first();
-  await expect(tocLink).toHaveCSS('text-decoration-line', 'none');
+  await expect(tocLink).toHaveCSS('text-decoration-line', 'underline');
 
   const externalLink = page.getByRole('link', { name: 'clear guidance' });
   const internalLink = page.getByRole('link', { name: 'thoughtful testing' });
@@ -153,6 +169,9 @@ test('blog styling is scoped and article supporting content matches production s
     element.classList.add('dark');
   });
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(1, 0, 23)');
+  await expect(keepReadingLink).toHaveCSS('color', 'rgb(173, 229, 248)');
+  await expect(keepReadingLink).toHaveCSS('text-decoration-line', 'underline');
+  await expect(tocLink).toHaveCSS('color', 'rgb(173, 229, 248)');
 
   await page.goto('/about/');
   await page.locator('html').evaluate((element) => {
@@ -167,21 +186,26 @@ test('blog topic navigation distinguishes inactive, current, and nested ancestor
   const topics = page.getByRole('navigation', { name: 'Blog topics' });
   const accessibility = topics.getByRole('link', { name: 'Accessibility' });
   const technology = topics.getByRole('link', { name: 'Technology' });
+  await expect(accessibility).toHaveCSS('font-size', '18px');
   await expect(accessibility).toHaveAttribute('aria-current', 'page');
   await expect(accessibility).toHaveCSS('text-decoration-line', 'underline');
-  await expect(accessibility).toHaveCSS('text-decoration-thickness', '4px');
+  await expect(accessibility).toHaveCSS('text-decoration-thickness', '2px');
   await expect(technology).not.toHaveAttribute('aria-current');
   await expect(technology).toHaveCSS('text-decoration-line', 'none');
+  if (!isMobile) {
+    await accessibility.hover();
+    await expect(accessibility).toHaveCSS('text-decoration-thickness', '4px');
+  }
 
   await page.goto('/blog/personal/cats/remembering-osiris/');
   const personal = page.getByRole('navigation', { name: 'Blog topics' }).getByRole('link', { name: 'Personal' });
   await expect(personal).toHaveAttribute('aria-current', 'true');
   await expect(personal).toHaveCSS('text-decoration-line', 'underline');
-  await expect(personal).toHaveCSS('text-decoration-thickness', '4px');
+  await expect(personal).toHaveCSS('text-decoration-thickness', '2px');
 
   if (!isMobile) {
     await personal.hover();
-    await expect(personal).toHaveCSS('text-decoration-thickness', '2px');
+    await expect(personal).toHaveCSS('text-decoration-thickness', '4px');
   }
 });
 
@@ -232,6 +256,21 @@ test('all-post and category pagination expose canonical next and previous paths'
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Accessibility posts – Page 2');
   await expect(pagination.getByRole('link', { name: 'Page 1' })).toHaveAttribute('href', '/blog/accessibility/');
   await expect(page.getByText('New here? Read this first')).toHaveCount(0);
+});
+
+test('every blog page keeps consistent space above the footer', async ({ page }) => {
+  for (const path of [
+    '/blog/',
+    '/blog/accessibility/accessibility-testing-guide/',
+    '/blog/posts/',
+    '/blog/personal/games/',
+  ]) {
+    await page.goto(path);
+    expect(await page.locator('footer').evaluate((footer) => {
+      const main = document.querySelector('main');
+      return main ? footer.getBoundingClientRect().top - main.getBoundingClientRect().bottom : 0;
+    })).toBeGreaterThanOrEqual(32);
+  }
 });
 
 test('the document reserves scrollbar space to prevent cross-page horizontal movement', async ({ page }) => {

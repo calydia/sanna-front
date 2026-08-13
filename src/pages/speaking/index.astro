@@ -1,6 +1,96 @@
 ---
 import IntroPage from '../../components/IntroPage.astro';
+import TalkArchiveRow from '../../components/TalkArchiveRow.astro';
+import TalkCard from '../../components/TalkCard.astro';
 import Card from '../../layouts/Card.astro';
+
+const topics = [
+  {
+    title: 'Accessibility in practice',
+    description: 'WCAG, testing, development, content and common accessibility problems.',
+  },
+  {
+    title: 'Accessibility beyond compliance',
+    description: 'Ownership, governance, organisational structures and maintaining accessibility over time.',
+  },
+  {
+    title: 'Software development, teams and communication',
+    description: 'Development practices, cognitive diversity, communication, psychological safety and sustainable teamwork.',
+  },
+];
+
+const upcomingTalks = [
+  {
+    title: 'Hidden Skills of Development: Practical Building Blocks for Team Health',
+    event: 'DrupalCon Europe 2026',
+    location: 'Rotterdam',
+    collaborator: 'With Mikaela Kindstedt',
+    description: 'Start debugging your culture alongside your code. Learn the hidden communication frameworks supporting high-performance teamwork.',
+  },
+  {
+    title: 'Who Owns Accessibility After a WordPress Site Launches?',
+    event: 'WordPress Accessibility Day 2026',
+    location: 'Online',
+    description: 'An accessible website can gradually become inaccessible after launch even when everyone involved cares about accessibility. This talk looks at ownership, content, plugins and ongoing development, and how responsibilities can be made clearer.',
+  },
+];
+
+const pastTalks = [
+  {
+    year: '2026',
+    talks: [
+      {
+        title: 'Hidden skills of development: Evolve your soft skills',
+        date: '2026-05-08',
+        displayDate: '8 May 2026',
+        event: 'DrupalCamp Finland',
+        location: 'Helsinki',
+        collaborator: 'With Mikaela Kindstedt',
+      },
+      {
+        title: 'How do organisations succeed in accessibility?',
+        date: '2026-05-08',
+        displayDate: '8 May 2026',
+        event: 'IAAP Nordic webinar',
+        location: 'Online',
+        role: 'Panel speaker',
+        recordingUrl: 'https://www.youtube.com/watch?v=RdvkjLFvvdE',
+        recordingLabel: 'How do organisations succeed in accessibility?',
+      },
+    ],
+  },
+  {
+    year: '2025',
+    talks: [
+      {
+        title: 'The EAA and E-Book Accessibility',
+        date: '2025-09-17',
+        displayDate: '17 September 2025',
+        event: 'IAAP Nordic Webinar',
+        location: 'Online',
+        role: 'Host/interviewer',
+        recordingUrl: 'https://youtu.be/rPUTdbNkNGM?si=yKzb5HkchEudUPaU',
+        recordingLabel: 'The EAA and E-Book Accessibility',
+      },
+      {
+        title: '5 yleistä saavutettavuusvirhettä, joita kehittäjät tekevät',
+        date: '2025-09-17',
+        displayDate: '17 September 2025',
+        event: 'Koodia Suomesta Webinar',
+        location: 'Online',
+        collaborator: 'With Mari Leipola',
+      },
+      {
+        title: 'From Oversight to Insight: 5 Common Accessibility Mistakes Developers Make',
+        date: '2025-04-25',
+        displayDate: '25 April 2025',
+        event: 'DrupalCamp Finland',
+        location: 'Espoo',
+        collaborator: 'With Mari Leipola',
+      },
+    ],
+  },
+];
 ---
 
 <Card
@@ -12,6 +102,52 @@ import Card from '../../layouts/Card.astro';
 >
   <IntroPage
     title="Speaking"
-    description="I speak about digital accessibility, inclusive design, and accessible frontend development. Details of talks and upcoming appearances will be added here."
+    description="I speak about digital accessibility, inclusive design, accessible frontend development, and the ways teams maintain accessibility over time."
   />
+
+  <section aria-labelledby="speaking-topics-heading">
+    <h2 id="speaking-topics-heading" class="mb-4">Topics I speak about</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {topics.map((topic) => (
+        <article class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+          <h3 class="text-lg">{topic.title}</h3>
+          <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">{topic.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="upcoming-talks-heading">
+    <h2 id="upcoming-talks-heading" class="mb-4">Upcoming talks</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {upcomingTalks.map((talk) => <TalkCard {...talk} />)}
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)]">
+    <section aria-labelledby="past-talks-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+      <h2 id="past-talks-heading">Past talks</h2>
+      <div class="mt-6 space-y-8">
+        {pastTalks.map((group) => (
+          <section aria-labelledby={`talks-${group.year}`}>
+            <h3 id={`talks-${group.year}`} class="mb-4">{group.year}</h3>
+            <ul>
+              {group.talks.map((talk) => <TalkArchiveRow {...talk} />)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="speaking-enquiries-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+      <h2 id="speaking-enquiries-heading">Invite me to speak</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        I'm interested in conferences, accessibility events, webinars and community events.
+      </p>
+      <div class="mt-6 space-y-3">
+        <a href="mailto:sanna@a11y.ing" class="block rounded-xl bg-dk-purple-header px-5 py-3 text-center font-medium text-white hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:bg-lt-perfume dark:text-black dark:focus:outline-white">Email Sanna</a>
+        <a href="https://www.linkedin.com/in/sanna-kramsi/" class="block rounded-xl bg-dk-purple-header px-5 py-3 text-center font-medium text-white hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:bg-lt-perfume dark:text-black dark:focus:outline-white">Connect on LinkedIn</a>
+      </div>
+    </section>
+  </div>
 </Card>

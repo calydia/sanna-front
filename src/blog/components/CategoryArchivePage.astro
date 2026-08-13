@@ -30,5 +30,5 @@ const popularTags = category.showPopularTopics ? getPopularTags(allPosts) : [];
   </header>
   {firstPage && featuredPost && <aside class="blog-cover-card blog-gradient-border relative bg-lt-blue-light p-5 dark:bg-dk-purple"><p class="m-0 font-semibold">New here? Read this first</p><a class="blog-card-link blog-cover-link mt-1 inline-block no-underline" href={getBlogArticlePath(category, featuredPost.slug, featuredPost.title)}><span class="blog-card-title">{featuredPost.title} →</span></a></aside>}
   {firstPage && <TopicBrowse tags={popularTags} />}
-  <section class="mb-8 md:mb-12" aria-label={`${category.label} blog posts`}><PostGrid posts={posts} /><Pagination currentPage={currentPage} totalPages={totalPages} getPageUrl={(page: number) => getBlogCategoryPagePath(category, page)} /></section>
+  <section aria-label={`${category.label} blog posts`}><PostGrid posts={posts} /><Pagination currentPage={currentPage} totalPages={totalPages} getPageUrl={(page: number) => getBlogCategoryPagePath(category, page)} /></section>
 </BlogLayout>

@@ -3,4 +3,4 @@ import type { TocItem } from '../utils/articleToc.ts';
 const { items } = Astro.props as { items: TocItem[] };
 ---
 
-{items.length >= 3 && <nav aria-labelledby="article-toc-heading" class="article-toc my-8 border-2 border-lt-code-border bg-lt-code-bg p-4 dark:border-dk-code-border dark:bg-dk-code-bg"><h2 id="article-toc-heading" class="m-0 text-base lg:text-lg">On this page</h2><ul class="mt-3 grid gap-1.5 p-0" role="list">{items.map((item) => <li><a href={`#${item.id}`} class="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-4">{item.label}</a></li>)}</ul></nav>}
+{items.length >= 3 && <nav aria-labelledby="article-toc-heading" class="article-toc my-8 border-2 border-lt-code-border bg-lt-code-bg p-4 dark:border-dk-code-border dark:bg-dk-code-bg"><h2 id="article-toc-heading" class="m-0 text-base lg:text-lg">On this page</h2><ul class="mt-3 grid list-disc gap-1.5 pl-5" role="list">{items.map((item) => <li><a href={`#${item.id}`} class="text-base text-lt-blue-dark underline decoration-1 underline-offset-4 hover:decoration-2 dark:text-dk-blue-light">{item.label}</a></li>)}</ul></nav>}

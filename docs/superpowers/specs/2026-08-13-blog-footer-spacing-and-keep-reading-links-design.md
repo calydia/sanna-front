@@ -6,13 +6,13 @@ Make the space above the blog footer consistent on every blog page and make link
 
 ## Footer spacing
 
-The blog footer component will own a 32px top margin. This creates the same separation on the blog front page, article pages, paginated archive pages, and archive pages without pagination. Pager-specific footer spacing will not be used, so the gap has one owner and does not vary with pagination.
+The blog footer component will own the existing responsive top gap: 32px by default and 48px on medium and larger screens. This creates the same separation on the blog front page, article pages, paginated archive pages, and archive pages without pagination. Archive-section footer spacing will be removed, so the gap has one owner and does not vary with pagination.
 
 The non-blog footer is outside this change.
 
 ## Keep reading links
 
-All links in the Keep reading box will be underlined by default and use the standard site link colors: `#033573` in the light theme and `#9ab4ff` in the dark theme. Existing hover and focus behavior will remain unchanged.
+All links in the Keep reading box will be underlined by default and inherit the blog shell's standard link colors: `#033573` in the light theme and `#ade5f8` in the dark theme. Existing hover and focus behavior will remain unchanged.
 
 ## Verification
 

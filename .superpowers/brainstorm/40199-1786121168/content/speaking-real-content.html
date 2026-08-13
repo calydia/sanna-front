@@ -1,0 +1,64 @@
+<style>
+  .site-preview{max-width:980px;margin:24px auto;background:linear-gradient(#ead4ff,#c9d8ff);padding:28px;border-radius:18px;color:#242a3a}
+  .site-nav{text-align:center;font-size:13px;margin-bottom:22px;color:#32104a}
+  .hero{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 5px 14px rgba(43,25,65,.12);max-width:720px;margin:0 auto 30px}
+  .hero h1{color:#4c0b70;margin:0 0 10px;font-size:32px}.hero p{font-size:17px;line-height:1.5;margin:0}
+  .section-title{color:#4c0b70;margin:32px 0 14px;font-size:23px}
+  .topics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .topic,.event,.archive,.enquiry{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 10px rgba(43,25,65,.1)}
+  .topic h3,.event h3{font-size:17px;color:#4c0b70;margin:0 0 8px}.topic p,.event p{font-size:14px;line-height:1.5;margin:0}
+  .events{display:grid;grid-template-columns:1fr 1fr;gap:14px}.meta{font-size:13px;font-weight:700;color:#5b6170;margin:0 0 12px!important}
+  .lower{display:grid;grid-template-columns:1.4fr .6fr;gap:18px;margin-top:30px;align-items:start}
+  .archive h2,.enquiry h2{font-size:21px;color:#4c0b70;margin:0 0 12px}.year{font-size:15px;font-weight:800;color:#4c0b70;margin:17px 0 6px}
+  .talk-row{border-top:1px solid #ddd2e6;padding:11px 0}.talk-row strong{display:block;font-size:14px}.talk-row span{display:block;font-size:12px;color:#5b6170;margin-top:3px}
+  .recording{font-size:12px;color:#4c0b70;font-weight:700;margin-top:5px}.enquiry p{font-size:14px;line-height:1.5}.button{display:block;background:#4b006e;color:#fff!important;border-radius:8px;padding:11px 13px;text-align:center;text-decoration:none;font-weight:700;margin-top:10px}
+  .note{max-width:980px;margin:15px auto 0;font-size:14px}.warning{border-left:4px solid #b25f00;background:#fff8ec;padding:12px 15px;margin:18px auto;max-width:950px}
+  @media(max-width:750px){.site-preview{padding:16px}.topics,.events,.lower{grid-template-columns:1fr}.hero{padding:23px}.hero h1{font-size:27px}}
+</style>
+
+<h2>Speaking page — recommended hierarchy</h2>
+<p class="subtitle">Use repeatable event structure, not one long prose card. The visual labels below are headings and event metadata already present in your content—not tags.</p>
+
+<div class="site-preview">
+  <div class="site-nav">Home &nbsp;&nbsp; About &nbsp;&nbsp; <strong>Speaking</strong> &nbsp;&nbsp; Projects &nbsp;&nbsp; Blog</div>
+  <section class="hero">
+    <h1>Speaking</h1>
+    <p>I speak about digital accessibility, inclusive design, accessible frontend development, and the ways teams maintain accessibility over time.</p>
+  </section>
+
+  <h2 class="section-title">Topics I speak about</h2>
+  <div class="topics">
+    <article class="topic"><h3>Accessibility in practice</h3><p>WCAG, testing, development, content and common accessibility problems.</p></article>
+    <article class="topic"><h3>Beyond compliance</h3><p>Ownership, governance, organisational structures and maintaining accessibility over time.</p></article>
+    <article class="topic"><h3>Software development, teams and communication</h3><p>Development practices, cognitive diversity, communication, psychological safety and sustainable teamwork.</p></article>
+  </div>
+
+  <h2 class="section-title">Upcoming talks</h2>
+  <div class="events">
+    <article class="event"><h3>Hidden Skills of Development: Practical Building Blocks for Team Health</h3><p class="meta">DrupalCon Europe 2026 · Rotterdam</p><p>Start debugging your culture alongside your code. Learn the hidden communication frameworks supporting high-performance teamwork.</p></article>
+    <article class="event"><h3>Who Owns Accessibility After a WordPress Site Launches?</h3><p class="meta">WordPress Accessibility Day 2026 · Online</p><p>An accessible website can gradually become inaccessible after launch. This talk looks at ownership, content, plugins and ongoing development.</p></article>
+  </div>
+
+  <div class="lower">
+    <section class="archive">
+      <h2>Past talks</h2>
+      <div class="year">2026</div>
+      <div class="talk-row"><strong>Hidden skills of development: Evolve your soft skills</strong><span>8 May · DrupalCamp Finland · Helsinki · With Mikaela Kindstedt</span></div>
+      <div class="talk-row"><strong>How do organisations succeed in accessibility?</strong><span>8 May · IAAP Nordic webinar · Online · Panel speaker</span><div class="recording">Watch recording →</div></div>
+      <div class="year">2025</div>
+      <div class="talk-row"><strong>The EAA and E-Book Accessibility</strong><span>17 September · IAAP Nordic Webinar · Online · Host/interviewer</span><div class="recording">Watch recording →</div></div>
+      <div class="talk-row"><strong>5 yleistä saavutettavuusvirhettä, joita kehittäjät tekevät</strong><span>17 September · Koodia Suomesta Webinar · Online · With Mari Leipola</span></div>
+      <div class="talk-row"><strong>From Oversight to Insight: 5 Common Accessibility Mistakes Developers Make</strong><span>25 April · DrupalCamp Finland · Espoo · With Mari Leipola</span></div>
+    </section>
+    <aside class="enquiry">
+      <h2>Invite me to speak</h2>
+      <p>I’m interested in conferences, accessibility events, webinars and community events.</p>
+      <a class="button" href="#">Email Sanna</a>
+      <a class="button" href="#">Connect on LinkedIn</a>
+    </aside>
+  </div>
+</div>
+
+<div class="warning"><strong>Content issue noticed:</strong> the two upcoming-talk descriptions appear to be attached to the wrong titles on the current page. This mockup places the team-health description with “Hidden Skills” and the site-ownership description with the WordPress talk.</div>
+
+<p class="note"><strong>Mobile behaviour:</strong> topics and upcoming events stack; the compact archive prevents the Past Talks section from becoming an undifferentiated wall of text.</p>

@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type Props = {
+  title: string;
+  description: string;
+  buttonLink: string;
+  buttonText: string;
+};
+
+const { title, description, buttonLink, buttonText } = Astro.props;
+---
+
+<article class="flex flex-col justify-between rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+  <div>
+    <h3 class="text-xl">{title}</h3>
+    <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">{description}</p>
+  </div>
+  <a href={buttonLink} class="project-link mt-6 flex items-center justify-between rounded-xl bg-dk-purple-header px-5 py-3 font-medium text-white hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:bg-lt-perfume dark:text-black dark:focus:outline-white">
+    {buttonText}
+    <Icon name="arrow-right" class="project-link-arrow ml-4 h-6 w-6 shrink-0" aria-hidden="true" />
+  </a>
+</article>
+
+<style>
+  .project-link-arrow {
+    transition: transform 150ms ease-in-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .project-link:hover .project-link-arrow {
+      transform: translateX(2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-link-arrow {
+      transition: none;
+    }
+  }
+</style>

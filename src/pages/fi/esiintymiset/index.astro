@@ -1,11 +1,101 @@
 ---
 import IntroPage from '../../../components/IntroPage.astro';
+import TalkArchiveRow from '../../../components/TalkArchiveRow.astro';
+import TalkCard from '../../../components/TalkCard.astro';
 import Card from '../../../layouts/Card.astro';
+
+const topics = [
+  {
+    title: 'Saavutettavuus käytännössä',
+    description: 'WCAG, testaus, kehitys, sisällöt ja yleiset saavutettavuusongelmat.',
+  },
+  {
+    title: 'Saavutettavuus vaatimustenmukaisuutta laajemmin',
+    description: 'Omistajuus, hallintamallit, organisaatiorakenteet ja saavutettavuuden ylläpitäminen pitkällä aikavälillä.',
+  },
+  {
+    title: 'Ohjelmistokehitys, tiimit ja viestintä',
+    description: 'Kehityskäytännöt, kognitiivinen monimuotoisuus, viestintä, psykologinen turvallisuus ja kestävät tiimityön tavat.',
+  },
+];
+
+const upcomingTalks = [
+  {
+    title: 'Hidden Skills of Development: Practical Building Blocks for Team Health',
+    event: 'DrupalCon Europe 2026',
+    location: 'Rotterdam',
+    collaborator: 'Yhdessä Mikaela Kindstedtin kanssa',
+    description: 'Kulttuuria kannattaa tarkastella ja korjata koodin rinnalla. Puheenvuoro esittelee viestinnän rakenteita, jotka tukevat hyvin toimivaa ja kestävää tiimityötä.',
+  },
+  {
+    title: 'Who Owns Accessibility After a WordPress Site Launches?',
+    event: 'WordPress Accessibility Day 2026',
+    location: 'Verkossa',
+    description: 'Saavutettava verkkosivusto voi muuttua vähitellen esteelliseksi julkaisun jälkeen, vaikka kaikki osapuolet pitäisivät saavutettavuutta tärkeänä. Puheenvuoro käsittelee omistajuutta, sisältöjä, lisäosia, jatkuvaa kehitystä ja vastuiden selkeyttämistä.',
+  },
+];
+
+const pastTalks = [
+  {
+    year: '2026',
+    talks: [
+      {
+        title: 'Hidden skills of development: Evolve your soft skills',
+        date: '2026-05-08',
+        displayDate: '8. toukokuuta 2026',
+        event: 'DrupalCamp Finland',
+        location: 'Helsinki',
+        collaborator: 'Yhdessä Mikaela Kindstedtin kanssa',
+      },
+      {
+        title: 'How do organisations succeed in accessibility?',
+        date: '2026-05-08',
+        displayDate: '8. toukokuuta 2026',
+        event: 'IAAP Nordic -webinaari',
+        location: 'Verkossa',
+        role: 'Paneelikeskustelija',
+        recordingUrl: 'https://www.youtube.com/watch?v=RdvkjLFvvdE',
+        recordingLabel: 'How do organisations succeed in accessibility?',
+      },
+    ],
+  },
+  {
+    year: '2025',
+    talks: [
+      {
+        title: 'The EAA and E-Book Accessibility',
+        date: '2025-09-17',
+        displayDate: '17. syyskuuta 2025',
+        event: 'IAAP Nordic -webinaari',
+        location: 'Verkossa',
+        role: 'Juontaja ja haastattelija',
+        recordingUrl: 'https://youtu.be/rPUTdbNkNGM?si=yKzb5HkchEudUPaU',
+        recordingLabel: 'The EAA and E-Book Accessibility',
+      },
+      {
+        title: '5 yleistä saavutettavuusvirhettä, joita kehittäjät tekevät',
+        date: '2025-09-17',
+        displayDate: '17. syyskuuta 2025',
+        event: 'Koodia Suomesta -webinaari',
+        location: 'Verkossa',
+        collaborator: 'Yhdessä Mari Leipolan kanssa',
+      },
+      {
+        title: 'From Oversight to Insight: 5 Common Accessibility Mistakes Developers Make',
+        date: '2025-04-25',
+        displayDate: '25. huhtikuuta 2025',
+        event: 'DrupalCamp Finland',
+        location: 'Espoo',
+        collaborator: 'Yhdessä Mari Leipolan kanssa',
+      },
+    ],
+  },
+];
 ---
 
 <Card
   title="Esiintymiset"
-  metaDescription="Sanna Kramsin puheenvuorot ja esitykset digitaalisesta saavutettavuudesta."
+  metaDescription="Sanna Kramsin puheenvuorot ja esitykset saavutettavuudesta."
   language="fi"
   pageType="sub"
   fiUrl="/fi/esiintymiset/"
@@ -13,6 +103,58 @@ import Card from '../../../layouts/Card.astro';
 >
   <IntroPage
     title="Esiintymiset"
-    description="Puhun digitaalisesta saavutettavuudesta, inklusiivisesta suunnittelusta ja saavutettavasta frontend-kehityksestä. Lisään myöhemmin tietoa puheenvuoroistani ja tulevista esiintymisistäni."
+    description="Puhun saavutettavuudesta, inklusiivisesta suunnittelusta, saavutettavasta frontend-kehityksestä ja siitä, miten tiimit ylläpitävät saavutettavuutta pitkällä aikavälillä."
   />
+
+  <section aria-labelledby="esiintymisaiheet-heading">
+    <h2 id="esiintymisaiheet-heading" class="mb-4">Aiheet, joista puhun</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {topics.map((topic) => (
+        <article class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+          <h3 class="text-lg">{topic.title}</h3>
+          <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">{topic.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="tulevat-esiintymiset-heading">
+    <h2 id="tulevat-esiintymiset-heading" class="mb-4">Tulevat esiintymiset</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {upcomingTalks.map((talk) => <TalkCard {...talk} />)}
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)]">
+    <section aria-labelledby="aiemmat-esiintymiset-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+      <h2 id="aiemmat-esiintymiset-heading">Aiemmat esiintymiset</h2>
+      <div class="mt-6 space-y-8">
+        {pastTalks.map((group) => (
+          <section aria-labelledby={`esiintymiset-${group.year}`}>
+            <h3 id={`esiintymiset-${group.year}`} class="mb-4">{group.year}</h3>
+            <ul>
+              {group.talks.map((talk) => (
+                <TalkArchiveRow
+                  {...talk}
+                  recordingLinkText="Katso tallenne"
+                  recordingLabelPrefix="Katso tallenne:"
+                />
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="esiintymiskutsut-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
+      <h2 id="esiintymiskutsut-heading">Kutsu minut puhujaksi</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Olen kiinnostunut konferensseista, saavutettavuustapahtumista, webinaareista ja yhteisötapahtumista.
+      </p>
+      <div class="mt-6 space-y-3">
+        <a href="mailto:sanna@a11y.ing" class="block rounded-xl bg-dk-purple-header px-5 py-3 text-center font-medium text-white hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:bg-lt-perfume dark:text-black dark:focus:outline-white">Lähetä sähköpostia</a>
+        <a href="https://www.linkedin.com/in/sanna-kramsi/" class="block rounded-xl bg-dk-purple-header px-5 py-3 text-center font-medium text-white hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:bg-lt-perfume dark:text-black dark:focus:outline-white">Ota yhteyttä LinkedInissä</a>
+      </div>
+    </section>
+  </div>
 </Card>

@@ -1,0 +1,70 @@
+---
+import PrincipleCard from '../../../components/PrincipleCard.astro';
+import Card from '../../../layouts/Card.astro';
+---
+
+<Card
+  title="Minusta"
+  metaDescription="Tutustu Sanna Kramsiin, saavutettavuusasiantuntijaan ja kehittäjään, joka työskentelee saavutettavuuden, koulutuksen ja organisaatioiden toimintatapojen parissa."
+  language="fi"
+  pageType="sub"
+  fiUrl="/fi/minusta/"
+  enUrl="/about/"
+>
+  <section class="mx-auto max-w-3xl rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+    <h1>Minusta</h1>
+    <p class="mt-4 text-gray-700 dark:text-gray-300">
+      Olen Sanna Kramsi, saavutettavuusasiantuntija ja kehittäjä. Työskentelen saavutettavuuden parissa useasta näkökulmasta: kehityksen, saavutettavuuden arvioinnin, koulutuksen ja organisaatioiden toimintatapojen kautta.
+    </p>
+
+    <p class="mt-4 text-gray-700 dark:text-gray-300">
+      Minua kiinnostaa erityisesti se, miten saavutettavuudesta tehdään pysyvä osa digitaalisten palvelujen kehittämistä sen sijaan, että se jäisi yksittäisiksi tarkistuksiksi ja korjauksiksi.
+    </p>    
+  </section>
+
+  <section aria-labelledby="saavutettavuusajattelu-heading">
+    <h2 id="saavutettavuusajattelu-heading" class="mb-4">Miten näen saavutettavuuden</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <PrincipleCard
+        title="Saavutettavuus on osa laatua"
+        description="Saavutettavuus kuuluu mukaan koko suunnittelu- ja kehitystyöhön. Sen ei pitäisi olla vasta lopussa tehtävä tarkistus, vaan yksi digitaalisen palvelun laadun lähtökohdista."
+      />
+      <PrincipleCard
+        title="Yksittäisten ongelmien korjaaminen ei riitä"
+        description="Saavutettavuusongelmien kohdalla on tärkeää tarkastella myös sitä, miksi ne syntyvät. Kun taustalla olevia syitä ymmärretään, tiimit ja organisaatiot voivat rakentaa toimintatapoja, jotka ehkäisevät samojen ongelmien toistumista."
+      />
+      <PrincipleCard
+        title="Saavutettavuuden pitää olla käytännöllistä ja ymmärrettävää"
+        description="Kaikkien ei tarvitse olla saavutettavuusasiantuntijoita. Ihmiset tarvitsevat omaan työhönsä sopivaa tietoa ja käytännön keinoja, joiden avulla he voivat tehdä parempia päätöksiä ja huomioida saavutettavuuden omassa työssään."
+      />
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <section aria-labelledby="a11ying-fi-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+      <h2 id="a11ying-fi-heading">A11ying with Sanna</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        A11ying with Sanna on nimi, jonka alla teen omaa saavutettavuustyötäni. Se kokoaa yhteen ylläpitämäni saavutettavuusmateriaalit, kirjoitukset, videot, puheenvuorot ja muut projektit.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Nimi pohjautuu saavutettavuutta tarkoittavaan lyhenteeseen a11y. Ajattelen sanaa A11ying melkein kuin verbinä: saavutettavuuden oppimisena, testaamisena, parantamisena ja viemisenä käytäntöön.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        A11ying with Sannan tavoitteena on tehdä saavutettavuudesta helpommin lähestyttävää ja auttaa muuttamaan tietoa käytännön tekemiseksi.
+      </p>      
+    </section>
+
+    <section aria-labelledby="yhteisot-heading" class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg backdrop-blur dark:border-black/20 dark:bg-black/40">
+      <h2 id="yhteisot-heading">Yhteisöt ja tiedon jakaminen</h2>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Tiedon jakaminen on tärkeä osa työtäni saavutettavuuden parissa. Puhun konferensseissa ja yhteisötapahtumissa, teen avoimia saavutettavuusmateriaaleja ja osallistun aktiivisesti saavutettavuusyhteisöjen toimintaan.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Olen mukana IAAP Nordic Committeessa, W3C Nordic Accessibility Community Groupissa ja suomalaisessa Saavutettavuusverkostossa.
+      </p>
+      <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">
+        Yhteisöissä toimiminen on minulle myös tapa oppia. Muiden kokemukset, näkökulmat ja käytännöt auttavat tarkastelemaan saavutettavuutta laajemmin ja kehittämään myös omaa osaamistani.
+      </p>
+    </section>
+  </div>
+</Card>

@@ -1,0 +1,43 @@
+<style>
+  .site-preview{max-width:1040px;margin:24px auto;background:linear-gradient(#ead4ff,#c9d8ff);padding:28px;border-radius:18px;color:#242a3a}
+  .site-nav{text-align:center;font-size:13px;margin-bottom:22px;color:#32104a}
+  .hero{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 5px 14px rgba(43,25,65,.12);max-width:720px;margin:0 auto 34px}
+  .hero h1{color:#4c0b70;margin:0 0 10px;font-size:32px}.hero p{font-size:17px;line-height:1.5;margin:0}
+  .section-title{color:#4c0b70;margin:30px 0 8px;font-size:23px}.section-intro{max-width:780px;line-height:1.55;margin:0 0 16px}
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .project{background:#fff;border-radius:14px;padding:21px;box-shadow:0 4px 10px rgba(43,25,65,.1);display:flex;flex-direction:column;justify-content:space-between;min-height:185px}
+  .project h3,.book h3{font-size:18px;color:#4c0b70;margin:0 0 9px}.project p,.book p{font-size:14px;line-height:1.5;margin:0}
+  .button{display:block;background:#4b006e;color:#fff!important;border-radius:8px;padding:11px 13px;text-decoration:none;font-weight:700;margin-top:17px}.button span{float:right;font-size:18px;line-height:14px}
+  .book{background:#fff;border-radius:14px;padding:22px;box-shadow:0 4px 10px rgba(43,25,65,.1);display:grid;grid-template-columns:.35fr 1.65fr;gap:22px;align-items:start}
+  .status{color:#4c0b70;font-size:14px;font-weight:800;border-left:4px solid #4c0b70;padding-left:10px}.status small{display:block;color:#666;font-weight:500;margin-top:4px}
+  .note{max-width:980px;margin:15px auto 0;font-size:14px}
+  @media(max-width:750px){.site-preview{padding:16px}.projects,.book{grid-template-columns:1fr}.hero{padding:23px}.hero h1{font-size:27px}.project{min-height:0}}
+</style>
+
+<h2>Projects page — refinement of the current layout</h2>
+<p class="subtitle">The two-column project grid already works. The recommendation strengthens its introduction and gives the in-progress book a deliberate full-width treatment.</p>
+
+<div class="site-preview">
+  <div class="site-nav">Home &nbsp;&nbsp; About &nbsp;&nbsp; Speaking &nbsp;&nbsp; <strong>Projects</strong> &nbsp;&nbsp; Blog</div>
+  <section class="hero">
+    <h1>Projects</h1>
+    <p>Accessibility resources, learning materials and other projects I create to help people understand, test and improve digital accessibility.</p>
+  </section>
+
+  <h2 class="section-title">A11ying with Sanna projects</h2>
+  <p class="section-intro">Some are reference resources, while others are intended for practising accessibility in a more hands-on way.</p>
+  <div class="projects">
+    <article class="project"><div><h3>I would if I could: a guide to web accessibility</h3><p>A growing reference library for the people who design, develop, write and maintain digital services.</p></div><a class="button" href="#">Explore I would if I could <span>→</span></a></article>
+    <article class="project"><div><h3>Almost, but not quite: a guide to accessibility requirements</h3><p>A reference for understanding WCAG success criteria and the requirements that apply to digital products and services.</p></div><a class="button" href="#">Explore Almost, but not quite <span>→</span></a></article>
+    <article class="project"><div><h3>Accessibility Testing Lab</h3><p>A hands-on learning environment for investigating examples with the keyboard, screen readers, automated tools and other methods.</p></div><a class="button" href="#">Explore Accessibility Testing Lab <span>→</span></a></article>
+    <article class="project"><div><h3>A11ying with Sanna on YouTube</h3><p>Finnish and English videos for developers and other people creating digital products.</p></div><a class="button" href="#">Explore the YouTube channel <span>→</span></a></article>
+  </div>
+
+  <h2 class="section-title">Other projects</h2>
+  <article class="book">
+    <div class="status">In progress<small>Finnish-language book</small></div>
+    <div><h3>Miksi saavutettavuus epäonnistuu organisaatioissa?</h3><p>I’m writing about why accessibility so often remains a series of audits and individual fixes, even in organisations that care about it. The book looks beyond individual WCAG failures to ownership, decision-making, processes, measurement and continuity.</p></div>
+  </article>
+</div>
+
+<p class="note"><strong>Why the book changes shape:</strong> it has no destination link yet, so presenting it like an available resource creates a false expectation. The full-width status panel makes “in progress” feel intentional and avoids the empty half-row in the current desktop grid.</p>

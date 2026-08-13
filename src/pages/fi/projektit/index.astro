@@ -1,5 +1,7 @@
 ---
+import InProgressProject from '../../../components/InProgressProject.astro';
 import IntroPage from '../../../components/IntroPage.astro';
+import Project from '../../../components/Project.astro';
 import Card from '../../../layouts/Card.astro';
 ---
 
@@ -13,6 +15,53 @@ import Card from '../../../layouts/Card.astro';
 >
   <IntroPage
     title="Projektit"
-    description="Tälle sivulle kokoan saavutettavuuteen liittyvät materiaalini ja muut projektini. Täydennän projektikokoelmaa blogin siirron jälkeen."
+    description="Teen saavutettavuusmateriaaleja, oppimisympäristöjä ja muita projekteja, jotka auttavat ihmisiä ymmärtämään, testaamaan ja parantamaan digitaalista saavutettavuutta."
   />
+
+  <section aria-labelledby="a11ying-projektit-heading">
+    <h2 id="a11ying-projektit-heading">A11ying with Sanna -projektit</h2>
+    <p class="mt-4 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-300">
+      Osa projekteista on hakuteoksia ja oppaita, kun taas toiset on tarkoitettu saavutettavuuden käytännön harjoitteluun.
+    </p>
+
+    <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <Project
+        title="Toki, jos voisin: opas saavutettavuuteen"
+        description="Kasvava digitaalisen saavutettavuuden tietopankki digipalvelujen suunnittelijoille, kehittäjille, sisällöntuottajille ja ylläpitäjille."
+        buttonLink="https://a11y.ing/fi/"
+        buttonText="Tutustu Toki, jos voisin -oppaaseen"
+      />
+
+      <Project
+        title="Melkein, mutta ei ihan: opas saavutettavuuteen liittyviin vaatimuksiin"
+        description="Hakuteos WCAG-onnistumiskriteerien sekä digitaalisiin tuotteisiin ja palveluihin sovellettavien saavutettavuusvaatimusten ymmärtämiseen."
+        buttonLink="https://wcag.a11y.ing/fi/"
+        buttonText="Tutustu Melkein, mutta ei ihan -oppaaseen"
+      />
+
+      <Project
+        title="Accessibility Testing Lab"
+        description="Käytännönläheinen oppimisympäristö saavutettavuusesimerkkien tutkimiseen näppäimistöllä, ruudunlukijalla, automaattisilla työkaluilla ja muilla testausmenetelmillä."
+        buttonLink="https://testing.a11y.ing"
+        buttonText="Tutustu Accessibility Testing Labiin"
+      />
+
+      <Project
+        title="A11ying with Sanna YouTubessa"
+        description="Suomenkielisiä videoita saavutettavuudesta kehittäjille ja muille digitaalisia tuotteita tekeville. Videoissa käytän käytännön esimerkkejä, selityksiä ja havainnollistuksia."
+        buttonLink="https://www.youtube.com/@saavutettavuus"
+        buttonText="Tutustu suomenkieliseen YouTube-kanavaan"
+      />
+    </div>
+  </section>
+
+  <section aria-labelledby="muut-projektit-heading">
+    <h2 id="muut-projektit-heading" class="mb-4">Muut projektit</h2>
+    <InProgressProject
+      title="Miksi saavutettavuus epäonnistuu organisaatioissa?"
+      status="Työn alla"
+      language="Suomenkielinen kirja"
+      description="Kirjoitan siitä, miksi saavutettavuus jää niin usein auditointien ja yksittäisten korjausten sarjaksi myös organisaatioissa, joissa saavutettavuutta pidetään tärkeänä. Kirja tarkastelee yksittäisiä WCAG-puutteita laajemmin omistajuutta, päätöksentekoa, prosesseja, mittaamista ja jatkuvuutta."
+    />
+  </section>
 </Card>
