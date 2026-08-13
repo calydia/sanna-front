@@ -8,7 +8,7 @@ const { items } = Astro.props as { items: BreadcrumbItem[] };
     {items.map((item, index) => (
       <li class="flex items-center">
         {item.href ? (
-          <a href={item.href} class="underline decoration-2 underline-offset-4 hover:no-underline">{item.label}</a>
+          <a href={item.href} class="underline decoration-1 underline-offset-4 hover:decoration-2">{item.label}</a>
         ) : (
           <span aria-current="page">{item.label}</span>
         )}
