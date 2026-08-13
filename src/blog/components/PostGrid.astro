@@ -23,7 +23,7 @@ const Heading = `h${headingLevel}` as 'h2' | 'h3';
       return (
         <li class="blog-cover-card blog-gradient-border group relative grid content-start bg-lt-blue-light p-2 transition-shadow hover:shadow-lg focus-within:shadow-lg dark:bg-dk-purple dark:text-white">
           <img src={post.listingImage} alt="" width="690" height="404" loading="lazy" class="aspect-[690/404] w-full object-cover">
-          <div class="p-3 text-center">
+          <div class="px-3 pb-3 pt-5 text-center">
             <Heading class="m-0 text-xl font-semibold leading-tight lg:text-2xl">
               <a class="blog-card-link blog-cover-link no-underline" href={getBlogArticlePath(category, post.slug, post.title)}>
                 <span class="blog-card-title">{post.title}</span>

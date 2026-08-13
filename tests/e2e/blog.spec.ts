@@ -63,7 +63,7 @@ test('article topics, related posts, pagination, and RSS use new routes', async 
   expect(feed).not.toContain('blog.sanna.ninja');
 });
 
-test('blog shell exposes RSS, honest language navigation, and the production footer', async ({ page }) => {
+test('blog shell exposes RSS, honest language navigation, and the production footer', async ({ page, isMobile }) => {
   await page.goto('/blog/');
 
   const header = page.locator('header');
@@ -74,12 +74,21 @@ test('blog shell exposes RSS, honest language navigation, and the production foo
   expect(await languageLink.evaluate((element, rss) => Boolean(element.compareDocumentPosition(rss) & Node.DOCUMENT_POSITION_FOLLOWING), await rssLink.elementHandle())).toBe(true);
 
   const footer = page.locator('footer');
-  await expect(footer.getByRole('button', { name: 'Back to top' })).toBeVisible();
+  const backToTop = footer.getByRole('button', { name: 'Back to top' });
+  await expect(backToTop).toBeVisible();
   await expect(footer.getByRole('navigation', { name: 'About this site' }).getByRole('link', { name: 'About me' })).toHaveAttribute('href', '/about/');
   await expect(footer.getByRole('link', { name: 'RSS feed' })).toHaveAttribute('href', '/blog/rss.xml');
   await expect(footer.getByRole('navigation', { name: 'A11ying sites' }).getByRole('link')).toHaveCount(2);
 
-  await footer.getByRole('button', { name: 'Back to top' }).click();
+  if (!isMobile) {
+    await backToTop.hover();
+    await expect(backToTop).toHaveCSS('text-decoration-line', 'none');
+    await expect(backToTop).toHaveCSS('border-top-color', 'rgb(84, 0, 123)');
+    const aboutLink = footer.getByRole('link', { name: 'About me' });
+    await aboutLink.hover();
+    await expect(aboutLink).toHaveCSS('text-decoration-line', 'underline');
+  }
+  await backToTop.click();
   await expect(page.locator('#page-top')).toBeFocused();
 
   await page.goto('/blog/accessibility/accessibility-testing-guide/');

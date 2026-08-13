@@ -23,6 +23,11 @@ test('article cards keep images and descriptions outside the expanded title link
   await expect(card.locator('img')).toHaveCount(1);
   await expect(card.locator('p')).toHaveCount(2);
   await expect(card.getByRole('link')).toHaveCount(1);
+  expect(await card.evaluate((element) => {
+    const image = element.querySelector('img');
+    const heading = element.querySelector('h3');
+    return image && heading ? heading.getBoundingClientRect().top - image.getBoundingClientRect().bottom : 0;
+  })).toBe(20);
   await expect(card.getByRole('link', { name: 'Accessibility', exact: true })).toHaveCount(0);
   await titleLink.focus();
   await expect(titleLink).toBeFocused();
@@ -74,9 +79,25 @@ test('blog card and browse-link interactions use the approved underline and focu
 
   const browseLink = page.getByRole('link', { name: /browse all posts/i });
   await expect(browseLink).toHaveCSS('text-decoration-line', 'none');
+  await expect(browseLink).toHaveCSS('font-size', '16px');
+  await expect(browseLink).toHaveCSS('column-gap', '8px');
+  const browseArrow = browseLink.locator('.browse-all-posts-arrow');
+  await expect(browseArrow).toHaveCSS('width', '24px');
+  await expect(browseArrow).toHaveCSS('height', '24px');
+  await expect(browseArrow).toHaveCSS('transform', 'none');
+  await expect(browseArrow).toHaveCSS('transition-duration', '0.15s');
+  await expect(browseArrow).toHaveCSS('transition-timing-function', 'ease-in-out');
   await browseLink.hover();
   await expect(browseLink).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(browseLink).toHaveCSS('border-top-color', 'rgb(3, 53, 115)');
+  await expect(browseArrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 2, 0)');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.mouse.move(0, 0);
+  await expect(browseArrow).toHaveCSS('transform', 'none');
+  await expect(browseArrow).toHaveCSS('transition-duration', '0s');
+  await browseLink.hover();
+  await expect(browseArrow).toHaveCSS('transform', 'none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await browseLink.focus();
   await expect(browseLink).toHaveCSS('outline-width', '2px');
   await expect(browseLink).toHaveCSS('outline-offset', '4px');
@@ -230,7 +251,7 @@ test('article image credits render only when Drupal provides them', async ({ pag
   await expect(page.getByText('Image credit: Test fixture image')).toBeVisible();
 });
 
-test('all-post and category pagination expose canonical next and previous paths', async ({ page }) => {
+test('all-post and category pagination expose canonical next and previous paths', async ({ page, isMobile }) => {
   await page.goto('/blog/posts/');
   let pagination = page.getByRole('navigation', { name: 'Pagination' });
   const currentPage = pagination.locator('[aria-current="page"]');
@@ -241,7 +262,26 @@ test('all-post and category pagination expose canonical next and previous paths'
   await expect(pageTwo).toHaveAttribute('href', '/blog/posts/2/');
   await expect(pageTwo).toHaveCSS('border-top-width', '2px');
   await expect(pageTwo).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-  await expect(pagination.getByRole('link', { name: /next/i })).toHaveAttribute('rel', 'next');
+  const nextLink = pagination.getByRole('link', { name: 'Next' });
+  await expect(nextLink).toHaveAttribute('rel', 'next');
+  await expect(nextLink).toHaveCSS('column-gap', '8px');
+  const nextArrow = nextLink.locator('.blog-pager-arrow');
+  await expect(nextArrow).toHaveCSS('width', '24px');
+  await expect(nextArrow).toHaveCSS('height', '24px');
+  await expect(nextArrow).toHaveCSS('transform', 'none');
+  await expect(nextArrow).toHaveCSS('transition-duration', '0.15s');
+  await expect(nextArrow).toHaveCSS('transition-timing-function', 'ease-in-out');
+  if (!isMobile) {
+    await nextLink.hover();
+    await expect(nextArrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 2, 0)');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.mouse.move(0, 0);
+    await expect(nextArrow).toHaveCSS('transform', 'none');
+    await expect(nextArrow).toHaveCSS('transition-duration', '0s');
+    await nextLink.hover();
+    await expect(nextArrow).toHaveCSS('transform', 'none');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+  }
   expect(await pagination.evaluate((element) => {
     const footer = document.querySelector('footer');
     return footer ? footer.getBoundingClientRect().top - element.getBoundingClientRect().bottom : 0;
@@ -249,7 +289,27 @@ test('all-post and category pagination expose canonical next and previous paths'
 
   await page.goto('/blog/posts/2/');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://sanna.a11y.ing/blog/posts/2/');
-  await expect(page.getByRole('navigation', { name: 'Pagination' }).getByRole('link', { name: /previous/i })).toHaveAttribute('rel', 'prev');
+  pagination = page.getByRole('navigation', { name: 'Pagination' });
+  const previousLink = pagination.getByRole('link', { name: 'Previous' });
+  await expect(previousLink).toHaveAttribute('rel', 'prev');
+  await expect(previousLink).toHaveCSS('column-gap', '8px');
+  const previousArrow = previousLink.locator('.blog-pager-arrow');
+  await expect(previousArrow).toHaveCSS('width', '24px');
+  await expect(previousArrow).toHaveCSS('height', '24px');
+  await expect(previousArrow).toHaveCSS('transform', 'none');
+  await expect(previousArrow).toHaveCSS('transition-duration', '0.15s');
+  await expect(previousArrow).toHaveCSS('transition-timing-function', 'ease-in-out');
+  if (!isMobile) {
+    await previousLink.hover();
+    await expect(previousArrow).toHaveCSS('transform', 'matrix(1, 0, 0, 1, -2, 0)');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.mouse.move(0, 0);
+    await expect(previousArrow).toHaveCSS('transform', 'none');
+    await expect(previousArrow).toHaveCSS('transition-duration', '0s');
+    await previousLink.hover();
+    await expect(previousArrow).toHaveCSS('transform', 'none');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+  }
 
   await page.goto('/blog/accessibility/page/2/');
   pagination = page.getByRole('navigation', { name: 'Pagination' });

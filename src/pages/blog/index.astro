@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import BlogLayout from '../../blog/layouts/BlogLayout.astro';
 import CategoryCard from '../../blog/components/CategoryCard.astro';
 import PostGrid from '../../blog/components/PostGrid.astro';
@@ -25,5 +26,23 @@ const professionalCategories = blogCategories.filter((category) => category.grou
       <CategoryCard href="/blog/personal/" label="Personal" description="Life, cats, games, and other personal subjects that may join them later." />
     </div>
   </section>
-  <section aria-labelledby="latest-posts"><h2 id="latest-posts" class="mb-5 text-center text-3xl">Latest posts</h2><PostGrid posts={allPosts.slice(0, 6)} headingLevel={3} /><p class="mt-6 text-center"><a href="/blog/posts/" class="blog-button inline-block px-5 py-3 font-semibold no-underline">Browse all posts →</a></p></section>
+  <section aria-labelledby="latest-posts"><h2 id="latest-posts" class="mb-5 text-center text-3xl">Latest posts</h2><PostGrid posts={allPosts.slice(0, 6)} headingLevel={3} /><p class="mt-6 text-center"><a href="/blog/posts/" class="blog-button inline-flex items-center gap-2 px-5 py-3 text-base font-semibold no-underline">Browse all posts <Icon name="arrow-right" class="browse-all-posts-arrow h-6 w-6 shrink-0" aria-hidden="true" /></a></p></section>
 </BlogLayout>
+
+<style>
+  .browse-all-posts-arrow {
+    transition: transform 150ms ease-in-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .blog-button:hover .browse-all-posts-arrow {
+      transform: translateX(2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .browse-all-posts-arrow {
+      transition: none;
+    }
+  }
+</style>
