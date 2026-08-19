@@ -2,6 +2,19 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { representativePages } from './pages.ts';
 
+test('ordinary pages use the shared A11ying social image metadata', async ({ page }) => {
+  await page.goto('/');
+
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
+  await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
+  await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630');
+  await expect(page.locator('meta[property="og:image:type"]')).toHaveAttribute('content', 'image/jpeg');
+  await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
+  await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
+});
+
 test('blog homepage presents six latest posts and a full archive link', async ({ page }) => {
   await page.goto('/blog/');
   const topics = page.getByRole('region', { name: 'Blog topics' });
@@ -432,6 +445,20 @@ test('shared discovery files and not-found page use combined-site branding', asy
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'blog', exact: true })).toHaveAttribute('href', '/blog/');
+});
+
+test('retired English service pages return the standard not-found page', async ({ page }) => {
+  for (const path of [
+    '/services/',
+    '/services/accessibility-audits/',
+    '/services/training/',
+    '/services/consulting/',
+    '/services/monitoring/',
+  ]) {
+    const response = await page.goto(path);
+    expect(response?.status(), `${path} should return 404`).toBe(404);
+    await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+  }
 });
 
 for (const pageCase of representativePages) {

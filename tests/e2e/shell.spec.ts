@@ -6,9 +6,9 @@ test('English pages expose the shared primary navigation and skip link', async (
 
   const primaryNavigation = page.getByRole('navigation', { name: 'Main' });
   await expect(primaryNavigation).toBeVisible();
-  await expect(primaryNavigation.getByRole('link')).toHaveCount(6);
+  await expect(primaryNavigation.getByRole('link')).toHaveCount(5);
   expect(await primaryNavigation.getByRole('link').allTextContents()).toEqual([
-    'Home', 'About', 'Services', 'Speaking', 'Projects', 'Blog',
+    'Home', 'About', 'Speaking', 'Projects', 'Blog',
   ]);
   await expect(primaryNavigation.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
   await expect(page.getByRole('navigation', { name: 'Blog topics' })).toHaveCount(0);
@@ -25,7 +25,7 @@ test('Finnish pages expose the localized primary navigation', async ({ page }) =
   const primaryNavigation = page.getByRole('navigation', { name: 'Päävalikko' });
   await expect(primaryNavigation).toBeVisible();
   expect(await primaryNavigation.getByRole('link').allTextContents()).toEqual([
-    'Etusivu', 'Minä', 'Palvelut', 'Esiintymiset', 'Projektit', 'Blogi',
+    'Etusivu', 'Minusta', 'Esiintymiset', 'Projektit', 'Blogi',
   ]);
   await expect(primaryNavigation.getByRole('link', { name: 'Etusivu' })).toHaveAttribute('aria-current', 'page');
   await expect(page.getByRole('navigation', { name: 'Blog topics' })).toHaveCount(0);
@@ -34,7 +34,7 @@ test('Finnish pages expose the localized primary navigation', async ({ page }) =
 });
 
 test('English primary navigation destinations resolve and identify the current page', async ({ page }) => {
-  for (const path of ['/about/', '/services/', '/speaking/', '/projects/', '/blog/']) {
+  for (const path of ['/about/', '/speaking/', '/projects/', '/blog/']) {
     const response = await page.goto(path);
     expect(response?.ok(), `${path} should resolve`).toBe(true);
 
@@ -47,8 +47,7 @@ test('English primary navigation destinations resolve and identify the current p
 
 test('Finnish primary navigation destinations resolve and identify the current section', async ({ page }) => {
   const destinations = [
-    ['/fi/mina/', 'Minä'],
-    ['/fi/palvelut/', 'Palvelut'],
+    ['/fi/minusta/', 'Minusta'],
     ['/fi/esiintymiset/', 'Esiintymiset'],
     ['/fi/projektit/', 'Projektit'],
     ['/fi/blog/', 'Blogi'],
@@ -61,14 +60,11 @@ test('Finnish primary navigation destinations resolve and identify the current s
     await expect(navigation.getByRole('link', { name: label })).toHaveAttribute('aria-current', 'page');
     await expect(navigation.getByRole('link', { name: 'Etusivu' })).not.toHaveAttribute('aria-current');
   }
-
-  await page.goto('/fi/palvelut/koulutukset/');
-  await expect(page.getByRole('navigation', { name: 'Päävalikko' }).getByRole('link', { name: 'Palvelut' })).toHaveAttribute('aria-current', 'true');
 });
 
 test('new Finnish section pages link to their English counterparts', async ({ page }) => {
   for (const [path, label, target] of [
-    ['/fi/mina/', 'In English', '/about/'],
+    ['/fi/minusta/', 'In English', '/about/'],
     ['/fi/esiintymiset/', 'In English', '/speaking/'],
     ['/fi/projektit/', 'In English', '/projects/'],
   ] as const) {

@@ -19,6 +19,23 @@ const routes = [
   '/blog/personal/cats/remembering-osiris/',
 ];
 
+test('blog social images use the shared fallback or an authored article image', async ({ page }) => {
+  await page.goto('/blog/');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
+  await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
+  await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
+
+  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'http://127.0.0.1:4010/image.jpg');
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'http://127.0.0.1:4010/image.jpg');
+  await expect(page.locator('meta[property="og:image:alt"]')).toHaveCount(0);
+  await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveCount(0);
+  await expect(page.locator('meta[property="og:image:width"]')).toHaveCount(0);
+  await expect(page.locator('meta[property="og:image:height"]')).toHaveCount(0);
+  await expect(page.locator('meta[property="og:image:type"]')).toHaveCount(0);
+});
+
 test('canonical blog routes resolve with both navigation levels', async ({ page }) => {
   for (const path of routes) {
     const response = await page.goto(path);

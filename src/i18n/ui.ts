@@ -36,7 +36,6 @@ export const ui = {
     'ext-a11y': 'My accessibility site',
     'sidebar-menu-title': 'WCAG Principle',
     'site-front-link': 'A11ying with Sanna - Web Content Accessibility Guidelines front page',
-    'services-link': 'Accessibility Services',
   },
   fi: {
     'site-name': 'Verkkosisällön saavutettavuusohjeet',
@@ -68,6 +67,5 @@ export const ui = {
     'ext-a11y': 'Tutustu saavutettavuusssivustooni',
     'sidebar-menu-title': 'WCAG periaate',
     'site-front-link': 'A11ying with Sanna - Web Content Accessibility Guidelines etusivu',
-    'services-link': 'Palvelut',
   },
 } as const;

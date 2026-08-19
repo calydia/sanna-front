@@ -17,10 +17,12 @@ const {
   fiUrl = '/fi/blog/',
   enUrl = Astro.url.pathname,
   canonicalPath = Astro.url.pathname,
-  image = '/sanna-profile.jpg',
+  image = '/social-media-share.jpg',
 } = Astro.props;
 const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
 const isBlogHomepage = Astro.url.pathname === '/blog/';
+const selectedSocialImage = image || '/social-media-share.jpg';
+const socialImageAlt = selectedSocialImage === '/social-media-share.jpg' ? 'A11ying with Sanna' : undefined;
 ---
 
 <SiteLayout
@@ -33,10 +35,11 @@ const isBlogHomepage = Astro.url.pathname === '/blog/';
   bodyAppearance="blog"
   showLanguageSwitcher={isBlogHomepage}
   languageLinkText="Tietoa blogista suomeksi"
+  socialImage={selectedSocialImage}
+  socialImageAlt={socialImageAlt}
 >
   <Fragment slot="head">
     <meta property="og:url" content={canonicalUrl}>
-    <meta property="og:image" content={new URL(image, Astro.site)}>
     <link rel="canonical" href={canonicalUrl}>
     <link rel="alternate" type="application/rss+xml" title="Sanna Kramsi – Blog" href="/blog/rss.xml">
     <slot name="head" />
