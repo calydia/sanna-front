@@ -33,13 +33,11 @@ test('Speaking uses structured topics, appearances, archive metadata, and enquir
   await expect(developmentTopic).toContainText('Development practices');
 
   const upcoming = page.getByRole('region', { name: 'Upcoming talks' });
-  await expect(upcoming.getByRole('article')).toHaveCount(2);
+  await expect(upcoming.getByRole('article')).toHaveCount(1);
   await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
     'Hidden Skills of Development: Practical Building Blocks for Team Health',
-    'Who Owns Accessibility After a WordPress Site Launches?',
   ]);
   const drupalCon = upcoming.getByRole('article').first();
-  const wordpressAccessibilityDay = upcoming.getByRole('article').last();
   const drupalConMetadata = drupalCon.locator('p').first();
   await expect(drupalConMetadata).toContainText('DrupalCon Europe 2026 · Rotterdam');
   const metadataAccessibilitySnapshot = await drupalConMetadata.ariaSnapshot();
@@ -47,8 +45,6 @@ test('Speaking uses structured topics, appearances, archive metadata, and enquir
   expect(metadataAccessibilitySnapshot).not.toContain('·');
   await expect(drupalCon).toContainText('With Mikaela Kindstedt');
   await expect(drupalCon).toContainText('communication frameworks');
-  await expect(wordpressAccessibilityDay).not.toContainText('Mikaela Kindstedt');
-  await expect(wordpressAccessibilityDay).toContainText('ownership, content, plugins');
 
   const archive = page.getByRole('region', { name: 'Past talks' });
   await expect(archive.getByRole('heading', { level: 3 })).toHaveText(['2026', '2025']);
@@ -126,12 +122,9 @@ test('Esiintymiset localizes structure while preserving official talk titles', a
   const upcoming = page.getByRole('region', { name: 'Tulevat esiintymiset' });
   await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
     'Hidden Skills of Development: Practical Building Blocks for Team Health',
-    'Who Owns Accessibility After a WordPress Site Launches?',
   ]);
   const drupalCon = upcoming.getByRole('article').first();
-  const wordpressAccessibilityDay = upcoming.getByRole('article').last();
   await expect(drupalCon).toContainText('Yhdessä Mikaela Kindstedtin kanssa');
-  await expect(wordpressAccessibilityDay).not.toContainText('Mikaela Kindstedt');
 
   const archive = page.getByRole('region', { name: 'Aiemmat esiintymiset' });
   await expect(archive.locator('time[datetime]')).toHaveCount(5);
