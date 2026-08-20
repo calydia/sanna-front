@@ -95,7 +95,9 @@ test('blog shell exposes RSS, honest language navigation, and the production foo
   await expect(backToTop).toBeVisible();
   await expect(footer.getByRole('navigation', { name: 'About this site' }).getByRole('link', { name: 'About me' })).toHaveAttribute('href', '/about/');
   await expect(footer.getByRole('link', { name: 'RSS feed' })).toHaveAttribute('href', '/blog/rss.xml');
-  await expect(footer.getByRole('navigation', { name: 'A11ying sites' }).getByRole('link')).toHaveCount(2);
+  const relatedSites = footer.getByRole('navigation', { name: 'A11ying sites' });
+  await expect(relatedSites.getByRole('link')).toHaveCount(3);
+  await expect(relatedSites.getByRole('link', { name: 'Accessibility Testing Lab' })).toHaveAttribute('href', 'https://testing.a11y.ing/');
 
   if (!isMobile) {
     await backToTop.hover();
