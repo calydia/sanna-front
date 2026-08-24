@@ -46,6 +46,15 @@ test('canonical blog routes resolve with both navigation levels', async ({ page 
   }
 });
 
+test('blog listing pages retain the constrained main container', async ({ page }) => {
+  for (const path of ['/blog/', '/blog/accessibility/']) {
+    await page.goto(path);
+    const main = page.locator('main#main-content');
+    await expect(main.locator('.blog-shell')).toBeVisible();
+    await expect(main).toHaveCSS('max-width', '1152px');
+  }
+});
+
 test('empty professional categories render useful archive states', async ({ page }) => {
   for (const path of ['/blog/speaking/', '/blog/projects/']) {
     await page.goto(path);
@@ -65,8 +74,8 @@ test('personal discovery and articles retain their full nested paths', async ({ 
 
 test('article topics, related posts, pagination, and RSS use new routes', async ({ page, request }) => {
   await page.goto('/blog/accessibility/accessibility-testing-guide/');
-  await expect(page.getByRole('link', { name: 'Accessibility Testing' })).toHaveAttribute('href', '/blog/tags/accessibility-testing/');
-  await expect(page.locator('main article').getByRole('heading', { name: 'Related posts' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Accessibility Testing', exact: true })).toHaveAttribute('href', '/blog/tags/accessibility-testing/');
+  await expect(page.locator('.blog-article-layout > section').getByRole('heading', { name: 'Related posts' })).toBeVisible();
   expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain('BlogPosting');
 
   await page.goto('/blog/accessibility/');
@@ -78,6 +87,60 @@ test('article topics, related posts, pagination, and RSS use new routes', async 
   expect(feed).toContain('https://sanna.a11y.ing/blog/technology/moving-my-accessibility-site-to-astro/');
   expect(feed).toContain('https://sanna.a11y.ing/blog/personal/cats/remembering-osiris/');
   expect(feed).not.toContain('blog.sanna.ninja');
+});
+
+test('article supporting content uses top-level landmarks in reading order', async ({ page, isMobile }) => {
+  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+
+  const layout = page.locator('.blog-article-layout');
+  const topicNavigation = layout.locator(':scope > nav[aria-label="Blog topics"]');
+  const breadcrumbs = layout.locator(':scope > nav[aria-label="Breadcrumbs"]');
+  const contentLayout = layout.locator(':scope > .blog-article-content');
+  const main = contentLayout.locator(':scope > main');
+  const sidebar = contentLayout.locator(':scope > aside');
+  const relatedPosts = contentLayout.locator(':scope > section');
+
+  await expect(topicNavigation).toBeVisible();
+  await expect(breadcrumbs).toBeVisible();
+  await expect(main.getByRole('navigation', { name: 'Blog topics' })).toHaveCount(0);
+  await expect(main.getByRole('navigation', { name: 'Breadcrumbs' })).toHaveCount(0);
+  await expect(main.locator('article')).toBeVisible();
+  await expect(sidebar.getByRole('region', { name: 'About the author' })).toBeVisible();
+  await expect(main.getByRole('region', { name: 'About the author' })).toHaveCount(0);
+  await expect(relatedPosts.getByRole('heading', { name: 'Related posts' })).toBeVisible();
+  await expect(main.getByRole('heading', { name: 'Related posts' })).toHaveCount(0);
+  await expect(relatedPosts).toHaveCSS('grid-column-start', '1');
+  await expect(relatedPosts).toHaveCSS('grid-column-end', '-1');
+
+  expect(await topicNavigation.evaluate((node) => {
+    const breadcrumbNode = node.parentElement?.querySelector(':scope > nav[aria-label="Breadcrumbs"]');
+    return breadcrumbNode ? Boolean(node.compareDocumentPosition(breadcrumbNode) & Node.DOCUMENT_POSITION_FOLLOWING) : false;
+  })).toBe(true);
+  expect(await breadcrumbs.evaluate((node) => {
+    const mainNode = node.parentElement?.querySelector(':scope > .blog-article-content > main');
+    return mainNode ? Boolean(node.compareDocumentPosition(mainNode) & Node.DOCUMENT_POSITION_FOLLOWING) : false;
+  })).toBe(true);
+  expect(await main.evaluate((node) => {
+    const sidebarNode = node.parentElement?.querySelector(':scope > aside');
+    return sidebarNode ? Boolean(node.compareDocumentPosition(sidebarNode) & Node.DOCUMENT_POSITION_FOLLOWING) : false;
+  })).toBe(true);
+  expect(await sidebar.evaluate((node) => {
+    const relatedNode = node.parentElement?.querySelector(':scope > section');
+    return relatedNode ? Boolean(node.compareDocumentPosition(relatedNode) & Node.DOCUMENT_POSITION_FOLLOWING) : false;
+  })).toBe(true);
+
+  const [layoutBox, topicNavigationBox, breadcrumbsBox] = await Promise.all([
+    layout.boundingBox(),
+    topicNavigation.boundingBox(),
+    breadcrumbs.boundingBox(),
+  ]);
+  expect(topicNavigationBox?.width).toBe(layoutBox?.width);
+  expect(breadcrumbsBox?.width).toBe(layoutBox?.width);
+
+  if (!isMobile) {
+    const [mainBox, sidebarBox] = await Promise.all([main.boundingBox(), sidebar.boundingBox()]);
+    expect(mainBox?.y).toBe(sidebarBox?.y);
+  }
 });
 
 test('blog shell exposes RSS, honest language navigation, and the production footer', async ({ page, isMobile }) => {
