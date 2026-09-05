@@ -1,17 +1,26 @@
 ---
 type Props = {
   title: string;
+  titleLanguage?: string;
+  url: string;
   event: string;
   location: string;
   collaborator?: string;
   description: string;
 };
 
-const { title, event, location, collaborator, description } = Astro.props;
+const { title, titleLanguage, url, event, location, collaborator, description } = Astro.props;
 ---
 
 <article class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
-  <h3 class="text-lg">{title}</h3>
+  <h3 lang={titleLanguage} class="text-lg">
+    <a
+      href={url}
+      class="text-dk-purple-header underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-black dark:text-lt-perfume dark:focus:outline-white"
+    >
+      {title}
+    </a>
+  </h3>
   <p class="mt-3 font-semibold text-gray-600 dark:text-gray-300">{event} <span aria-hidden="true">·</span> {location}</p>
   {collaborator && <p class="mt-1 text-gray-600 dark:text-gray-300">{collaborator}</p>}
   <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">{description}</p>

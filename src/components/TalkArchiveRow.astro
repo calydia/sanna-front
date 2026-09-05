@@ -1,6 +1,7 @@
 ---
 type Props = {
   title: string;
+  titleLanguage?: string;
   date: string;
   displayDate: string;
   event: string;
@@ -15,6 +16,7 @@ type Props = {
 
 const {
   title,
+  titleLanguage,
   date,
   displayDate,
   event,
@@ -31,7 +33,7 @@ const metadata = [event, location, collaborator, role].filter((value): value is 
 ---
 
 <li class="border-t border-gray-300 py-5 first:border-t-0 first:pt-0 dark:border-gray-700">
-  <h4 class="text-lg">{title}</h4>
+  <h4 lang={titleLanguage} class="text-lg">{title}</h4>
   <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
     <time datetime={date}>{displayDate}</time>{metadata.map((item) => <Fragment>{' '}<span aria-hidden="true">·</span>{' '}{item}</Fragment>)}
   </p>

@@ -33,11 +33,18 @@ test('Speaking uses structured topics, appearances, archive metadata, and enquir
   await expect(developmentTopic).toContainText('Development practices');
 
   const upcoming = page.getByRole('region', { name: 'Upcoming talks' });
-  await expect(upcoming.getByRole('article')).toHaveCount(1);
+  await expect(upcoming.getByRole('article')).toHaveCount(3);
   await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
     'Hidden Skills of Development: Practical Building Blocks for Team Health',
+    'Who Owns Accessibility After a WordPress Site Launches?',
+    'Decoding Collaboration: Hidden Skills for Diverse Workflows',
   ]);
+  await expect(upcoming.locator('h3[lang="en"]')).toHaveCount(3);
   const drupalCon = upcoming.getByRole('article').first();
+  await expect(drupalCon.getByRole('link', { name: 'Hidden Skills of Development: Practical Building Blocks for Team Health' })).toHaveAttribute(
+    'href',
+    'https://events.drupal.org/rotterdam2026/session/hidden-skills-development-practical-building-blocks-team-health',
+  );
   const drupalConMetadata = drupalCon.locator('p').first();
   await expect(drupalConMetadata).toContainText('DrupalCon Europe 2026 · Rotterdam');
   const metadataAccessibilitySnapshot = await drupalConMetadata.ariaSnapshot();
@@ -45,6 +52,21 @@ test('Speaking uses structured topics, appearances, archive metadata, and enquir
   expect(metadataAccessibilitySnapshot).not.toContain('·');
   await expect(drupalCon).toContainText('With Mikaela Kindstedt');
   await expect(drupalCon).toContainText('communication frameworks');
+  const wordpressAccessibilityDay = upcoming.getByRole('article').nth(1);
+  await expect(wordpressAccessibilityDay.getByRole('link', { name: 'Who Owns Accessibility After a WordPress Site Launches?' })).toHaveAttribute(
+    'href',
+    'https://wpaccessibility.day/2026/sessions/who-owns-accessibility-after-a-wordpress-site-launches/',
+  );
+  await expect(wordpressAccessibilityDay).toContainText('WordPress Accessibility Day 2026 · Online');
+  await expect(wordpressAccessibilityDay).toContainText('accessible launch is only the beginning');
+  const wpSuomi = upcoming.getByRole('article').nth(2);
+  await expect(wpSuomi.getByRole('link', { name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' })).toHaveAttribute(
+    'href',
+    'https://wpsuomi.fi/',
+  );
+  await expect(wpSuomi).toContainText('WP Suomi 2026 · Oulu');
+  await expect(wpSuomi).toContainText('With Mikaela Kindstedt');
+  await expect(wpSuomi).toContainText('hidden cost of "silent acceptance"');
 
   const archive = page.getByRole('region', { name: 'Past talks' });
   await expect(archive.getByRole('heading', { level: 3 })).toHaveText(['2026', '2025']);
@@ -120,14 +142,36 @@ test('Esiintymiset localizes structure while preserving official talk titles', a
   await expect(topics.getByRole('heading', { level: 3, name: 'Ohjelmistokehitys, tiimit ja viestintä' })).toBeVisible();
 
   const upcoming = page.getByRole('region', { name: 'Tulevat esiintymiset' });
+  await expect(upcoming.getByRole('article')).toHaveCount(3);
   await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
     'Hidden Skills of Development: Practical Building Blocks for Team Health',
+    'Who Owns Accessibility After a WordPress Site Launches?',
+    'Decoding Collaboration: Hidden Skills for Diverse Workflows',
   ]);
   const drupalCon = upcoming.getByRole('article').first();
+  await expect(drupalCon.getByRole('link', { name: 'Hidden Skills of Development: Practical Building Blocks for Team Health' })).toHaveAttribute(
+    'href',
+    'https://events.drupal.org/rotterdam2026/session/hidden-skills-development-practical-building-blocks-team-health',
+  );
   await expect(drupalCon).toContainText('Yhdessä Mikaela Kindstedtin kanssa');
+  const wordpressAccessibilityDay = upcoming.getByRole('article').nth(1);
+  await expect(wordpressAccessibilityDay.getByRole('link', { name: 'Who Owns Accessibility After a WordPress Site Launches?' })).toHaveAttribute(
+    'href',
+    'https://wpaccessibility.day/2026/sessions/who-owns-accessibility-after-a-wordpress-site-launches/',
+  );
+  await expect(wordpressAccessibilityDay).toContainText('WordPress Accessibility Day 2026 · Verkossa');
+  const wpSuomi = upcoming.getByRole('article').nth(2);
+  await expect(wpSuomi.getByRole('link', { name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' })).toHaveAttribute(
+    'href',
+    'https://wpsuomi.fi/',
+  );
+  await expect(wpSuomi).toContainText('WP Suomi 2026 · Oulu');
+  await expect(wpSuomi).toContainText('Yhdessä Mikaela Kindstedtin kanssa');
 
   const archive = page.getByRole('region', { name: 'Aiemmat esiintymiset' });
   await expect(archive.locator('time[datetime]')).toHaveCount(5);
+  await expect(archive.locator('h4[lang="en"]')).toHaveCount(4);
+  await expect(archive.getByRole('heading', { level: 4, name: '5 yleistä saavutettavuusvirhettä, joita kehittäjät tekevät' })).not.toHaveAttribute('lang', 'en');
   await expect(archive.getByRole('link', { name: 'Katso tallenne: How do organisations succeed in accessibility?' })).toHaveAttribute(
     'href',
     'https://www.youtube.com/watch?v=RdvkjLFvvdE',
@@ -188,6 +232,11 @@ test('profile pages reflow at 320 CSS pixels without horizontal overflow', async
 
 test('profile-page actions are keyboard focusable', async ({ page }) => {
   await page.goto('/speaking/');
+  const firstTalk = page.getByRole('link', { name: 'Hidden Skills of Development: Practical Building Blocks for Team Health' });
+  await firstTalk.focus();
+  await expect(firstTalk).toBeFocused();
+  await expect(firstTalk).toHaveCSS('outline-style', 'solid');
+
   const email = page.getByRole('link', { name: 'Email Sanna' });
   await email.focus();
   await expect(email).toBeFocused();
