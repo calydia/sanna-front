@@ -1,9 +1,10 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { gotoExistingPage } from './helpers.ts';
 import { representativePages } from './pages.ts';
 
 test('ordinary pages use the shared A11ying social image metadata', async ({ page }) => {
-  await page.goto('/');
+  await gotoExistingPage(page, '/');
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
   await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
@@ -16,7 +17,7 @@ test('ordinary pages use the shared A11ying social image metadata', async ({ pag
 });
 
 test('blog homepage presents six latest posts and a full archive link', async ({ page }) => {
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
   const topics = page.getByRole('region', { name: 'Blog topics' });
   await expect(page.getByRole('heading', { name: 'Professional topics' })).toHaveCount(0);
   await expect(topics.getByRole('heading', { level: 2 })).toHaveCount(5);
@@ -29,7 +30,7 @@ test('blog homepage presents six latest posts and a full archive link', async ({
 });
 
 test('article cards keep images and descriptions outside the expanded title link', async ({ page }) => {
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
   const card = page.getByRole('region', { name: 'Latest posts' }).getByRole('listitem').first();
   const titleLink = card.getByRole('link', { name: 'A practical guide to accessibility testing' });
   await expect(titleLink.locator('img, p')).toHaveCount(0);
@@ -56,7 +57,7 @@ test('article cards keep images and descriptions outside the expanded title link
 
 test('blog card and browse-link interactions use the approved underline and focus treatments', async ({ page, isMobile }) => {
   test.skip(Boolean(isMobile), 'Hover styling requires a hover-capable pointer.');
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
   await page.locator('html').evaluate((element) => {
     element.classList.remove('dark');
     element.classList.add('light');
@@ -116,7 +117,7 @@ test('blog card and browse-link interactions use the approved underline and focu
   await expect(browseLink).toHaveCSS('outline-offset', '4px');
   await expect(browseLink).toHaveCSS('outline-color', 'rgb(0, 0, 0)');
 
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   const tagLink = page.locator('.blog-tag-link').first();
   await expect(tagLink).toHaveCSS('text-decoration-line', 'none');
   await tagLink.hover();
@@ -142,7 +143,7 @@ test('blog card and browse-link interactions use the approved underline and focu
 });
 
 test('blog styling is scoped and article supporting content matches production structure', async ({ page }) => {
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   await page.locator('html').evaluate((element) => {
     element.classList.remove('dark');
     element.classList.add('light');
@@ -207,7 +208,7 @@ test('blog styling is scoped and article supporting content matches production s
   await expect(keepReadingLink).toHaveCSS('text-decoration-line', 'underline');
   await expect(tocLink).toHaveCSS('color', 'rgb(173, 229, 248)');
 
-  await page.goto('/about/');
+  await gotoExistingPage(page, '/about/');
   await page.locator('html').evaluate((element) => {
     element.classList.remove('dark');
     element.classList.add('light');
@@ -216,7 +217,7 @@ test('blog styling is scoped and article supporting content matches production s
 });
 
 test('blog topic navigation distinguishes inactive, current, and nested ancestor links', async ({ page, isMobile }) => {
-  await page.goto('/blog/accessibility/');
+  await gotoExistingPage(page, '/blog/accessibility/');
   const topics = page.getByRole('navigation', { name: 'Blog topics' });
   const accessibility = topics.getByRole('link', { name: 'Accessibility' });
   const technology = topics.getByRole('link', { name: 'Technology' });
@@ -231,7 +232,7 @@ test('blog topic navigation distinguishes inactive, current, and nested ancestor
     await expect(accessibility).toHaveCSS('text-decoration-thickness', '4px');
   }
 
-  await page.goto('/blog/personal/cats/remembering-osiris/');
+  await gotoExistingPage(page, '/blog/personal/cats/remembering-osiris/');
   const personal = page.getByRole('navigation', { name: 'Blog topics' }).getByRole('link', { name: 'Personal' });
   await expect(personal).toHaveAttribute('aria-current', 'true');
   await expect(personal).toHaveCSS('text-decoration-line', 'underline');
@@ -244,12 +245,12 @@ test('blog topic navigation distinguishes inactive, current, and nested ancestor
 });
 
 test('breadcrumbs reflect professional and nested personal hierarchies', async ({ page }) => {
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   let breadcrumb = page.getByRole('navigation', { name: 'Breadcrumbs' });
   await expect(breadcrumb.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog/');
   await expect(breadcrumb.getByRole('link', { name: 'Accessibility' })).toHaveAttribute('href', '/blog/accessibility/');
 
-  await page.goto('/blog/personal/cats/remembering-osiris/');
+  await gotoExistingPage(page, '/blog/personal/cats/remembering-osiris/');
   breadcrumb = page.getByRole('navigation', { name: 'Breadcrumbs' });
   await expect(breadcrumb.getByRole('link', { name: 'Personal' })).toHaveAttribute('href', '/blog/personal/');
   await expect(breadcrumb.getByRole('link', { name: 'Cats' })).toHaveAttribute('href', '/blog/personal/cats/');
@@ -257,15 +258,15 @@ test('breadcrumbs reflect professional and nested personal hierarchies', async (
 });
 
 test('article image credits render only when Drupal provides them', async ({ page }) => {
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   await expect(page.getByText(/Image credit:|null/)).toHaveCount(0);
 
-  await page.goto('/blog/accessibility/how-to-create-more-accessible-content-avoid-common-accessibility-mistakes/');
+  await gotoExistingPage(page, '/blog/accessibility/how-to-create-more-accessible-content-avoid-common-accessibility-mistakes/');
   await expect(page.getByText('Image credit: Test fixture image')).toBeVisible();
 });
 
 test('all-post and category pagination expose canonical next and previous paths', async ({ page, isMobile }) => {
-  await page.goto('/blog/posts/');
+  await gotoExistingPage(page, '/blog/posts/');
   let pagination = page.getByRole('navigation', { name: 'Pagination' });
   const currentPage = pagination.locator('[aria-current="page"]');
   const pageTwo = pagination.getByRole('link', { name: 'Page 2' });
@@ -300,7 +301,7 @@ test('all-post and category pagination expose canonical next and previous paths'
     return footer ? footer.getBoundingClientRect().top - element.getBoundingClientRect().bottom : 0;
   })).toBeGreaterThanOrEqual(32);
 
-  await page.goto('/blog/posts/2/');
+  await gotoExistingPage(page, '/blog/posts/2/');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://sanna.a11y.ing/blog/posts/2/');
   pagination = page.getByRole('navigation', { name: 'Pagination' });
   const previousLink = pagination.getByRole('link', { name: 'Previous' });
@@ -324,34 +325,34 @@ test('all-post and category pagination expose canonical next and previous paths'
     await page.emulateMedia({ reducedMotion: 'no-preference' });
   }
 
-  await page.goto('/blog/accessibility/page/2/');
+  await gotoExistingPage(page, '/blog/accessibility/page/2/');
   pagination = page.getByRole('navigation', { name: 'Pagination' });
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Accessibility posts – Page 2');
   await expect(pagination.getByRole('link', { name: 'Page 1' })).toHaveAttribute('href', '/blog/accessibility/');
   await expect(page.getByText('New here? Read this first')).toHaveCount(0);
 });
 
-test('every blog page keeps consistent space above the footer', async ({ page }) => {
-  for (const path of [
-    '/blog/',
-    '/blog/accessibility/accessibility-testing-guide/',
-    '/blog/posts/',
-    '/blog/personal/games/',
-  ]) {
-    await page.goto(path);
+for (const path of [
+  '/blog/',
+  '/blog/accessibility/accessibility-testing-guide/',
+  '/blog/posts/',
+  '/blog/personal/games/',
+]) {
+  test(`${path} keeps consistent space above the footer`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     expect(await page.locator('footer').evaluate((footer) => {
       const main = document.querySelector('main');
       return main ? footer.getBoundingClientRect().top - main.getBoundingClientRect().bottom : 0;
     })).toBeGreaterThanOrEqual(32);
-  }
-});
+  });
+}
 
 test('the document reserves scrollbar space to prevent cross-page horizontal movement', async ({ page }) => {
-  await page.goto('/about/');
+  await gotoExistingPage(page, '/about/');
   await expect(page.locator('html')).toHaveCSS('scrollbar-gutter', 'stable');
 
   const aboutMainWidth = await page.locator('main').evaluate((element) => element.getBoundingClientRect().width);
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
   await expect(page.locator('html')).toHaveCSS('scrollbar-gutter', 'stable');
   const blogMainWidth = await page.locator('main').evaluate((element) => element.getBoundingClientRect().width);
 
@@ -365,7 +366,7 @@ test('CSP is present and permits the shared theme toggle on blog pages', async (
   });
   page.on('pageerror', (error) => errors.push(error.message));
 
-  await page.goto('/blog/', { waitUntil: 'networkidle' });
+  await gotoExistingPage(page, '/blog/', { waitUntil: 'networkidle' });
   await expect(page.locator('meta[http-equiv="content-security-policy"]')).toHaveCount(1);
   const html = page.locator('html');
   const initialClass = await html.getAttribute('class');
@@ -388,7 +389,7 @@ test('theme is initialized synchronously and persists across full-page navigatio
       sessionStorage.setItem('theme-test-seeded', 'true');
     }
   });
-  await page.goto('/blog/', { waitUntil: 'domcontentloaded' });
+  await gotoExistingPage(page, '/blog/', { waitUntil: 'domcontentloaded' });
   const root = page.locator('html');
   const initializer = page.locator('head script[src="/theme-init.js"]');
   await expect(initializer).not.toHaveAttribute('type', 'module');
@@ -414,7 +415,7 @@ test('theme is initialized synchronously and persists across full-page navigatio
 test('theme initializer falls back to the system preference when storage is unset', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.addInitScript(() => localStorage.removeItem('darkMode'));
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await gotoExistingPage(page, '/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('html')).toHaveClass(/dark/);
   await expect(page.locator('html')).toHaveCSS('color-scheme', 'dark');
 });
@@ -447,23 +448,23 @@ test('shared discovery files and not-found page use combined-site branding', asy
   await expect(page.getByRole('link', { name: 'blog', exact: true })).toHaveAttribute('href', '/blog/');
 });
 
-test('retired English service pages return the standard not-found page', async ({ page }) => {
-  for (const path of [
-    '/services/',
-    '/services/accessibility-audits/',
-    '/services/training/',
-    '/services/consulting/',
-    '/services/monitoring/',
-  ]) {
+for (const path of [
+  '/services/',
+  '/services/accessibility-audits/',
+  '/services/training/',
+  '/services/consulting/',
+  '/services/monitoring/',
+]) {
+  test(`retired service page ${path} returns the standard not-found page`, async ({ page }) => {
     const response = await page.goto(path);
     expect(response?.status(), `${path} should return 404`).toBe(404);
     await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
-  }
-});
+  });
+}
 
 for (const pageCase of representativePages) {
   test(`@a11y ${pageCase.name} has no WCAG A or AA violations`, async ({ page }) => {
-    await page.goto(pageCase.path, { waitUntil: 'networkidle' });
+    await gotoExistingPage(page, pageCase.path, { waitUntil: 'networkidle' });
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();

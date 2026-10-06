@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { gotoExistingPage } from './helpers.ts';
 import { representativePages } from './pages.ts';
 
 for (const pageCase of representativePages) {
   for (const theme of ['light', 'dark'] as const) {
     test(`@visual ${pageCase.name} in ${theme} theme`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.goto(pageCase.path, { waitUntil: 'networkidle' });
+      await gotoExistingPage(page, pageCase.path, { waitUntil: 'networkidle' });
       await page.evaluate((selectedTheme) => {
         document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add(selectedTheme);

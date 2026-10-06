@@ -1,8 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { gotoExistingPage } from './helpers.ts';
 
 test('English pages expose the shared primary navigation and skip link', async ({ page }) => {
-  await page.goto('/');
+  await gotoExistingPage(page, '/');
 
   const primaryNavigation = page.getByRole('navigation', { name: 'Main' });
   await expect(primaryNavigation).toBeVisible();
@@ -20,7 +21,7 @@ test('English pages expose the shared primary navigation and skip link', async (
 });
 
 test('Finnish pages expose the localized primary navigation', async ({ page }) => {
-  await page.goto('/fi/');
+  await gotoExistingPage(page, '/fi/', { language: 'fi' });
 
   const primaryNavigation = page.getByRole('navigation', { name: 'Päävalikko' });
   await expect(primaryNavigation).toBeVisible();
@@ -33,48 +34,46 @@ test('Finnish pages expose the localized primary navigation', async ({ page }) =
   await expect(primaryNavigation.getByRole('link', { name: 'Blogi' })).toHaveAttribute('href', '/fi/blog/');
 });
 
-test('English primary navigation destinations resolve and identify the current page', async ({ page }) => {
-  for (const path of ['/about/', '/speaking/', '/projects/', '/blog/']) {
-    const response = await page.goto(path);
-    expect(response?.ok(), `${path} should resolve`).toBe(true);
+for (const path of ['/about/', '/speaking/', '/projects/', '/blog/']) {
+  test(`English primary navigation identifies ${path} as the current page`, async ({ page }) => {
+    await gotoExistingPage(page, path);
 
     const primaryNavigation = page.getByRole('navigation', { name: 'Main' });
     const currentLink = primaryNavigation.locator('[aria-current="page"]');
     await expect(currentLink).toHaveCount(1);
     await expect(currentLink).toHaveAttribute('href', path);
-  }
-});
+  });
+}
 
-test('Finnish primary navigation destinations resolve and identify the current section', async ({ page }) => {
-  const destinations = [
-    ['/fi/minusta/', 'Minusta'],
-    ['/fi/esiintymiset/', 'Esiintymiset'],
-    ['/fi/projektit/', 'Projektit'],
-    ['/fi/blog/', 'Blogi'],
-  ] as const;
+const finnishDestinations = [
+  ['/fi/minusta/', 'Minusta'],
+  ['/fi/esiintymiset/', 'Esiintymiset'],
+  ['/fi/projektit/', 'Projektit'],
+  ['/fi/blog/', 'Blogi'],
+] as const;
 
-  for (const [path, label] of destinations) {
-    const response = await page.goto(path);
-    expect(response?.ok(), `${path} should resolve`).toBe(true);
+for (const [path, label] of finnishDestinations) {
+  test(`Finnish primary navigation identifies ${path} as the current section`, async ({ page }) => {
+    await gotoExistingPage(page, path, { language: 'fi' });
     const navigation = page.getByRole('navigation', { name: 'Päävalikko' });
     await expect(navigation.getByRole('link', { name: label })).toHaveAttribute('aria-current', 'page');
     await expect(navigation.getByRole('link', { name: 'Etusivu' })).not.toHaveAttribute('aria-current');
-  }
-});
+  });
+}
 
-test('new Finnish section pages link to their English counterparts', async ({ page }) => {
-  for (const [path, label, target] of [
-    ['/fi/minusta/', 'In English', '/about/'],
-    ['/fi/esiintymiset/', 'In English', '/speaking/'],
-    ['/fi/projektit/', 'In English', '/projects/'],
-  ] as const) {
-    await page.goto(path);
+for (const [path, label, target] of [
+  ['/fi/minusta/', 'In English', '/about/'],
+  ['/fi/esiintymiset/', 'In English', '/speaking/'],
+  ['/fi/projektit/', 'In English', '/projects/'],
+] as const) {
+  test(`${path} links to its English counterpart`, async ({ page }) => {
+    await gotoExistingPage(page, path, { language: 'fi' });
     await expect(page.getByRole('link', { name: label })).toHaveAttribute('href', target);
-  }
-});
+  });
+}
 
 test('Finnish blog introduction points to English without claiming to be a translation', async ({ page }) => {
-  await page.goto('/fi/blog/');
+  await gotoExistingPage(page, '/fi/blog/', { language: 'fi' });
 
   const blogLink = page.getByRole('link', { name: 'Read the blog in English' });
   await expect(blogLink).toHaveAttribute('href', '/blog/');
@@ -83,10 +82,10 @@ test('Finnish blog introduction points to English without claiming to be a trans
   await expect(page.locator('head link[rel="alternate"]')).toHaveCount(0);
 });
 
-test('@a11y shared shell and Finnish section pages have no detectable violations', async ({ page }) => {
-  for (const path of ['/', '/fi/mina/', '/fi/esiintymiset/', '/fi/projektit/', '/fi/blog/']) {
-    await page.goto(path);
+for (const path of ['/', '/fi/minusta/', '/fi/esiintymiset/', '/fi/projektit/', '/fi/blog/']) {
+  test(`@a11y shared shell on ${path} has no detectable violations`, async ({ page }) => {
+    await gotoExistingPage(page, path, { language: path.startsWith('/fi/') ? 'fi' : 'en' });
     const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations, `${path} accessibility violations`).toEqual([]);
-  }
-});
+    expect(results.violations).toEqual([]);
+  });
+}

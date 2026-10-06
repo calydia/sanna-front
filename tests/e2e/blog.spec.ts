@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { gotoExistingPage } from './helpers.ts';
 
 const routes = [
   '/blog/',
@@ -20,13 +21,13 @@ const routes = [
 ];
 
 test('blog social images use the shared fallback or an authored article image', async ({ page }) => {
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://sanna.a11y.ing/social-media-share.jpg');
   await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
   await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute('content', 'A11ying with Sanna');
 
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'http://127.0.0.1:4010/image.jpg');
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'http://127.0.0.1:4010/image.jpg');
   await expect(page.locator('meta[property="og:image:alt"]')).toHaveCount(0);
@@ -36,51 +37,54 @@ test('blog social images use the shared fallback or an authored article image', 
   await expect(page.locator('meta[property="og:image:type"]')).toHaveCount(0);
 });
 
-test('canonical blog routes resolve with both navigation levels', async ({ page }) => {
-  for (const path of routes) {
-    const response = await page.goto(path);
-    expect(response?.ok(), `${path} should resolve`).toBe(true);
+for (const path of routes) {
+  test(`canonical blog route ${path} resolves with both navigation levels`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Blog topics' })).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://sanna.a11y.ing${path}`);
-  }
-});
+  });
+}
 
-test('blog listing pages retain the constrained main container', async ({ page }) => {
-  for (const path of ['/blog/', '/blog/accessibility/']) {
-    await page.goto(path);
+for (const path of ['/blog/', '/blog/accessibility/']) {
+  test(`${path} retains the constrained blog listing container`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     const main = page.locator('main#main-content');
     await expect(main.locator('.blog-shell')).toBeVisible();
     await expect(main).toHaveCSS('max-width', '1152px');
-  }
-});
+  });
+}
 
-test('empty professional categories render useful archive states', async ({ page }) => {
-  for (const path of ['/blog/speaking/', '/blog/projects/']) {
-    await page.goto(path);
+for (const path of ['/blog/speaking/', '/blog/projects/']) {
+  test(`${path} renders a useful empty archive state`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     await expect(page.getByText('No posts have been published in this section yet.')).toBeVisible();
-  }
-});
+  });
+}
 
 test('personal discovery and articles retain their full nested paths', async ({ page }) => {
-  await page.goto('/blog/personal/');
+  await gotoExistingPage(page, '/blog/personal/');
   await expect(page.getByLabel('Personal topics').getByRole('link', { name: 'Cats', exact: true })).toHaveAttribute('href', '/blog/personal/cats/');
   await expect(page.getByRole('link', { name: 'Remembering Osiris' }).first()).toHaveAttribute('href', '/blog/personal/cats/remembering-osiris/');
 
-  await page.goto('/blog/personal/cats/remembering-osiris/');
+  await gotoExistingPage(page, '/blog/personal/cats/remembering-osiris/');
   await expect(page.getByRole('heading', { name: 'Remembering Osiris', level: 1 })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Breadcrumbs' })).toContainText('Personal');
 });
 
-test('article topics, related posts, pagination, and RSS use new routes', async ({ page, request }) => {
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+test('article topics and related posts use canonical routes', async ({ page }) => {
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   await expect(page.getByRole('link', { name: 'Accessibility Testing', exact: true })).toHaveAttribute('href', '/blog/tags/accessibility-testing/');
-  await expect(page.locator('.blog-article-layout > section').getByRole('heading', { name: 'Related posts' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Related posts' })).toBeVisible();
   expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain('BlogPosting');
+});
 
-  await page.goto('/blog/accessibility/');
+test('category pagination uses the canonical page route', async ({ page }) => {
+  await gotoExistingPage(page, '/blog/accessibility/');
   await expect(page.getByRole('link', { name: 'Page 2' })).toHaveAttribute('href', '/blog/accessibility/page/2/');
+});
 
+test('RSS uses canonical article routes', async ({ request }) => {
   const response = await request.get('/blog/rss.xml');
   expect(response.ok()).toBe(true);
   const feed = await response.text();
@@ -90,7 +94,7 @@ test('article topics, related posts, pagination, and RSS use new routes', async 
 });
 
 test('article supporting content uses top-level landmarks in reading order', async ({ page, isMobile }) => {
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
 
   const layout = page.locator('.blog-article-layout');
   const topicNavigation = layout.locator(':scope > nav[aria-label="Blog topics"]');
@@ -144,7 +148,7 @@ test('article supporting content uses top-level landmarks in reading order', asy
 });
 
 test('blog shell exposes RSS, honest language navigation, and the production footer', async ({ page, isMobile }) => {
-  await page.goto('/blog/');
+  await gotoExistingPage(page, '/blog/');
 
   const header = page.locator('header');
   const rssLink = header.getByRole('link', { name: 'RSS feed' });
@@ -173,29 +177,29 @@ test('blog shell exposes RSS, honest language navigation, and the production foo
   await backToTop.click();
   await expect(page.locator('#page-top')).toBeFocused();
 
-  await page.goto('/blog/accessibility/accessibility-testing-guide/');
+  await gotoExistingPage(page, '/blog/accessibility/accessibility-testing-guide/');
   await expect(page.locator('header').getByRole('link', { name: 'RSS feed' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Tietoa blogista suomeksi' })).toHaveCount(0);
 
-  await page.goto('/about/');
+  await gotoExistingPage(page, '/about/');
   await expect(page.getByRole('link', { name: 'RSS feed' })).toHaveCount(0);
   await expect(page.getByText(/Made with/)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Back to top' })).toHaveCount(0);
 });
 
-test('rendered blog pages contain no former domain or root-level blog links', async ({ page }) => {
-  for (const path of ['/blog/', '/blog/accessibility/', '/blog/personal/', '/blog/personal/cats/remembering-osiris/']) {
-    await page.goto(path);
+for (const path of ['/blog/', '/blog/accessibility/', '/blog/personal/', '/blog/personal/cats/remembering-osiris/']) {
+  test(`${path} contains no former domain or root-level blog links`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     const hrefs = await page.locator('a[href]').evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
     expect(hrefs.some((href) => href.includes('blog.sanna.ninja')), `${path} old-domain links`).toBe(false);
     expect(hrefs.some((href) => /^\/(tech|life|cats|games|tags)\//.test(href)), `${path} former root links`).toBe(false);
-  }
-});
+  });
+}
 
-test('@a11y representative blog pages have no detectable violations', async ({ page }) => {
-  for (const path of ['/blog/', '/blog/personal/', '/blog/speaking/', '/blog/accessibility/accessibility-testing-guide/']) {
-    await page.goto(path);
+for (const path of ['/blog/', '/blog/personal/', '/blog/speaking/', '/blog/accessibility/accessibility-testing-guide/']) {
+  test(`@a11y ${path} has no detectable accessibility violations`, async ({ page }) => {
+    await gotoExistingPage(page, path);
     const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations, `${path} accessibility violations`).toEqual([]);
-  }
-});
+    expect(results.violations).toEqual([]);
+  });
+}
