@@ -24,7 +24,7 @@ export default defineConfig({
       timeout: 10_000,
     },
     {
-      command: 'npm run build && npm run preview -- --host 127.0.0.1 --port 4322',
+      command: 'npm run build && npm run preview -- --host 127.0.0.1 --port 4322 --ignore-lock',
       env: {
         ...process.env,
         BLOG_API_URL: `${mockApiUrl}/graphql`,
