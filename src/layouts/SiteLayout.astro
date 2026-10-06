@@ -39,13 +39,14 @@ const {
   showLanguageSwitcher = true,
   languageLinkText,
   socialImage = '/social-media-share.jpg',
-  socialImageAlt = 'A11ying with Sanna',
+  socialImageAlt,
   customPageStructure = false,
 } = Astro.props;
 const t = useTranslations(language);
 const documentTitle = title === 'Sanna Kramsi' ? title : `${title} - Sanna Kramsi`;
 const socialImageUrl = new URL(socialImage, Astro.site);
 const isSharedSocialImage = socialImage === '/social-media-share.jpg';
+const resolvedSocialImageAlt = socialImageAlt ?? (isSharedSocialImage ? 'A11ying with Sanna' : undefined);
 ---
 
 <html lang={language}>
@@ -64,10 +65,10 @@ const isSharedSocialImage = socialImage === '/social-media-share.jpg';
     {isSharedSocialImage && <meta property="og:image:width" content="1200">}
     {isSharedSocialImage && <meta property="og:image:height" content="630">}
     {isSharedSocialImage && <meta property="og:image:type" content="image/jpeg">}
-    {socialImageAlt && <meta property="og:image:alt" content={socialImageAlt}>}
+    {resolvedSocialImageAlt && <meta property="og:image:alt" content={resolvedSocialImageAlt}>}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content={socialImageUrl}>
-    {socialImageAlt && <meta name="twitter:image:alt" content={socialImageAlt}>}
+    {resolvedSocialImageAlt && <meta name="twitter:image:alt" content={resolvedSocialImageAlt}>}
     <link rel="shortcut icon" href="/favicons/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicons/favicon.ico" type="image/x-icon">
     <link rel="manifest" href="/manifest.json">
