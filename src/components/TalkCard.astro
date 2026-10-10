@@ -3,13 +3,15 @@ type Props = {
   title: string;
   titleLanguage?: string;
   url: string;
+  date?: string;
+  displayDate?: string;
   event: string;
   location: string;
   collaborator?: string;
   description: string;
 };
 
-const { title, titleLanguage, url, event, location, collaborator, description } = Astro.props;
+const { title, titleLanguage, url, date, displayDate, event, location, collaborator, description } = Astro.props;
 ---
 
 <article class="rounded-2xl border border-white/50 bg-white/95 p-6 shadow-lg dark:border-black/20 dark:bg-black/40">
@@ -21,6 +23,7 @@ const { title, titleLanguage, url, event, location, collaborator, description } 
       {title}
     </a>
   </h3>
+  {date && displayDate && <p class="mt-3 text-gray-600 dark:text-gray-300"><time datetime={date}>{displayDate}</time></p>}
   <p class="mt-3 font-semibold text-gray-600 dark:text-gray-300">{event} <span aria-hidden="true">·</span> {location}</p>
   {collaborator && <p class="mt-1 text-gray-600 dark:text-gray-300">{collaborator}</p>}
   <p class="mt-4 leading-relaxed text-gray-700 dark:text-gray-300">{description}</p>
