@@ -1,3 +1,4 @@
+import { normalizeDrupalHtml } from './drupalHtml.ts';
 import type {
   BlogArticle,
   BlogArticleListing,
@@ -90,6 +91,7 @@ export function normalizeArticle<F extends ArticleFieldSet>(
   value: unknown,
   fieldSet: F,
   index = 0,
+  apiUrl = getBlogApiUrl(),
 ): ArticleByFieldSet[F] {
   const context = `articles.items[${index}]`;
   const record = requireRecord(value, context);
@@ -105,17 +107,17 @@ export function normalizeArticle<F extends ArticleFieldSet>(
   if (fieldSet === 'rss') {
     return {
       ...common,
-      content: requireString(record, 'content', context),
+      content: normalizeDrupalHtml(requireString(record, 'content', context), apiUrl),
     } as ArticleByFieldSet[F];
   }
 
   return {
     ...common,
     listingImage: requireString(record, 'listingImage', context),
-    authorContent: requireString(record, 'authorContent', context),
+    authorContent: normalizeDrupalHtml(requireString(record, 'authorContent', context), apiUrl),
     authorImage: requireString(record, 'authorImage', context),
     authorName: requireString(record, 'authorName', context),
-    content: requireString(record, 'content', context),
+    content: normalizeDrupalHtml(requireString(record, 'content', context), apiUrl),
     id: requireIdentifier(record, 'id', context),
     imageCredits: typeof record.imageCredits === 'string' || record.imageCredits === null
       ? record.imageCredits
@@ -123,7 +125,7 @@ export function normalizeArticle<F extends ArticleFieldSet>(
     published: requireBoolean(record, 'published', context),
     mainImage: requireString(record, 'mainImage', context),
     boxTitle: nullableString(record, 'boxTitle', context),
-    boxContent: nullableString(record, 'boxContent', context),
+    boxContent: normalizeDrupalHtml(nullableString(record, 'boxContent', context), apiUrl),
   } as ArticleByFieldSet[F];
 }
 
@@ -179,11 +181,12 @@ async function getArticleCapabilities(): Promise<ArticleCapabilities> {
 }
 
 export async function fetchPageContent(pageId: number): Promise<{ page: BlogEditorialPage }> {
-  return fetchGraphQL<{ page: BlogEditorialPage }>(`
+  const data = await fetchGraphQL<{ page: BlogEditorialPage }>(`
     query GetBlogPage {
       page(id: ${pageId}) { title metaDescription content }
     }
   `);
+  return { page: { ...data.page, content: normalizeDrupalHtml(data.page.content, getBlogApiUrl()) } };
 }
 
 export async function fetchArticles<F extends ArticleFieldSet>({

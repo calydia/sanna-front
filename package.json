@@ -28,6 +28,7 @@
     "astro": "^7.3.3",
     "astro-icon": "^1.1.5",
     "dayjs": "^1.11.21",
+    "htmlparser2": "^12.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
   },
