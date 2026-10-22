@@ -1,7 +1,6 @@
 ---
 import IntroPage from '../../components/IntroPage.astro';
 import TalkArchiveRow from '../../components/TalkArchiveRow.astro';
-import TalkCard from '../../components/TalkCard.astro';
 import Card from '../../layouts/Card.astro';
 
 const topics = [
@@ -19,23 +18,18 @@ const topics = [
   },
 ];
 
-const upcomingTalks = [
-  {
-    title: 'Decoding Collaboration: Hidden Skills for Diverse Workflows',
-    url: 'https://wpsuomi.fi/',
-    date: '2026-10-16',
-    displayDate: '16 October 2026',
-    event: 'WP Suomi 2026',
-    location: 'Oulu',
-    collaborator: 'With Mikaela Kindstedt',
-    description: 'Successful collaboration requires clear boundaries, defined expectations, and open communication. In this session, we will explore how context-switching, unclear tasks, and undocumented practices increase cognitive load, directly impacting developer productivity and decision-making. You will learn to acknowledge different working styles to utilise their full potential. For effective collaboration, recognise the hidden cost of "silent acceptance" and learn how to empower everyone to be that “someone” who breaks the silence. We will look into why it is crucial to know what we expect from each other, where responsibilities lie, and how to establish clear accountability and code ownership, especially when working with AI-generated code. Explore with us the hidden skills needed to optimise your daily workflow, protect your mental capacity, and improve your collaboration with others.',
-  },
-];
-
 const pastTalks = [
   {
     year: '2026',
     talks: [
+      {
+        title: 'Decoding Collaboration: Hidden Skills for Diverse Workflows',
+        date: '2026-10-16',
+        displayDate: '16 October 2026',
+        event: 'WP Suomi 2026',
+        location: 'Oulu',
+        collaborator: 'With Mikaela Kindstedt',
+      },
       {
         title: 'Who Owns Accessibility After a WordPress Site Launches?',
         date: '2026-10-08',
@@ -131,9 +125,7 @@ const pastTalks = [
 
   <section aria-labelledby="upcoming-talks-heading">
     <h2 id="upcoming-talks-heading" class="mb-4">Upcoming talks</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {upcomingTalks.map((talk) => <TalkCard {...talk} />)}
-    </div>
+    <p>No upcoming talks at the moment.</p>
   </section>
 
   <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)]">

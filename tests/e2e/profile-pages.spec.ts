@@ -37,7 +37,7 @@ test('About presents Sanna’s principles and community participation', async ({
   await expect(community).toContainText('Saavutettavuusverkosto');
 });
 
-test('Speaking exposes topics, upcoming appearances, archive metadata, and enquiries', async ({ page }) => {
+test('Speaking exposes topics, no upcoming appearances, archive metadata, and enquiries', async ({ page }) => {
   await gotoProfilePage(page, profiles.speaking);
 
   await expect(page.getByRole('heading', { level: 1, name: 'Speaking' })).toBeVisible();
@@ -50,19 +50,17 @@ test('Speaking exposes topics, upcoming appearances, archive metadata, and enqui
   await expect(developmentTopic).toContainText('Development practices');
 
   const upcoming = page.getByRole('region', { name: 'Upcoming talks' });
-  await expect(upcoming.getByRole('article')).toHaveCount(1);
-  await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
-    'Decoding Collaboration: Hidden Skills for Diverse Workflows',
-  ]);
+  await expect(upcoming).toContainText('No upcoming talks at the moment.');
+  await expect(upcoming.getByRole('article')).toHaveCount(0);
 
-  const wpSuomi = upcoming.getByRole('article').filter({
-    has: page.getByRole('heading', { level: 3, name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' }),
+  const archive = page.getByRole('region', { name: 'Past talks' });
+  const wpSuomi = archive.getByRole('listitem').filter({
+    has: page.getByRole('heading', { level: 4, name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' }),
   });
-  await expect(wpSuomi.getByRole('link')).toHaveAttribute('href', 'https://wpsuomi.fi/');
+  await expect(wpSuomi.getByRole('link')).toHaveCount(0);
   await expect(wpSuomi).toContainText('WP Suomi 2026 · Oulu');
   await expect(wpSuomi).toContainText('With Mikaela Kindstedt');
 
-  const archive = page.getByRole('region', { name: 'Past talks' });
   const wordpressAccessibilityDay = archive.getByRole('listitem').filter({
     has: page.getByRole('heading', { level: 4, name: 'Who Owns Accessibility After a WordPress Site Launches?' }),
   });
@@ -73,8 +71,8 @@ test('Speaking exposes topics, upcoming appearances, archive metadata, and enqui
   await expect(wpSuomi.locator('time')).toHaveAttribute('datetime', '2026-10-16');
   await expect(wpSuomi.locator('time')).toHaveText('16 October 2026');
   await expect(archive.getByRole('heading', { level: 3 })).toHaveText(['2026', '2025']);
-  await expect(archive.getByRole('heading', { level: 4 })).toHaveCount(7);
-  await expect(archive.locator('time[datetime]')).toHaveCount(7);
+  await expect(archive.getByRole('heading', { level: 4 })).toHaveCount(8);
+  await expect(archive.locator('time[datetime]')).toHaveCount(8);
 
   const drupalCon = archive.getByRole('listitem').filter({
     has: page.getByRole('heading', { level: 4, name: 'Hidden Skills of Development: Practical Building Blocks for Team Health' }),
@@ -167,20 +165,17 @@ test('Esiintymiset localizes structure while preserving official talk titles', a
   await expect(topics.getByRole('heading', { level: 3, name: 'Ohjelmistokehitys, tiimit ja viestintä' })).toBeVisible();
 
   const upcoming = page.getByRole('region', { name: 'Tulevat esiintymiset' });
-  await expect(upcoming.getByRole('article')).toHaveCount(1);
-  await expect(upcoming.getByRole('heading', { level: 3 })).toHaveText([
-    'Decoding Collaboration: Hidden Skills for Diverse Workflows',
-  ]);
-  await expect(upcoming.locator('h3[lang="en"]')).toHaveCount(1);
+  await expect(upcoming).toContainText('Ei tulevia esiintymisiä tällä hetkellä.');
+  await expect(upcoming.getByRole('article')).toHaveCount(0);
 
-  const wpSuomi = upcoming.getByRole('article').filter({
-    has: page.getByRole('heading', { level: 3, name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' }),
+  const archive = page.getByRole('region', { name: 'Aiemmat esiintymiset' });
+  const wpSuomi = archive.getByRole('listitem').filter({
+    has: page.getByRole('heading', { level: 4, name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows' }),
   });
-  await expect(wpSuomi.getByRole('link')).toHaveAttribute('href', 'https://wpsuomi.fi/');
+  await expect(wpSuomi.getByRole('link')).toHaveCount(0);
   await expect(wpSuomi).toContainText('WP Suomi 2026 · Oulu');
   await expect(wpSuomi).toContainText('Yhdessä Mikaela Kindstedtin kanssa');
 
-  const archive = page.getByRole('region', { name: 'Aiemmat esiintymiset' });
   const wordpressAccessibilityDay = archive.getByRole('listitem').filter({
     has: page.getByRole('heading', { level: 4, name: 'Who Owns Accessibility After a WordPress Site Launches?' }),
   });
@@ -190,8 +185,8 @@ test('Esiintymiset localizes structure while preserving official talk titles', a
   await expect(wordpressAccessibilityDay.getByRole('link')).toHaveCount(0);
   await expect(wpSuomi.locator('time')).toHaveAttribute('datetime', '2026-10-16');
   await expect(wpSuomi.locator('time')).toHaveText('16. lokakuuta 2026');
-  await expect(archive.locator('time[datetime]')).toHaveCount(7);
-  await expect(archive.locator('h4[lang="en"]')).toHaveCount(6);
+  await expect(archive.locator('time[datetime]')).toHaveCount(8);
+  await expect(archive.locator('h4[lang="en"]')).toHaveCount(7);
 
   const drupalCon = archive.getByRole('listitem').filter({
     has: page.getByRole('heading', { level: 4, name: 'Hidden Skills of Development: Practical Building Blocks for Team Health' }),
@@ -265,11 +260,6 @@ for (const profile of Object.values(profiles)) {
 }
 
 for (const actionCase of [
-  {
-    label: 'upcoming talk',
-    profile: profiles.speaking,
-    name: 'Decoding Collaboration: Hidden Skills for Diverse Workflows',
-  },
   { label: 'English speaking enquiry', profile: profiles.speaking, name: 'Email Sanna' },
   { label: 'English project', profile: profiles.projects, name: 'Explore I would if I could' },
   { label: 'Finnish speaking enquiry', profile: profiles.esiintymiset, name: 'Lähetä sähköpostia' },

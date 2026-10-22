@@ -1,7 +1,6 @@
 ---
 import IntroPage from '../../../components/IntroPage.astro';
 import TalkArchiveRow from '../../../components/TalkArchiveRow.astro';
-import TalkCard from '../../../components/TalkCard.astro';
 import Card from '../../../layouts/Card.astro';
 
 const topics = [
@@ -19,24 +18,19 @@ const topics = [
   },
 ];
 
-const upcomingTalks = [
-  {
-    title: 'Decoding Collaboration: Hidden Skills for Diverse Workflows',
-    titleLanguage: 'en',
-    url: 'https://wpsuomi.fi/',
-    date: '2026-10-16',
-    displayDate: '16. lokakuuta 2026',
-    event: 'WP Suomi 2026',
-    location: 'Oulu',
-    collaborator: 'Yhdessä Mikaela Kindstedtin kanssa',
-    description: 'Onnistunut yhteistyö edellyttää selkeitä rajoja, määriteltyjä odotuksia ja avointa viestintää. Tässä puheenvuorossa tarkastelemme, miten kontekstin vaihtaminen, epäselvät tehtävät ja dokumentoimattomat käytännöt lisäävät kognitiivista kuormaa ja vaikuttavat suoraan kehittäjien tuottavuuteen ja päätöksentekoon. Opit tunnistamaan erilaisia työskentelytapoja ja hyödyntämään niiden täyden potentiaalin. Jotta yhteistyö olisi tehokasta, tunnista ”hiljaisen hyväksynnän” piilevä hinta ja opi antamaan jokaiselle mahdollisuus olla se ”joku”, joka rikkoo hiljaisuuden. Tarkastelemme, miksi on tärkeää tietää, mitä odotamme toisiltamme, missä vastuut ovat ja miten selkeä vastuunkanto ja koodin omistajuus luodaan etenkin tekoälyn tuottaman koodin parissa. Tutustu kanssamme piileviin taitoihin, joiden avulla voit optimoida päivittäistä työnkulkuasi, suojella henkistä kapasiteettiasi ja parantaa yhteistyötäsi muiden kanssa.',
-  },
-];
-
 const pastTalks = [
   {
     year: '2026',
     talks: [
+      {
+        title: 'Decoding Collaboration: Hidden Skills for Diverse Workflows',
+        titleLanguage: 'en',
+        date: '2026-10-16',
+        displayDate: '16. lokakuuta 2026',
+        event: 'WP Suomi 2026',
+        location: 'Oulu',
+        collaborator: 'Yhdessä Mikaela Kindstedtin kanssa',
+      },
       {
         title: 'Who Owns Accessibility After a WordPress Site Launches?',
         titleLanguage: 'en',
@@ -139,9 +133,7 @@ const pastTalks = [
 
   <section aria-labelledby="tulevat-esiintymiset-heading">
     <h2 id="tulevat-esiintymiset-heading" class="mb-4">Tulevat esiintymiset</h2>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {upcomingTalks.map((talk) => <TalkCard {...talk} />)}
-    </div>
+    <p>Ei tulevia esiintymisiä tällä hetkellä.</p>
   </section>
 
   <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)]">
