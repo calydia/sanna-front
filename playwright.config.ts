@@ -40,6 +40,10 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 900 },
+        launchOptions: {
+          // Keep native scrollbar-gutter coverage stable across host scrollbar preferences.
+          args: ['--disable-features=OverlayScrollbar'],
+        },
       },
     },
     {
